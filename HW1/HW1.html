@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<style>
+
+	body {
+	  background-color: #ccffee;
+	  color: #111;
+	  margin: 0px;
+	  
+	  font-family: Monospace;
+	  font-size: 20px;
+	}
+	
+	#info {
+	  position: absolute;
+	  top: 0px;
+	  width: 80%;
+	  padding: 5px;
+	  text-align: center;
+	  color: #ffff00
+	}
+	
+	a {
+	  color: #0000ff
+	}
+	
+	strong {
+	  color: red
+	}
+	
+	#container {
+	  z-index: 0;
+	  left: 0px;
+	  top: 0px;
+	  overflow: hidden;
+	  position: absolute;
+	  width: 100%;
+	  height: 100%;
+	}
+	.light_1 {
+	  background: 0#0000ff;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 190px;
+	  top: 400px;
+	  position: absolute;
+	}
+	.light_2 {
+	  background: 0#00ffff;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 120px;
+	  top: 600px;
+	  position: absolute;
+	}
+	.light_3 {
+	  background: 0#ff00ff;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 282px;
+	  top: 300px;
+	  position: absolute;
+	}
+	.light_4 {
+	  background: 0#ff0000;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 182px;
+	  top: 500px;
+	  position: absolute;
+	}
+	.light_5 {
+	  background: 0#1efd9c;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 352px;
+	  top: 550px;
+	  position: absolute;
+	}
+	.light_6 {
+	  background: 0#548c00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 222px;
+	  top: 550px;
+	  position: absolute;
+	}
+	.light_7 {
+	  background: 0#003e3e;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 255px;
+	  top: 680px;
+	  position: absolute;
+	}
+	.light_8 {
+	  background: 0#6c3365;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 350px;
+	  top: 623px;
+	  position: absolute;
+	}
+	.light_9 {
+	  background: 0#ffff00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 333px;
+	  top: 433px;
+	  position: absolute;
+	}
+	.light_10 {
+	  background: 0#ffffff;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 450px;
+	  top: 690px;
+	  position: absolute;
+	}
+
+</style>
+</head>
+
+<body> 
+<h1 > Homework 1 (<a href="https://jsfiddle.net/shine85810/gd352bgx/">jsfiddle)</a></h1>
+</body>
+
+<button id='l0Button' style="margin:10px 0 20px 20px;text-align:center;font-size:20px;">
+On/Off
+</button>
+
+<br>
+<div id='light1' class='light_1' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light2' class='light_2' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light3' class='light_3' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light4' class='light_4' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light5' class='light_5' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light6' class='light_6' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light7' class='light_7' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light8' class='light_8' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light9' class='light_9' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light10' class='light_10' style='float:left; margin:10px 10px 20px 20px;'></div>  
+
+
+<br>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<img src=" http://i.imgur.com/sdtz9ON.png" ><br><br>
+
+
+<script>
+
+function Lamp(lampId) {
+
+  /*if(lampId===undefined){
+	Lamp.serial=Lamp.serial===undefined?0 : ++Lamp.serial;
+  }
+  var name = lampId || 'Light' + Lamp.serial;
+  */
+  var name = '#' + lampId;
+  
+  var status = false;
+
+  var toggle = function() {
+    status = !status;
+    var hue='hsl(' + Math.random() * 360 + ',80%,50%)';
+    if (status) {
+	
+    	$(name).css ('backgroundColor', hue);
+      //$(name).text (name + ' is on');
+    } else {
+    	$(name).css ('backgroundColor', hue);
+      //$(name).text (name + ' is off');
+    }
+  };
+
+  this.check = function() {
+    return status;
+  }
+  
+  var timer;
+  var power = false;
+  this.toggleBlink = function() {
+	power = !power;
+    if (power === true) {
+  		timer = setInterval (toggle, 300);
+    } 
+	else {
+  		clearInterval (timer);
+    }
+  	//setInterval (function() {toggle();}, 500);
+  }
+}
+
+
+var l=[];
+for(var i=1;i<=10;i++){
+		l[i]=new Lamp('light'+i);
+		
+	}
+
+/*
+$('#l0Button').click ( function() { 
+	l0.toggleBlink();
+} );*/
+$('#l0Button').click ( function() { 
+	for(var i=1;i<=10;i++){
+		
+		l[i].toggleBlink();
+	}
+	
+
+} );
+
+
+
+</script>
+
+
+</html>
