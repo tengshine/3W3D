@@ -72,7 +72,7 @@ function init ()
 	gridXZ.setColors( new THREE.Color(0xff0000), new THREE.Color(0xffffff) );
 	scene.add(gridXZ);
 
-THREE.ImageUtils.crossOrigin = '';
+	THREE.ImageUtils.crossOrigin = '';
 	var loader = new THREE.JSONLoader();
 	loader.load('https://jyunming-chen.github.io/tutsplus/models/laalaa.js', function (geometry, mat) {
 		geometry.computeMorphNormals();
