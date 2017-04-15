@@ -5,7 +5,7 @@
 <head>
 <style>
 body {
-  overflow: hidden
+  overflow: hidden;
 }
 
 </style>
@@ -26,7 +26,7 @@ var clock = new THREE.Clock();
 var scene, renderer, camera;
 var controls;
 var keyboard = new KeyboardState();
-
+var brakeOn = false;
 var turn = 1;
 var toycar;
 var pos, vel, force,power=1;
@@ -106,9 +106,9 @@ function computeForce() {
   //power=new THREE.Vector3(0,0,0);
   //power.add(force.clone().multiplyScalar(vel));
   // engine force
-  //if (brakeOn){
-  //	power=0;
-  //}
+  if (brakeOn){
+  	power=0;
+  }
  
   // resistance force
   var alpha = 3.50;  
