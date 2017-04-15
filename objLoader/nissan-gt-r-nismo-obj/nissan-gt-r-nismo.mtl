@@ -369,8 +369,7 @@ Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump rough_asphalt2.jpg
-map_Kd rough_asphalt2.jpg
+
 
 newmtl Material__586
 Ns 96.078431
