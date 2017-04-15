@@ -83,7 +83,7 @@ function init() {
 		materials.preload();
 
 		var objLoader = new THREE.OBJLoader();
-		objLoader.setMaterials( materials );
+		//objLoader.setMaterials( materials );
 		objLoader.setPath('nissan-gt-r-nismo-obj/');
 		objLoader.load('nissan-gt-r-nismo.obj',function(object) {
       toycar = object;
