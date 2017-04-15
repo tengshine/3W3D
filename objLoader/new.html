@@ -26,10 +26,13 @@ var clock = new THREE.Clock();
 var scene, renderer, camera;
 var controls;
 
-var angle = 0;
+
 var turn = 1;
 var toycar;
-
+var pos, vel, force,power=1;
+var mass = 1;
+var clock = new THREE.Clock();
+var angle=0,theta=0;
 init();
 animate();
 
@@ -93,27 +96,75 @@ function init() {
     });
 	
 	});
-	
+	pos = new THREE.Vector3();
+	vel = new THREE.Vector3();
+	force = new THREE.Vector3();
+}
+function computeForce() {
+	  
+	force=new THREE.Vector3(power,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),angle+theta).multiplyScalar(26);
+  //power=new THREE.Vector3(0,0,0);
+  //power.add(force.clone().multiplyScalar(vel));
+  // engine force
+  if (brakeOn){
+  	power=0;
+  }
+ 
+  // resistance force
+  var alpha = 3.50;  
+  force.add(vel.clone().multiplyScalar(-alpha));
 }
 
 function animate() {
-  var dt = clock.getDelta();
 
-  var x = 30 * Math.cos(angle);
-  var z = 30 * Math.sin(angle);
+	computeForce();
+	var dt = clock.getDelta();
+	keyboard.update();
+	theta=0;
+	brakeOn = false;
+	if (keyboard.down("space")) {
+		brakeOn = true;
+	}
+	if (keyboard.pressed("right")) {
+		theta=-0.31;
+	}
+	if (keyboard.pressed("left")) {
+		theta=0.31;   
+	}
+	if (keyboard.down("home")) {
+		power=1;
+	}
+	if (keyboard.pressed("up")) {
+		power+=0.1;  
+	}
+	if (keyboard.pressed("down")) {
+		power-=0.1;
+	if(power<0)power=0;
+	}
+	
+	vel.add(force.clone().multiplyScalar(dt / mass));
 
-  //if (turn) {  // this is error-prone
-  if (toycar !== undefined && turn) {
-    toycar.position.set(x, 0, z);
-    toycar.rotation.y = -(angle + Math.PI);
-    angle -= dt;
-  }
+	// pos = pos - vel * dt
+	pos.sub(vel.clone().multiplyScalar(dt));
 
-  controls.update();
+	if(vel.length()>0.01){
+		angle=Math.atan2(-vel.z,vel.x);
+	}
+	//var x = 30 * Math.cos(angle);
+	//var z = 30 * Math.sin(angle);
 
-  requestAnimationFrame(animate);
-  render();
-}//
+	//if (turn) {  // this is error-prone
+	if (toycar !== undefined && turn) {
+		toycar.position.copy(pos);
+		toycar.rotation.y = -(angle + Math.PI);
+		angle -= dt;
+	}
+
+	controls.update();
+
+	requestAnimationFrame(animate);
+	render();
+}
 
 function render() {
 
