@@ -104,9 +104,9 @@ function animate() {
 
   //if (turn) {  // this is error-prone
   if (toycar !== undefined && turn) {
-    toycar.position.set(x, 2, z);
+    toycar.position.set(x, 0, z);
     toycar.rotation.y = -(angle + Math.PI);
-    //angle -= dt;
+    angle -= dt;
   }
 
   controls.update();
