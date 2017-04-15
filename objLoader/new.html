@@ -89,7 +89,7 @@ function init() {
 		objLoader.load('porsche-cayman.obj',function(object) {
       toycar = object;
       scene.add(toycar);
-    	toycar.scale.set(3.5, 3.5, 3.5);
+    	toycar.scale.set(5.5, 0.5, 5.5);
     });
 	
 	});
@@ -104,7 +104,7 @@ function animate() {
 
   //if (turn) {  // this is error-prone
   if (toycar !== undefined && turn) {
-    toycar.position.set(x, 10, z);
+    toycar.position.set(x, 2, z);
     toycar.rotation.y = -(angle + Math.PI);
     //angle -= dt;
   }
