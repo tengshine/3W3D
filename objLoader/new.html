@@ -17,7 +17,7 @@ body {
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
 <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
-
+<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
 
 
 <script>
@@ -25,7 +25,7 @@ body {
 var clock = new THREE.Clock();
 var scene, renderer, camera;
 var controls;
-
+var keyboard = new KeyboardState();
 
 var turn = 1;
 var toycar;
@@ -106,9 +106,9 @@ function computeForce() {
   //power=new THREE.Vector3(0,0,0);
   //power.add(force.clone().multiplyScalar(vel));
   // engine force
-  if (brakeOn){
-  	power=0;
-  }
+  //if (brakeOn){
+  //	power=0;
+  //}
  
   // resistance force
   var alpha = 3.50;  
