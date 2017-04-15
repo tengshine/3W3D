@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    
+}
+body {
+    overflow: hidden;
+}
+
+</style>
+</head>
+
+<body> 
+
+<div id="info">
+	<h1 > Homework 2 </h1>
+
+	<button id="makeCurve" style="width:20%">Make Curve<br></button><br>
+	<a id='v1'>view1<br></a>
+	<a id='v2'>view2</a>
+</div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://rawgit.com/jyunming-chen/tutsplus/master/js/text2D.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+<canvas id='mycanvas'>
+  <canvas>
+<script>
+
+var camera, scene, renderer, light, controls;
+var wall0;
+var texture;
+
+var keyboard = new KeyboardState();
+var turn = true;
+var pickables = [];
+var avatar;
+var sprite;
+var mouse = new THREE.Vector2();
+var i=0;
+var name;
+var dataPoints = [];
+var dataPointGroup = new THREE.Object3D();
+var gcontrols;
+var resController;
+var typeController;
+var mycanvas;
+
+var angle = 0;
+var curve;
+var uu=0;
+var button=false;
+var button1=false;
+var circle;
+document.oncontextmenu = function() {
+  return false;
+}
+
+$('#v1').click(
+
+	function() {
+		camera.position.set(200, 200, 200);
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+		button1=false;
+	}
+);
+
+$('#v2').click(
+
+	function() {
+		button1=true;
+	}
+);
+$("#makeCurve").click(
+	function() {
+		console.log('in makeCurve');
+		makeCatmullRom();
+		button=true;
+	}
+);
+
+init();
+animate();
+function loadTexture( url ) {
+
+	// instantiate a loader
+	var loader = new THREE.TextureLoader();
+	loader.setCrossOrigin('');
+
+	// load a resource
+	loader.load(
+	// resource URL
+		url, // Lena
+	// Function when resource is loaded
+		function (tex) {
+			console.log ('texture loaded ...');
+
+			texture = tex; // for global access with Keypress
+		},
+
+	// Function called when download progresses
+		function(xhr) {
+			console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+		},
+		// Function called when download errors
+		function(xhr) {
+			console.log('An error happened');
+		}
+	);
+
+}
+
+function init() {
+	mycanvas = document.getElementById('mycanvas');
+	scene = new THREE.Scene();
+
+	camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+	camera.position.set(0,200,400);
+	scene.add(camera);
+
+	light = new THREE.PointLight(0xffffff);
+	light.position.set(100, 300, 250);
+	scene.add(light);
+	
+	var ambientlight = new THREE.AmbientLight(0x404040); // soft white light
+	scene.add(ambientlight);
+
+	var gridXZ = new THREE.GridHelper(400, 40, 'red', 'white');
+	scene.add(gridXZ);
+
+	var axes = new THREE.AxisHelper(40);
+	scene.add(axes);
+
+	renderer = new THREE.WebGLRenderer({
+		antialias: true,
+		canvas: mycanvas
+	});
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setClearColor(0x888888);
+
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+	document.body.appendChild(renderer.domElement);
+	////////////////////////////////////////////////////////////////////////
+	scene.add(dataPointGroup);
+  //mycanvas.addEventListener('mousedown', onDocumentMouseDown1, false);
+
+	gcontrols = {
+		resolution: 20,
+		closed: false,
+		type: "centripetal"
+	};
+
+	var gui = new dat.GUI();
+	gui.domElement.id = 'gui';
+
+	resController = gui.add(gcontrols, 'resolution', 10, 50);
+	closedController = gui.add(gcontrols, 'closed');
+	typeController = gui.add(gcontrols, 'type', ["centripetal", "chordal", "catmullrom"]);
+  ////////////////////////////////////////////////////////////////////////
+	plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 164), new THREE.MeshBasicMaterial({
+		transparent: true,
+		opacity: 0.6,
+		visible: true
+	}));
+	scene.add(plane);
+	plane.position.set(50,0,82);
+	plane.rotation.x = -Math.PI / 2;
+	pickables = [plane];
+  ////////////////////////////////////////////////////////////////////////
+  ////人物模型
+	avatar = new THREE.Object3D();
+	body = new THREE.Mesh(new THREE.CylinderGeometry(2,2,6,32),new THREE.MeshLambertMaterial());
+	//scene.add(body);
+	//body.position.set(0,12.5,0);
+	avatar.add(body);
+	head = new THREE.Mesh(new THREE.SphereGeometry( 2, 32, 32 ),new THREE.MeshLambertMaterial());
+	head.position.set(0,5,0);
+	//scene.add(head);
+	avatar.add(head);
+	rleg = new THREE.Mesh(new THREE.CylinderGeometry(0.5,0.5,4,32),new THREE.MeshLambertMaterial());
+	lleg = rleg.clone();
+	rsleg = rleg.clone();
+	lsleg = rleg.clone();
+	
+	rleg.position.set(1.5,-5,0);
+	lleg.position.set(-1.5,-5,0);
+	rsleg.position.set(1.5,-9,0);
+	lsleg.position.set(-1.5,-9,0);
+	/**/
+	avatar.add(rleg);
+	avatar.add(lleg);
+	avatar.add(rsleg);
+	avatar.add(lsleg);
+	
+	rarm = new THREE.Mesh(new THREE.CylinderGeometry(0.5,0.5,7,32),new THREE.MeshLambertMaterial());
+	larm = rarm.clone();
+	rarm.position.set(2.5,-0.7,0);
+	
+	larm.position.set(-2.5,-0.7,0);
+	avatar.add(rarm);
+	avatar.add(larm);
+	
+	noise = new THREE.Mesh(new THREE.ConeGeometry( 0.5, 1, 32 ),new THREE.MeshLambertMaterial()); 
+	noise.position.set(0,4.5,2);
+	noise.rotation.x=Math.PI/2;
+	avatar.add(noise);
+	raycaster = new THREE.Raycaster();
+	document.addEventListener('mousedown', onDocumentMouseDown, false);
+	////////////////////////////////////////////////////////////////////////
+	////房間隔間
+	var material = new THREE.MeshLambertMaterial();
+	var room = new THREE.Object3D();
+	wall0 = new THREE.Mesh(new THREE.BoxGeometry(72,40,3), material);
+	wall0.position.set(36,20,1.5);
+	room.add(wall0);
+	loadTexture('http://i.imgur.com/Q8x1gJo.jpg');
+	wall01=wall0.clone();
+	wall01.position.set(36,20,15);
+	room.add(wall01);
+	
+	wall1 = new THREE.Mesh(new THREE.BoxGeometry(3,40,164), material);
+	wall1.position.set(1.5,20,82);
+	room.add(wall1);
+	
+	wall2 = new THREE.Mesh(new THREE.BoxGeometry(100,40,3), material);
+	wall2.position.set(50,20,162.5);
+	room.add(wall2);
+	
+	wall3 = new THREE.Mesh(new THREE.BoxGeometry(3,40,59), material);
+	wall3.position.set(83.5,20,29.5);
+	room.add(wall3);
+	
+	wall4 = new THREE.Mesh(new THREE.BoxGeometry(3,40,105), material);
+	wall4.position.set(98.5,20,111.5);
+	room.add(wall4);
+	
+	wall5 = new THREE.Mesh(new THREE.BoxGeometry(42,40,3), material);
+	wall5.position.set(21,20,57.5);
+	room.add(wall5);
+	
+	wall51=wall5.clone();
+	wall51.position.set(79,20,57.5);
+	room.add(wall51);
+	wall52=wall5.clone();
+	wall52.position.set(21,20,103.5);
+	room.add(wall52);
+	wall53=wall5.clone();
+	wall53.position.set(79,20,103.5);
+	room.add(wall53);
+	wall54=wall5.clone();
+	wall54.position.set(21,20,126.5);
+	room.add(wall54);
+	wall55=wall5.clone();
+	wall55.position.set(21,20,149.5);
+	room.add(wall55);
+	wall56=wall5.clone();
+	wall56.position.set(79,20,149.5);
+	room.add(wall56);
+	
+	wall6 = new THREE.Mesh(new THREE.BoxGeometry(3,40,33), material);
+	wall6.position.set(40.5,20,88.5);
+	room.add(wall6);
+	
+	wall61=wall6.clone();
+	wall61.position.set(59.5,20,72.5);
+	room.add(wall61);
+	wall62=wall6.clone();
+	wall62.position.set(59.5,20,134.5);
+	room.add(wall62);
+	
+	wall7 = new THREE.Mesh(new THREE.BoxGeometry(3,40,10), material);
+	wall7.position.set(40.5,20,110);
+	room.add(wall7);
+	scene.add(room);
+	
+	//////////////////////////////////////////////////////////////////////////頭頂文字
+	var textAlign = THREE_Text.textAlign;
+	var Text2D = THREE_Text.MeshText2D;
+	var SpriteText2D = THREE_Text.SpriteText2D;
+	sprite = new SpriteText2D(name, {
+		align: textAlign.center,
+		font: '5px Courier',
+		fillStyle: '#000000',
+		antialias: true
+	});
+	//////////////////////////////////////////////////////////////////////////
+	
+	var geometry = new THREE.CircleGeometry(3, 32);
+	var material = new THREE.MeshBasicMaterial({
+		color: 0xffff00
+	});
+	circle = new THREE.Mesh(geometry, material);
+	
+}
+var avatars=[];
+
+function onDocumentMouseDown(event) {
+	
+  // PICKING DETAILS: 
+  // convert mouse.xy = [-1,1]^2 (NDC)
+  // unproject (mouse.xy, 1) to a point on the far plane (in world coordinate)
+  // set raycaster (origin, direction)
+  // find intersection objects, (closest first) 
+  // each record as
+  // [ { distance, point, face, faceIndex, object }, ... ]
+	//avatars=[];
+	name='sprite '+i;
+	event.preventDefault();
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+	if (event.button === 0){
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects(pickables);
+		if (intersects.length > 0) {
+			avatar.position.x=intersects[0].point.x;
+			avatar.position.y=intersects[0].point.y+11;
+			avatar.position.z=intersects[0].point.z;
+			scene.add(avatar);
+			
+			sprite.scale.set(.5, .5, .5);
+			scene.add(sprite);
+			sprite.position.set(avatar.position.x,avatar.position.y+25,avatar.position.z);
+		}
+		
+	
+	}
+	// find intersections
+	
+	if (event.button === 2) { // right button
+		cleanRestart();
+		//var intersects = raycaster.intersectObjects(pickables);
+		//var pos = new THREE.Vector3(mouse.x , 0, mouse.y);
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects(pickables);
+		if (intersects.length > 0) {
+			
+
+			var pos = new THREE.Vector3(intersects[0].point.x,intersects[0].point.y+0.1,intersects[0].point.z);
+			dataPoints.push(pos);
+			var pt = makeADot(pos);
+			dataPointGroup.add(pt);
+		}
+	}
+}
+
+function makeCatmullRom() {
+
+	var cat;
+	// if line exists, remove it...
+	if (cat = scene.getObjectByName('catmull')) {
+		scene.remove(cat);
+		cat.children[0].geometry.dispose();
+		cat.children[1].geometry.dispose();
+	}
+
+	curve = new THREE.CatmullRomCurve3(dataPoints);
+	curve.type = gcontrols.type;
+	curve.closed = gcontrols.closed;
+
+	var geometry = new THREE.Geometry();
+	geometry.vertices = //curve.getPoints(Math.floor(gcontrols.resolution));      // no !
+	curve.getSpacedPoints(Math.floor(gcontrols.resolution)); // yes!
+	
+	//vel=curve.getTangentAt(1);
+	var material = new THREE.LineBasicMaterial({
+		color: 0x000000
+	});
+
+	var lineAndPt = new THREE.Object3D();
+	var line = new THREE.Line(geometry, material);
+	lineAndPt.add(line);
+	lineAndPt.name = "catmull";
+
+	var dataPointMesh = new THREE.Points(line.geometry.clone());
+	dataPointMesh.material.size = 1;
+	dataPointMesh.material.color = new THREE.Color('white');
+	
+	lineAndPt.add(dataPointMesh);
+
+	scene.add(lineAndPt);
+
+}
+
+
+// dynamic adding vertices is NOT supported
+// http://stackoverflow.com/questions/14840026/dynamically-adding-vertices-to-a-line-in-three-js
+
+function makeADot(pos) {
+	var geometry = new THREE.CircleGeometry(1, 32);
+	var material = new THREE.MeshBasicMaterial({
+		color: 0x000000
+	});
+	var circle = new THREE.Mesh(geometry, material);
+	circle.rotation.x=-Math.PI/2;
+	circle.position.copy(pos);
+	return circle;
+}
+
+function cleanRestart() {
+
+	var cat;
+	if (cat = scene.getObjectByName('catmull')) {
+		scene.remove(cat);
+		cat.children[0].geometry.dispose();
+		dataPoints = [];
+		dataPointGroup.children = [];
+	}
+
+}
+
+function animate() {
+	if (texture !== undefined) {
+	// texture already loaded ...
+	wall0.material.map = texture;
+	//room.material.map = texture;
+	// tell Three.js that something needs update
+	wall0.material.needsUpdate = true;
+	//room.material.needsUpdate = true;
+	}
+	closedController.onChange(function() {
+		console.log(gcontrols.closed);
+		makeCatmullRom();
+	});
+	resController.onFinishChange(function() {
+		console.log(gcontrols.resolution);
+		makeCatmullRom();
+	});
+	typeController.onFinishChange(function() {
+		console.log(gcontrols.type);
+		makeCatmullRom();
+	});
+	
+	if(button){
+		uu += 0.003;
+		uu %= 1;
+
+		if((uu+0.003)>1){
+			console.log(uu+0.003);
+			uu += 0.003;
+			uu=uu%1;
+		}
+		var tmp1=new THREE.Vector3(curve.getPointAt(uu+0.003).x-curve.getPointAt(uu).x,curve.getPointAt(uu+0.003).y-curve.getPointAt(uu).y,curve.getPointAt(uu+0.003).z-curve.getPointAt(uu).z);
+		angle=Math.atan2(-tmp1.z,tmp1.x);
+		
+
+		avatar.position.set(curve.getPointAt(uu).x,11,curve.getPointAt(uu).z);
+		sprite.position.set(curve.getPointAt(uu).x,curve.getPointAt(uu).y+30,curve.getPointAt(uu).z);
+		avatar.rotation.y=angle+Math.PI/2;
+		
+	}
+	circle.position.set(avatar.position.x+30*Math.cos(angle),	avatar.position.y+9,avatar.position.z-30*Math.sin(angle));
+	if(button1){
+		var uu1=uu;
+		if((uu1+0.3)>1){
+			uu1+=0.3;
+			uu1=uu1%1;
+		}
+		camera.position.set(avatar.position.x,	avatar.position.y+9,avatar.position.z+4);
+		camera.lookAt(circle.position);
+	}
+
+	//controls.update();
+	keyboard.update();
+	requestAnimationFrame(animate);
+	render();
+}
+
+function render() {
+	renderer.render(scene, camera);
+}
+
+</script>
+</body>
+
+</html>
