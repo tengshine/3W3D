@@ -53,8 +53,7 @@ function init() {
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-  var gridXZ = new THREE.GridHelper(100, 10);
-  gridXZ.setColors(new THREE.Color(0xff0000), new THREE.Color(0xffffff));
+  var gridxz = new THREE.GridHelper (200, 20,'red','white');
   scene.add(gridXZ);
 
   var pointLight = new THREE.PointLight(0xffffff);
@@ -92,7 +91,7 @@ function init() {
     	toycar.scale.set(3.5, 3.5, 3.5);
     },onProgress,onError);
 	
-	},onProgress,onError);
+	});
 	
 }
 
