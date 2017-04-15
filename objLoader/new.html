@@ -77,15 +77,15 @@ function init() {
     });
 */
 	var mtlloader = new THREE.MTLLoader();
-	mtlloader.setBaseUrl( 'camero-2010-low-poly-obj' );
-	mtlloader.setPath('camero-2010-low-poly-obj');
+	mtlloader.setBaseUrl( 'camero-2010-low-poly-obj/' );
+	mtlloader.setPath('camero-2010-low-poly-obj/');
 	mtlloader.load('camero-2010-low-poly.mtl',function(materials){
 		materials.preload();
 
 		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials( materials );
 		//objLoader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
-		objLoader.setPath('camero-2010-low-poly-obj');
+		objLoader.setPath('camero-2010-low-poly-obj/');
 		objLoader.load('camero-2010-low-poly.obj',function(object) {
       toycar = object;
       scene.add(toycar);
