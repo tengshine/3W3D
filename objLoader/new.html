@@ -16,7 +16,7 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="https://jyunming-chen.github.io/tutsplus/js/loaders/OBJLoader.js"></script>
-<script src="https://jyunming-chen.github.io/tutsplus/js/loaders/MTLLoader.js"></script>
+<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
 
 
 
@@ -41,7 +41,7 @@ function init() {
     antialias: true
   });
   renderer.setClearColor(0x888888);
-  renderer.setSize(width, height);
+  renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
   scene = new THREE.Scene();
@@ -54,7 +54,7 @@ function init() {
   controls = new THREE.OrbitControls(camera, renderer.domElement);
 
   var gridXZ = new THREE.GridHelper(100, 10);
-  //gridXZ.setColors(new THREE.Color(0xff0000), new THREE.Color(0xffffff));
+  gridXZ.setColors(new THREE.Color(0xff0000), new THREE.Color(0xffffff));
   scene.add(gridXZ);
 
   var pointLight = new THREE.PointLight(0xffffff);
