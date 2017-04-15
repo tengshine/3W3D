@@ -78,9 +78,13 @@ function init() {
     });
 */
 	var mtlloader = new THREE.MTLLoader();
+	mtlloader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
 	mtlloader.setPath('nissan-gt-r-nismo-obj/');
 	mtlloader.load('nissan-gt-r-nismo.mtl',function(materials){
+		materials.preload();
+
 		var objLoader = new THREE.OBJLoader();
+		objLoader.setMaterials( materials );
 		objLoader.setPath('nissan-gt-r-nismo-obj/');
 		objLoader.load('nissan-gt-r-nismo.obj',function(object) {
       toycar = object;
