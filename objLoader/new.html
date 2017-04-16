@@ -196,7 +196,9 @@ function animate() {
 	
 	//var dir = new THREE.Vector3(1,0,0);
 	
-	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta);
+	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta).multiplyScalar(26);
+	var alpha = 3.50;  
+	force.add(vel.clone().multiplyScalar(-alpha));
 	//pos.add (dir); 
 	vel.add(force.clone().multiplyScalar(dt / mass));
 	
@@ -228,8 +230,8 @@ function myclamp(x,lo,hi)
 	if (x > hi) return hi;
 	return x;
 }
-function update()
-{
+function update(){
+
 	theta=0;
 	controls.update();
 	keyboard.update();
