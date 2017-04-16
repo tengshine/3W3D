@@ -222,7 +222,10 @@ function myclamp(x,lo,hi)
 function update()
 {
 	controls.update();
-	keyboard.update();         
+	keyboard.update();
+	if (keyboard.down("space")) {
+		power = 0;
+	}	
 	if ( keyboard.pressed("left") ) 
 		angle += 0.01;               
 	if ( keyboard.pressed("right") )
