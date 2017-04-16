@@ -193,7 +193,7 @@ function animate() {
 	
 	var dt = clock.getDelta();
 	
-	theta=0;
+	
 	//var dir = new THREE.Vector3(1,0,0);
 	
 	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta);
@@ -230,16 +230,16 @@ function myclamp(x,lo,hi)
 }
 function update()
 {
-	
+	theta=0;
 	controls.update();
 	keyboard.update();
 	if (keyboard.down("space")) {
 		power = 0;
 	}	
 	if ( keyboard.pressed("left") ) 
-		theta += 0.01;               
+		theta =0.31;               
 	if ( keyboard.pressed("right") )
-		theta -= 0.01;               
+		theta =-0.31;               
 	if ( keyboard.pressed("up") )  
 		power += 0.5;        
 	if ( keyboard.pressed("down") )  
