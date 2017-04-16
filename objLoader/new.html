@@ -196,7 +196,7 @@ function animate() {
 	
 	//var dir = new THREE.Vector3(1,0,0);
 	
-	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle);
+	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta);
 	//pos.add (dir); 
 	vel.add(force.clone().multiplyScalar(dt / mass));
 	
@@ -236,14 +236,14 @@ function update()
 		power = 0;
 	}	
 	if ( keyboard.pressed("left") ) 
-		angle += 0.01;               
+		theta += 0.01;               
 	if ( keyboard.pressed("right") )
-		angle -= 0.01;               
+		theta -= 0.01;               
 	if ( keyboard.pressed("up") )  
 		power += 0.5;        
 	if ( keyboard.pressed("down") )  
 		power -= 0.5;    
-	power = myclamp (power, 0.0, 20.0);		
+	//power = myclamp (power, 0.0, 20.0);		
 }
 
 function render() {
