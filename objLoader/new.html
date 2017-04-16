@@ -190,7 +190,7 @@ function computeForce() {
 
 function animate() {
 
-	
+	update();
 	var dt = clock.getDelta();
 	
 	
@@ -217,7 +217,7 @@ function animate() {
 		box.rotation.y = angle-Math.PI/2 ;
 		
 	}
-	update();
+	
 	requestAnimationFrame(animate);
 	render();
 }
@@ -241,9 +241,9 @@ function update()
 	if ( keyboard.pressed("right") )
 		theta =-0.31;               
 	if ( keyboard.pressed("up") )  
-		power += 0.5;        
+		power += 0.1;        
 	if ( keyboard.pressed("down") )  
-		power -= 0.5;
+		power -= 0.1;
 		if(power<0)power=0;
 	//power = myclamp (power, 0.0, 20.0);		
 }
