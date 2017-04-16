@@ -41,7 +41,7 @@ var pos, vel, force,power=1;
 var mass = 1;
 var clock = new THREE.Clock();
 var angle=0,theta=0;
-var theObject;
+var theObject1;
 
 init();
 animate();
@@ -109,10 +109,10 @@ var onProgress = function(xhr) {
 		//objLoader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
 		objLoader.setPath('porsche-cayman-obj/');
 		objLoader.load('porsche-cayman.obj',function(object) {
-		theObject =  unitize (object, 20);
+		theObject1 =  unitize (object, 20);
       //toycar = object;
-      scene.add(theObject);
-	  scene.add (new THREE.BoxHelper (theObject));
+      scene.add(theObject1);
+	  scene.add (new THREE.BoxHelper (theObject1));
     	//toycar.scale.set(5.5, 5.5, 5.5);
     object.traverse (
 				function(mesh) {
@@ -220,9 +220,9 @@ function animate() {
 	//var z = 30 * Math.sin(angle);
 
 	//if (turn) {  // this is error-prone
-	if (theObject !== undefined && turn) {
-		theObject.position.copy(pos);
-		theObject.rotation.y = angle-Math.PI/2 ;
+	if (theObject1 !== undefined && turn) {
+		theObject1.position.copy(pos);
+		theObject1.rotation.y = angle-Math.PI/2 ;
 		//angle -= dt;
 	}
 
