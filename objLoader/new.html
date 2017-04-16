@@ -63,7 +63,7 @@ function init() {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
-
+scene.add(camera);
   var gridXZ = new THREE.GridHelper (200, 20,'red','white');
   scene.add(gridXZ);
 
@@ -87,6 +87,15 @@ function init() {
     	toycar.scale.set(3.5, 3.5, 3.5);
     });
 */
+var onProgress = function(xhr) {
+    if (xhr.lengthComputable) {
+      var percentComplete = xhr.loaded / xhr.total * 100;
+      console.log(Math.round(percentComplete, 2) + '% downloaded');
+    }
+  };
+
+  var onError = function(xhr) {};
+  
 	var mtlloader = new THREE.MTLLoader();
 	mtlloader.setBaseUrl( 'porsche-cayman-obj/' );
 	mtlloader.setPath('porsche-cayman-obj/');
@@ -98,16 +107,63 @@ function init() {
 		//objLoader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
 		objLoader.setPath('porsche-cayman-obj/');
 		objLoader.load('porsche-cayman.obj',function(object) {
-      toycar = object;
-      scene.add(toycar);
-    	toycar.scale.set(5.5, 5.5, 5.5);
-    });
+		var theObject =  unitize (object, 20);
+      //toycar = object;
+      scene.add(theObject);
+	  scene.add (new THREE.BoxHelper (theObject));
+    	//toycar.scale.set(5.5, 5.5, 5.5);
+    object.traverse (
+				function(mesh) {
+					if (mesh instanceof THREE.Mesh) {
+						mesh.material.side = THREE.DoubleSide;
+					}
+				});
+
+
+    }, onProgress, onError);
 	
 	});
 	pos = new THREE.Vector3();
 	vel = new THREE.Vector3();
 	force = new THREE.Vector3();
 }
+function unitize (object, targetSize) {  
+	
+	// find bounding box of 'object'
+	var box3 = new THREE.Box3();
+	box3.setFromObject (object);
+	var size = new THREE.Vector3();
+	size.subVectors (box3.max, box3.min);
+	var center = new THREE.Vector3();
+	center.addVectors(box3.max, box3.min).multiplyScalar (0.5);
+	
+	console.log ('center: ' + center.x + ', '+center.y + ', '+center.z );
+	console.log ('size: ' + size.x + ', ' +  size.y + ', '+size.z );
+	
+	// uniform scaling according to objSize
+	var objSize = findMax (size);
+	var scaleSet = targetSize/objSize;
+				
+	var theObject =  new THREE.Object3D();
+	theObject.add (object);
+	object.scale.set (scaleSet, scaleSet, scaleSet);
+	object.position.set (-center.x*scaleSet, -center.y*scaleSet + size.y/2*scaleSet, -center.z*scaleSet);
+	
+	return theObject;
+	
+	
+	// helper function
+	function findMax(v) {
+		if (v.x > v.y) {
+			return v.x > v.z ? v.x : v.z;
+		} else { // v.y > v.x
+			return v.y > v.z ? v.y : v.z;
+		} 
+	}
+			
+}
+
+
 function computeForce() {
 	  
 	force=new THREE.Vector3(power,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),angle+theta).multiplyScalar(26);
