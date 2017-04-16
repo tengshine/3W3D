@@ -65,9 +65,9 @@ function init() {
 
 	scene = new THREE.Scene();
 
-	camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-	camera.position.y = 160;
-	camera.position.z = 400;
+	camera = new THREE.PerspectiveCamera(45, width / height, 30, 10000);
+	camera.position.y = 100;
+	camera.position.z = 200;
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -85,7 +85,7 @@ function init() {
 
   ///////////////////////////////////////////////
 
-var onProgress = function(xhr) {
+	var onProgress = function(xhr) {
 		if (xhr.lengthComputable) {
 			var percentComplete = xhr.loaded / xhr.total * 100;
 			console.log(Math.round(percentComplete, 2) + '% downloaded');
