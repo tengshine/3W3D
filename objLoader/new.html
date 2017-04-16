@@ -41,6 +41,9 @@ var pos, vel, force,power=1;
 var mass = 1;
 var clock = new THREE.Clock();
 var angle=0,theta=0;
+var objLoader;
+
+
 init();
 animate();
 
@@ -102,7 +105,7 @@ var onProgress = function(xhr) {
 	mtlloader.load('porsche-cayman.mtl',function(materials){
 		materials.preload();
 
-		var objLoader = new THREE.OBJLoader();
+		objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials( materials );
 		//objLoader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
 		objLoader.setPath('porsche-cayman-obj/');
@@ -218,9 +221,9 @@ function animate() {
 	//var z = 30 * Math.sin(angle);
 
 	//if (turn) {  // this is error-prone
-	if (toycar !== undefined && turn) {
-		toycar.position.copy(pos);
-		toycar.rotation.y = angle-Math.PI/2 ;
+	if (objLoader !== undefined && turn) {
+		objLoader.position.copy(pos);
+		objLoader.rotation.y = angle-Math.PI/2 ;
 		//angle -= dt;
 	}
 
