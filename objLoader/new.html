@@ -174,6 +174,19 @@ function onWindowResize ()
 	renderer.setSize (window.innerWidth, window.innerHeight);
 }
 
+function computeForce() {
+	  
+	//force=new THREE.Vector3(power,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),angle+theta).multiplyScalar(26);
+  //power=new THREE.Vector3(0,0,0);
+  //power.add(force.clone().multiplyScalar(vel));
+  // engine force
+  if (brakeOn){
+  	power=0;
+  }
+ 
+  // resistance force
+  
+}
 
 function animate() {
 
@@ -183,7 +196,7 @@ function animate() {
 	
 	var dir = new THREE.Vector3(1,0,0);
 	
-	dir.multiplyScalar (dt*power).applyAxisAngle (new THREE.Vector3(0,1,0), theta);
+	dir.multiplyScalar (dt*power).applyAxisAngle (new THREE.Vector3(0,1,0), angle);
 	pos.add (dir); 
 	
 	
@@ -191,11 +204,10 @@ function animate() {
 		toycar.scale.set (0.2,0.2,0.2);
 		toycar.position.copy(pos);
 		box.position.copy(pos);
-		toycar.rotation.y = angle-Math.PI/2 ;
-		box.rotation.y = angle-Math.PI/2 ;
+		toycar.rotation.y = angle+Math.PI/2 ;
+		box.rotation.y = angle+Math.PI/2 ;
 		
 	}
-	
 	update();
 	requestAnimationFrame(animate);
 	render();
@@ -210,22 +222,16 @@ function myclamp(x,lo,hi)
 function update()
 {
 	controls.update();
-	keyboard.update(); 
-	
-	brakeOn = false;
-	if (keyboard.down("space")) {
-		brakeOn = true;
-	}
+	keyboard.update();         
 	if ( keyboard.pressed("left") ) 
-		theta+=0.31;              
+		angle += 0.01;               
 	if ( keyboard.pressed("right") )
-		theta-=0.31;              
+		angle -= 0.01;               
 	if ( keyboard.pressed("up") )  
-		power+=0.1;        
+		power += 0.5;        
 	if ( keyboard.pressed("down") )  
-		power-=0.1;    
-	power = myclamp (power, 0.0, 20.0);
-	
+		power -= 0.5;    
+	power = myclamp (power, 0.0, 20.0);		
 }
 
 function render() {
