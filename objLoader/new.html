@@ -20,7 +20,14 @@ body {
 </head>
 
 <body> 
-<div id="info"></div>
+<div id="info">
+	<br>HW3<br>
+	方向鍵控制<br>
+	上下：加減速前進<br>
+	左右：控制方向<br>
+	空白鍵：煞車<br>
+	
+	</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
 <script src="https://jyunming-chen.github.io/tutsplus/js/OrbitControls.js"></script>
 <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
@@ -174,27 +181,13 @@ function onWindowResize ()
 	renderer.setSize (window.innerWidth, window.innerHeight);
 }
 
-function computeForce() {
-	  
-	//force=new THREE.Vector3(power,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),angle+theta).multiplyScalar(26);
-  //power=new THREE.Vector3(0,0,0);
-  //power.add(force.clone().multiplyScalar(vel));
-  // engine force
-  if (brakeOn){
-  	power=0;
-  }
- 
-  // resistance force
-  
-}
+
 
 function animate() {
 
 	update();
 	var dt = clock.getDelta();
 	
-	
-	//var dir = new THREE.Vector3(1,0,0);
 	
 	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta).multiplyScalar(26);
 	var alpha = 3.50;  
@@ -207,9 +200,6 @@ function animate() {
 	if(vel.length()>0.01){
 		angle=Math.atan2(-vel.z,vel.x);
 	}
-
-	
-	
 	
 	if (toycar !== undefined && turn) {
 		toycar.scale.set (0.2,0.2,0.2);
@@ -222,6 +212,7 @@ function animate() {
 	
 	requestAnimationFrame(animate);
 	render();
+	
 }
 
 function myclamp(x,lo,hi)
@@ -247,7 +238,7 @@ function update(){
 	if ( keyboard.pressed("down") )  
 		power -= 0.1;
 		if(power<0)power=0;
-	//power = myclamp (power, 0.0, 20.0);		
+	power = myclamp (power, 0.0, 20.0);		
 }
 
 function render() {
