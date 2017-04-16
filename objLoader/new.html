@@ -193,7 +193,7 @@ function animate() {
 	
 	var dt = clock.getDelta();
 	
-	
+	theta=0;
 	//var dir = new THREE.Vector3(1,0,0);
 	
 	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta);
@@ -213,8 +213,8 @@ function animate() {
 		toycar.scale.set (0.2,0.2,0.2);
 		toycar.position.copy(pos);
 		box.position.copy(pos);
-		toycar.rotation.y = angle+Math.PI/2 ;
-		box.rotation.y = angle+Math.PI/2 ;
+		toycar.rotation.y = angle-Math.PI/2 ;
+		box.rotation.y = angle-Math.PI/2 ;
 		
 	}
 	update();
@@ -230,7 +230,7 @@ function myclamp(x,lo,hi)
 }
 function update()
 {
-	theta=0;
+	
 	controls.update();
 	keyboard.update();
 	if (keyboard.down("space")) {
@@ -243,7 +243,8 @@ function update()
 	if ( keyboard.pressed("up") )  
 		power += 0.5;        
 	if ( keyboard.pressed("down") )  
-		power -= 0.5;    
+		power -= 0.5;
+		if(power<0)power=0;
 	//power = myclamp (power, 0.0, 20.0);		
 }
 
