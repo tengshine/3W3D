@@ -184,8 +184,32 @@ function computeForce() {
 
 function animate() {
 
-	computeForce();
+	
 	var dt = clock.getDelta();
+	
+	
+	
+	
+	//var x = 30 * Math.cos(angle);
+	//var z = 30 * Math.sin(angle);
+
+	//if (turn) {  // this is error-prone
+	if (toycar !== undefined && turn) {
+		toycar.scale.set (0.2,0.2,0.2);
+		toycar.position.copy(pos);
+		box.position.copy(pos);
+		toycar.rotation.y = angle-Math.PI/2 ;
+		box.rotation.y = angle-Math.PI/2 ;
+		//angle -= dt;
+	}
+
+	
+
+	requestAnimationFrame(animate);
+	render();
+}
+function drive(){
+	controls.update();
 	keyboard.update();
 	theta=0;
 	brakeOn = false;
@@ -206,9 +230,9 @@ function animate() {
 	}
 	if (keyboard.pressed("down")) {
 		power-=0.1;
-	if(power<0)power=0;
+		if(power<0)power=0;
 	}
-	
+	computeForce();
 	vel.add(force.clone().multiplyScalar(dt / mass));
 
 	// pos = pos - vel * dt
@@ -217,23 +241,6 @@ function animate() {
 	if(vel.length()>0.01){
 		angle=Math.atan2(-vel.z,vel.x);
 	}
-	//var x = 30 * Math.cos(angle);
-	//var z = 30 * Math.sin(angle);
-
-	//if (turn) {  // this is error-prone
-	if (toycar !== undefined && turn) {
-		toycar.scale.set (0.2,0.2,0.2);
-		toycar.position.copy(pos);
-		box.position.copy(pos);
-		toycar.rotation.y = angle-Math.PI/2 ;
-		box.rotation.y = angle-Math.PI/2 ;
-		//angle -= dt;
-	}
-
-	controls.update();
-
-	requestAnimationFrame(animate);
-	render();
 }
 
 function render() {
