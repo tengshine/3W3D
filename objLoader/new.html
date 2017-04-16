@@ -22,7 +22,7 @@ body {
 <body> 
 <div id="info"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
-<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://jyunming-chen.github.io/tutsplus/js/OrbitControls.js"></script>
 <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
 <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
 <script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
@@ -194,7 +194,7 @@ function animate() {
 	var dt = clock.getDelta();
 	
 	//var dir = new THREE.Vector3(1,0,0);
-	theta=0;
+	
 	//dir.multiplyScalar (dt*speed);
 	//dir.applyAxisAngle (new THREE.Vector3(0,1,0), angle);
 	force=new THREE.Vector3(power,0,0).multiplyScalar (dt*power).applyAxisAngle (new THREE.Vector3(0,1,0), theta);
