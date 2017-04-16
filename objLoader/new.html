@@ -190,7 +190,7 @@ function computeForce() {
 
 function animate() {
 
-	//computeForce();
+	
 	var dt = clock.getDelta();
 	
 	//var dir = new THREE.Vector3(1,0,0);
@@ -199,8 +199,7 @@ function animate() {
 	//dir.applyAxisAngle (new THREE.Vector3(0,1,0), angle);
 	force=new THREE.Vector3(power,0,0).multiplyScalar (dt*power).applyAxisAngle (new THREE.Vector3(0,1,0), theta);
 	//pos.add (dir); 
-	var alpha = 3.50;  
-	force.add(vel.clone().multiplyScalar(-alpha));
+	
 
 	
 	/*brakeOn = false;
@@ -239,7 +238,7 @@ function animate() {
 		box.rotation.y = angle-Math.PI/2 ;
 		//angle -= dt;
 	}
-
+	update();
 	requestAnimationFrame(animate);
 	render();
 }
