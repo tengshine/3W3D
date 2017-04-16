@@ -5,15 +5,15 @@
 <head>
 <style>
 #info {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  color: #ffff00
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+	color: #ffff00
 }
 body {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 </style>
@@ -23,9 +23,8 @@ body {
 <div id="info">
 	<br>HW3<br>
 	方向鍵控制<br>
-	上下：加減速前進<br>
-	左右：控制方向<br>
-	空白鍵：煞車<br>
+	
+	空白鍵煞車<br>
 	
 	</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
@@ -54,57 +53,46 @@ init();
 animate();
 
 function init() {
-  var width = window.innerWidth;
-  var height = window.innerHeight;
+	var width = window.innerWidth;
+	var height = window.innerHeight;
 
-  renderer = new THREE.WebGLRenderer({
-    antialias: true
-  });
-  renderer.setClearColor(0x888888);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+	renderer = new THREE.WebGLRenderer({
+		antialias: true
+	});
+	renderer.setClearColor(0x888888);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	document.body.appendChild(renderer.domElement);
 
-  scene = new THREE.Scene();
+	scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-  camera.position.y = 160;
-  camera.position.z = 400;
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
+	camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+	camera.position.y = 160;
+	camera.position.z = 400;
+	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
-scene.add(camera);
-  var gridXZ = new THREE.GridHelper (200, 20,'red','white');
-  scene.add(gridXZ);
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+	scene.add(camera);
+	var gridXZ = new THREE.GridHelper (200, 20,'red','white');
+	scene.add(gridXZ);
 
-  var pointLight = new THREE.PointLight(0xffffff);
-  pointLight.position.set(0, 300, 200);
-  scene.add(pointLight);
+	var pointLight = new THREE.PointLight(0xffffff);
+	pointLight.position.set(0, 300, 200);
+	scene.add(pointLight);
 
-  var ambientLight = new THREE.AmbientLight(0x111111);
-  scene.add(ambientLight);
-window.addEventListener ('resize', onWindowResize, false);
+	var ambientLight = new THREE.AmbientLight(0x111111);
+	scene.add(ambientLight);
+	window.addEventListener ('resize', onWindowResize, false);
 
   ///////////////////////////////////////////////
-/*  var loader = new THREE.OBJMTLLoader();
-  //loader.load('https://jyunming-chen.github.io/tutsplus/models/toycar.obj', 'https://jyunming-chen.github.io/tutsplus/models/toycar.mtl',
-  //loader.load('https://jyunming-chen.github.io/tutsplus/models/porsche.obj', 'https://jyunming-chen.github.io/tutsplus/models/porsche.mtl',
-  
-  loader.load('https://tengshine.github.io/3W3D/objLoader/nissan-gt-r-nismo-obj/nissan-gt-r-nismo.obj', 'https://tengshine.github.io/3W3D/objLoader/nissan-gt-r-nismo-obj/nissan-gt-r-nismo.mtl',
-  
-    function(object) {
-      toycar = object;
-      scene.add(toycar);
-    	toycar.scale.set(3.5, 3.5, 3.5);
-    });
-*/
-var onProgress = function(xhr) {
-    if (xhr.lengthComputable) {
-      var percentComplete = xhr.loaded / xhr.total * 100;
-      console.log(Math.round(percentComplete, 2) + '% downloaded');
-    }
-  };
 
-  var onError = function(xhr) {};
+var onProgress = function(xhr) {
+		if (xhr.lengthComputable) {
+			var percentComplete = xhr.loaded / xhr.total * 100;
+			console.log(Math.round(percentComplete, 2) + '% downloaded');
+		}
+	};
+
+	var onError = function(xhr) {};
 
 	var mtlloader = new THREE.MTLLoader();
 	mtlloader.setBaseUrl( 'porsche-cayman-obj/' );
@@ -114,24 +102,25 @@ var onProgress = function(xhr) {
 
 		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials( materials );
-		//objLoader.setBaseUrl( 'nissan-gt-r-nismo-obj/' );
+		
 		objLoader.setPath('porsche-cayman-obj/');
 		objLoader.load('porsche-cayman.obj',function(object) {
-		var theObject =  unitize (object, 20);
-      //toycar = object;
-      scene.add(theObject);
-	  scene.add (box = new THREE.BoxHelper (theObject));
-	  box.add(theObject);
-    	//toycar.scale.set(5.5, 5.5, 5.5);
-    object.traverse (
+			var theObject =  unitize (object, 20);
+		  
+			scene.add(theObject);
+			scene.add (box = new THREE.BoxHelper (theObject));
+			box.add(theObject);
+			
+			object.traverse (
 				function(mesh) {
 					if (mesh instanceof THREE.Mesh) {
 						mesh.material.side = THREE.DoubleSide;
 					}
-				});
+				}
+			);
 
 
-    }, onProgress, onError);
+		}, onProgress, onError);
 	
 	});
 	pos = new THREE.Vector3();
@@ -182,7 +171,6 @@ function onWindowResize ()
 }
 
 
-
 function animate() {
 
 	update();
@@ -192,7 +180,7 @@ function animate() {
 	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle+theta).multiplyScalar(26);
 	var alpha = 3.50;  
 	force.add(vel.clone().multiplyScalar(-alpha));
-	//pos.add (dir); 
+	
 	vel.add(force.clone().multiplyScalar(dt / mass));
 	
 	pos.sub(vel.clone().multiplyScalar(dt));
