@@ -36,7 +36,7 @@ var controls;
 var keyboard = new KeyboardState();
 var brakeOn = false;
 var turn = 1;
-var toycar= new THREE.Object3D();;
+var toycar= new THREE.Object3D();
 var pos, vel, force,power=1;
 var mass = 1;
 var clock = new THREE.Clock();
@@ -112,7 +112,7 @@ var onProgress = function(xhr) {
 		var theObject =  unitize (object, 20);
       //toycar = object;
       scene.add(theObject);
-	  scene.add (new THREE.BoxHelper (theObject));
+	  scene.add (box = new THREE.BoxHelper (theObject));
 	  box.add(theObject);
     	//toycar.scale.set(5.5, 5.5, 5.5);
     object.traverse (
@@ -222,6 +222,7 @@ function animate() {
 
 	//if (turn) {  // this is error-prone
 	if (toycar !== undefined && turn) {
+		toycar.scale.set (0.2,0.2,0.2);
 		toycar.position.copy(pos);
 		box.position.copy(pos);
 		toycar.rotation.y = angle-Math.PI/2 ;
