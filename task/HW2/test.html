@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    
+}
+body {
+    overflow: hidden;
+}
+
+</style>
+</head>
+
+<body> 
+
+<div id="info">
+  <h1 > Homework 2 </h1>
+  <h2 > <a href="https://jsfiddle.net/shine85810/tph72dxx/">jsfiddle</a></h2>
+  <h2 > <a href="HW2-1.html">2D平面圖</a></h2>
+	<button id="makeCurve" style="width:20%">Make Curve<br></button>
+  <a id='v1'>view1<br></a>
+  <a id='v2'>view2</a>
+</div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r78/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://rawgit.com/jyunming-chen/tutsplus/master/js/text2D.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+
+<canvas id='mycanvas'>
+  <canvas>
+ 
+<script>
+// to deactivate default right button events
+// to deactivate default right button events
+document.oncontextmenu = function() {
+  return false;
+}
+
+var camera, scene, renderer;
+var mousePoint;
+var mouse = new THREE.Vector2();
+var dataPoints = [];
+var dataPointGroup = new THREE.Object3D();
+var gcontrols;
+var resController;
+var typeController;
+var mycanvas;
+var head;
+var pickables = [];
+var curve;
+var uu = 0;
+
+var mass = 1;
+
+var avatar, avatars, sprite, sprites;
+var count = 0,
+  button = false;
+var mycanvas;
+var pos1, force, vel, target;
+var clock = new THREE.Clock();
+var maxSpeed = 30,
+  maxForce = 10;
+
+
+init();
+animate();
+
+$("#makeCurve").click(function() {
+  console.log('in makeCurve');
+  makeCatmullRom();
+  button=true;
+});
+
+function init() {
+
+  mycanvas = document.getElementById('mycanvas');
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    canvas: mycanvas
+  });
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x888888);
+  //  document.body.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+  camera = new THREE.OrthographicCamera(-10, 10, 10, -10, -10, 100);
+  camera.position.z = 10;
+  camera.lookAt(new THREE.Vector3(0,5,0));
+  scene.add(camera);
+
+  var gridXZ = new THREE.GridHelper(10, 1, 'red', 'white');
+  scene.add(gridXZ);
+  gridXZ.rotation.x = Math.PI / 2;
+
+  scene.add(dataPointGroup);
+
+  document.addEventListener('resize', onWindowResize, false);
+  mycanvas.addEventListener('mousedown', onDocumentMouseDown, false);
+
+  gcontrols = {
+    resolution: 20,
+    closed: false,
+    type: "centripetal"
+  };
+
+  var gui = new dat.GUI();
+  gui.domElement.id = 'gui';
+
+  resController = gui.add(gcontrols, 'resolution', 10, 50);
+  closedController = gui.add(gcontrols, 'closed');
+  typeController = gui.add(gcontrols, 'type', ["centripetal", "chordal", "catmullrom"]);
+  
+  /////////////////////////////////////////////
+  head = new THREE.Mesh(new THREE.SphereGeometry( 0.5, 32, 32 ),new THREE.MeshLambertMaterial());
+  
+  scene.add(head);
+  ///////////////////////////////////
+  pos1 = new THREE.Vector3(2,0,4);
+  vel = new THREE.Vector3();
+  force = new THREE.Vector3();
+	
+  
+}
+
+function makeCatmullRom() {
+
+  var cat;
+  // if line exists, remove it...
+  if (cat = scene.getObjectByName('catmull')) {
+    scene.remove(cat);
+    cat.children[0].geometry.dispose();
+    cat.children[1].geometry.dispose();
+  }
+  curve = new THREE.CatmullRomCurve3(dataPoints);
+  curve.type = gcontrols.type;
+  curve.closed = gcontrols.closed;
+
+  var geometry = new THREE.Geometry();
+  geometry.vertices = //curve.getPoints(Math.floor(gcontrols.resolution));      // no !
+    curve.getSpacedPoints(Math.floor(gcontrols.resolution)); // yes!
+	//vel=curve.getTangentAt(0.5);
+	
+	
+  var material = new THREE.LineBasicMaterial({
+    color: 0xffff00
+  });
+
+  var lineAndPt = new THREE.Object3D();
+  var line = new THREE.Line(geometry, material);
+  lineAndPt.add(line);
+  lineAndPt.name = "catmull";
+
+  var dataPointMesh = new THREE.Points(line.geometry.clone());
+  dataPointMesh.material.size = 0.41;
+  dataPointMesh.material.color = new THREE.Color('white');
+  lineAndPt.add(dataPointMesh);
+	//target.copy(dataPointMesh.position);
+  scene.add(lineAndPt);
+
+}
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// dynamic adding vertices is NOT supported
+// http://stackoverflow.com/questions/14840026/dynamically-adding-vertices-to-a-line-in-three-js
+
+function makeADot(pos) {
+  var geometry = new THREE.CircleGeometry(0.3, 32);
+  var material = new THREE.MeshBasicMaterial({
+    color: 0xffff00
+  });
+  var circle = new THREE.Mesh(geometry, material);
+  circle.position.copy(pos);
+  return circle;
+}
+
+function cleanRestart() {
+
+  var cat;
+  if (cat = scene.getObjectByName('catmull')) {
+    scene.remove(cat);
+    cat.children[0].geometry.dispose();
+    dataPoints = [];
+    dataPointGroup.children = [];
+  }
+
+}
+
+function onDocumentMouseDown(event) {
+  event.preventDefault();
+  // NDC: [-1,1]x[-1,1]
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  if (event.button === 2) { // right button
+    cleanRestart();
+    var pos = new THREE.Vector3(mouse.x * 10, mouse.y * 10, 0);
+    dataPoints.push(pos);
+    var pt = makeADot(pos);
+    dataPointGroup.add(pt);
+  }
+}
+function computeForce() {
+  force = target.clone().sub(pos1).setLength(maxSpeed).sub(vel);
+}
+
+function vectorClamp(v, vMax) {
+  if (v.length() > vMax)
+    v.setLength(vMax);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  render();
+
+	closedController.onChange(function() {
+    console.log(gcontrols.closed);
+    makeCatmullRom();
+  });
+  resController.onFinishChange(function() {
+    console.log(gcontrols.resolution);
+    makeCatmullRom();
+  });
+  typeController.onFinishChange(function() {
+    console.log(gcontrols.type);
+    makeCatmullRom();
+  });
+  /* */
+  if(button){
+	  uu += 0.003;
+	  uu %= 1;
+	  head.position.copy (curve.getPointAt (uu));
+  }
+  
+ 
+
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+
+
+</script>
+</body>
+
+</html>
