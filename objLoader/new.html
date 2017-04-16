@@ -194,10 +194,19 @@ function animate() {
 	var dt = clock.getDelta();
 	
 	
-	var dir = new THREE.Vector3(1,0,0);
+	//var dir = new THREE.Vector3(1,0,0);
 	
-	dir.multiplyScalar (dt*power).applyAxisAngle (new THREE.Vector3(0,1,0), angle);
-	pos.add (dir); 
+	force=new THREE.Vector3(power,0,0).applyAxisAngle (new THREE.Vector3(0,1,0), angle);
+	//pos.add (dir); 
+	vel.add(force.clone().multiplyScalar(dt / mass));
+	
+	pos.sub(vel.clone().multiplyScalar(dt));
+  
+	if(vel.length()>0.01){
+		angle=Math.atan2(-vel.z,vel.x);
+	}
+
+	
 	
 	
 	if (toycar !== undefined && turn) {
