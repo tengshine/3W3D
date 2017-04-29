@@ -271,15 +271,15 @@ function init() {
 	};
 	var onError = function(xhr) {};
 	var mtlloader = new THREE.MTLLoader();
-	mtlloader.setBaseUrl( 'skull-obj' );
-	mtlloader.setPath('skull-obj');
+	mtlloader.setBaseUrl( 'skull-obj/' );
+	mtlloader.setPath('skull-obj/');
 	mtlloader.load('skull.mtl',function(materials){
 		materials.preload();
 
 		var objLoader = new THREE.OBJLoader();
 		objLoader.setMaterials( materials );
 		
-		objLoader.setPath('skull-obj');
+		objLoader.setPath('skull-obj/');
 		objLoader.load('skull.obj',function(object) {
 			var theObject =  unitize (object, 20);
 		  
