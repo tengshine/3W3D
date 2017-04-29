@@ -219,7 +219,7 @@ function init() {
 	var torusKnot = new THREE.Mesh( geometry, material );
 	torusKnot.position.set(45,30,30);
 	torusKnot.name="11";
-	torusKnots.add( torusKnot );
+	//torusKnots.add( torusKnot );
 	
 	var geometry = new THREE.TorusKnotBufferGeometry( 5, 3, 100, 16 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xdddddd } );
@@ -284,7 +284,7 @@ function init() {
 			var theObject =  unitize (object, 20);
 		  
 			scene.add(theObject);
-			scene.add (box = new THREE.BoxHelper (theObject));
+			//scene.add (box = new THREE.BoxHelper (theObject));
 			box.add(theObject);
 			
 			object.traverse (
@@ -299,7 +299,7 @@ function init() {
 		}, onProgress, onError);
 	
 	});
-
+	skull1.position.set(45,30,30);
   
   
   
