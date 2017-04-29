@@ -1,0 +1,485 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    
+}
+body {
+    overflow: hidden;
+}
+
+</style>
+</head>
+
+<body> 
+
+<div id="info">
+  <h1 > Homework 2 </h1>
+
+  <button id="toggle" style="width:20%">toggle
+    <br>
+  </button>
+</div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
+<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+
+
+var camera, scene, renderer, light, controls;
+var wall0;
+var plane;
+var room;
+var texture;
+var turn=true;
+var spotLight;
+var raycaster;
+var mouse = new THREE.Vector2();
+var pickables = [];
+var draws=[];
+var i=11;
+var box = new THREE.Object3D();
+
+init();
+animate();
+
+$("#toggle").click(
+  function() {
+    turn = !turn;
+    if(turn){
+		spotLight.intensity=4;
+		//spotLight.castShadow = true;
+    }
+    else {
+		spotLight.intensity=0;
+		//spotLight.castShadow = false;
+	}
+  }
+);
+function loadTexture( url ) {
+  var loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('');
+  loader.load(
+    url, 
+    function (tex) {
+		console.log ('texture loaded ...');
+		texture = tex; // for global access with Keypress
+	
+    },
+
+    function(xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    function(xhr) {
+      console.log('An error happened');
+    }
+  );
+  
+}
+function spotlightbuild(pos1,pos2,pos3,tar1,tar2,tar3,dis){
+	spotLight = new THREE.SpotLight(0xffffff);
+	spotLight.distance=dis;
+	spotLight.angle = 0.34;
+	spotLight.penumbra = 1;
+	spotLight.intensity = 4;
+	spotLight.position.set(pos1,pos2,pos3);
+	scene.add(spotLight);
+	spotLight.target.position.set(tar1,tar2,tar3);
+	spotLight.target.updateMatrixWorld();
+	
+	spotLight.castShadow = true;
+  	spotLight.shadow.mapSize.width = 1024;
+  	spotLight.shadow.mapSize.height = 1024;
+	
+	var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+	//scene.add(spotLightHelper);
+}
+
+function init() {
+  scene = new THREE.Scene();
+
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+  camera.position.set(0,200,400);
+  //scene.add(camera);
+	//var directionalLight = new THREE.DirectionalLight( 0xffffff,1 );
+	//scene.add( directionalLight );
+  light = new THREE.PointLight(0xffff99);
+  //light.intensity = 0.5;
+  light.position.set(50, 150, 150);
+  scene.add(light);
+  light.castShadow = true;
+  var gridXZ = new THREE.GridHelper(400, 40, 'red', 'white');
+  scene.add(gridXZ);
+  var light1 = new THREE.AmbientLight( 0x202020 ); // soft white light
+  scene.add( light1 );
+  var axes = new THREE.AxisHelper(40);
+  scene.add(axes);
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x888888);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  document.body.appendChild(renderer.domElement);
+  
+
+  
+  
+  
+  
+  
+  ////////////////////////////////////////////////////////////////////////
+	plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 280), new THREE.MeshLambertMaterial({
+		transparent: true,
+		//opacity: 0.6,
+		visible: true
+	}));
+	
+	scene.add(plane);
+	
+	plane.rotation.x = -Math.PI / 2;
+	
+	//plane.material.map = texture;
+	//plane.material.needsUpdate = true;
+	plane.receiveShadow = true;
+	  ////////////////////////////////////////////////////////////////////////
+  var material = new THREE.MeshLambertMaterial();
+	var room = new THREE.Object3D();
+	//room = new THREE.Mesh(new THREE.BoxGeometry(200,60,3,80,80,80), material);
+	wall0 = new THREE.Mesh(new THREE.BoxGeometry(200,60,3,60,60,60), material);
+	wall0.position.set(0,30,-138.5);
+	room.add(wall0);
+	loadTexture('http://i.imgur.com/SeNKtXY.jpg');
+	wall1 = new THREE.Mesh(new THREE.BoxGeometry(3,60,280,60,60,60), material);
+	wall1.position.set(-98.5,30,0);
+	room.add(wall1);
+	wall11=wall1.clone();
+	wall11.position.set(98.5,30,0);
+	room.add(wall11);
+	wall2 = new THREE.Mesh(new THREE.BoxGeometry(160,60,3,60,60,60), material);
+	wall2.position.set(20,30,138.5);
+	room.add(wall2);
+	wall21=wall2.clone();
+	wall21.position.set(-20,30,81.5);
+	//room.add(wall21);
+	box1= new THREE.Mesh(new THREE.BoxGeometry(15,20,15,60,60,60), new THREE.MeshLambertMaterial());
+	box1.position.set(-45,10,30);  	
+	room.add(box1);
+	box2=box1.clone();
+	box2.position.set(45,10,30);  	
+	room.add(box2);
+	
+	chair = new THREE.Mesh(new THREE.BoxGeometry(80,8,15,60,60,60), new THREE.MeshLambertMaterial());
+	chair.position.set(0,8,-50);
+	leg=new THREE.Mesh(new THREE.BoxGeometry(5,4,15,60,60,60), new THREE.MeshLambertMaterial());
+	leg2=leg.clone();
+	leg.position.set(37.5,2,-50);
+	leg2.position.set(-37.5,2,-50);
+	room.add(leg);
+	room.add(leg2);
+	room.add(chair);
+	
+	
+	scene.add(room);
+	////////////////////////////////////////////////////////////////////////
+	buildTexturedFace(buildFaceGeometry(12,12,12),-60,30,-136.98,0,0,0,'http://i.imgur.com/2Pafhx9.jpg');
+	buildTexturedFace(buildFaceGeometry(12,10,12),20,30,-136.98,0,0,0,'http://i.imgur.com/tYzBZgL.jpg');
+	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,0,0,-Math.PI/2,0,'http://i.imgur.com/PdfIUzh.jpg');
+	buildTexturedFace(buildFaceGeometry(8,12,12),96.98,30,-60,0,-Math.PI/2,0,'http://i.imgur.com/XVP7GvQ.jpg');
+	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,60,0,-Math.PI/2,0,'http://i.imgur.com/cpJcgO8.jpg');
+	
+	
+	
+	
+	spotlightbuild(-60,10,-80,-60,30,-138,100);
+	spotlightbuild(20,10,-80,20,30,-138,100);
+	spotlightbuild(30,10,0,100,30,0,100);
+	spotlightbuild(30,10,-60,100,30,-60,100);
+	spotlightbuild(30,10,60,100,30,60,100);
+	
+	/////////////////////////////////////////////////////////////////////
+	torusKnots=new THREE.Object3D();
+	var geometry = new THREE.TorusKnotBufferGeometry( 5, 3, 100, 16 );
+	var material = new THREE.MeshLambertMaterial( { color: 0xdddddd } );
+	var torusKnot = new THREE.Mesh( geometry, material );
+	torusKnot.position.set(45,30,30);
+	torusKnot.name="11";
+	torusKnots.add( torusKnot );
+	
+	var geometry = new THREE.TorusKnotBufferGeometry( 5, 3, 100, 16 );
+	var material = new THREE.MeshLambertMaterial( { color: 0xdddddd } );
+	var torusKnot2 = new THREE.Mesh( geometry, material );
+	torusKnot2.position.set(-45,30,30);
+	torusKnots.add( torusKnot2 );
+	torusKnot2.name="12";
+	scene.add(torusKnots);
+	
+	pickables.push(torusKnot,torusKnot2);
+	spotlightbuild(0,70,30,-45,30,30,130);
+	spotlightbuild(0,70,30,45,30,30,130);
+	
+	
+	//torusKnot.castShadow = true;
+	//mesh2.receiveShadow = true; // self shadow
+
+	torusKnots.castShadow = true; // wont work
+	torusKnots.receiveShadow = true;
+	torusKnots.traverse(
+    function(mesh) {
+      if (mesh instanceof THREE.Mesh) {
+        mesh.castShadow = true;
+		mesh.receiveShadow = true;
+      }
+    }
+  );
+	//room.castShadow = true; // wont work
+	room.receiveShadow = true;
+	room.traverse(
+    function(mesh) {
+      if (mesh instanceof THREE.Mesh) {
+        //mesh.castShadow = true;
+		mesh.receiveShadow = true;
+      }
+    }
+  );
+	
+	raycaster = new THREE.Raycaster();
+  document.addEventListener('mousedown', onDocumentMouseDown, false);
+  document.addEventListener('mousemove', onDocumentMouseMove, false);
+  ////////////////////////////////////////////////////////////////////
+  
+	var onProgress = function(xhr) {
+		if (xhr.lengthComputable) {
+			var percentComplete = xhr.loaded / xhr.total * 100;
+			console.log(Math.round(percentComplete, 2) + '% downloaded');
+		}
+	};
+	var onError = function(xhr) {};
+	var mtlloader = new THREE.MTLLoader();
+	mtlloader.setBaseUrl( 'skull-obj' );
+	mtlloader.setPath('skull-obj');
+	mtlloader.load('skull.mtl',function(materials){
+		materials.preload();
+
+		var objLoader = new THREE.OBJLoader();
+		objLoader.setMaterials( materials );
+		
+		objLoader.setPath('skull-obj');
+		objLoader.load('skull.obj',function(object) {
+			var theObject =  unitize (object, 20);
+		  
+			scene.add(theObject);
+			scene.add (box = new THREE.BoxHelper (theObject));
+			box.add(theObject);
+			
+			object.traverse (
+				function(mesh) {
+					if (mesh instanceof THREE.Mesh) {
+						mesh.material.side = THREE.DoubleSide;
+					}
+				}
+			);
+
+
+		}, onProgress, onError);
+	
+	});
+
+  
+  
+  
+	
+}
+///////////////////////////////////////////////////
+function unitize (object, targetSize) {  
+	
+	// find bounding box of 'object'
+	var box3 = new THREE.Box3();
+	box3.setFromObject (object);
+	var size = new THREE.Vector3();
+	size.subVectors (box3.max, box3.min);
+	var center = new THREE.Vector3();
+	center.addVectors(box3.max, box3.min).multiplyScalar (0.5);
+	
+	console.log ('center: ' + center.x + ', '+center.y + ', '+center.z );
+	console.log ('size: ' + size.x + ', ' +  size.y + ', '+size.z );
+	
+	// uniform scaling according to objSize
+	var objSize = findMax (size);
+	var scaleSet = targetSize/objSize;
+				
+	var theObject =  new THREE.Object3D();
+	theObject.add (object);
+	object.scale.set (scaleSet, scaleSet, scaleSet);
+	object.position.set (-center.x*scaleSet, -center.y*scaleSet + size.y/2*scaleSet, -center.z*scaleSet);
+	
+	return theObject;
+	
+	
+	// helper function
+	function findMax(v) {
+		if (v.x > v.y) {
+			return v.x > v.z ? v.x : v.z;
+		} else { // v.y > v.x
+			return v.y > v.z ? v.y : v.z;
+		} 
+	}
+			
+}
+
+///////////////////////////////////////////////////
+function buildFaceGeometry(x1,y1,z1) {
+  var geometry = new THREE.Geometry();
+  geometry.vertices.push(
+    new THREE.Vector3(-x1, y1, 0),
+    new THREE.Vector3(-x1, -y1, 0),
+    new THREE.Vector3(x1, -y1, 0),
+    new THREE.Vector3(x1, y1, 0)
+  );
+
+  var face;
+  face = new THREE.Face3(0, 1, 2);
+  face.materialIndex = 0;
+  geometry.faces.push(face);
+  face = new THREE.Face3(0, 2, 3);
+  face.materialIndex = 0;
+  geometry.faces.push(face);
+
+  geometry.faceVertexUvs[0].push([new THREE.Vector2(0, 1), new THREE.Vector2(0, 0), new THREE.Vector2(1, 0)]);
+  geometry.faceVertexUvs[0].push([new THREE.Vector2(0, 1), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1)]);
+
+  geometry.computeBoundingSphere();
+  geometry.computeFaceNormals();
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+function buildTexturedFace(geometry,posx1,posy1,posz1,rotx,roty,rotz,url) {
+
+  // instantiate a loader
+  var loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('');
+
+  // load a resource
+  loader.load(
+    // resource URL
+    url,
+    // Function when resource is loaded
+    function(tex) {
+      // do something with the texture
+      texture1 = tex; // for global access with Keypress
+      
+      draw1 = new THREE.Mesh(geometry,
+        new THREE.MeshLambertMaterial({
+          map: texture1,
+          side: THREE.DoubleSide
+        }));
+      scene.add(draw1);
+	  draw1.position.x=posx1;
+      draw1.position.y=posy1;
+      draw1.position.z=posz1;
+	  draw1.rotation.x=rotx;
+	  draw1.rotation.y=roty;
+	  draw1.rotation.z=rotz;
+	  //draws.push(draw1);
+	  draw1.name="i";
+	  pickables.push(draw1);
+	  i++;
+    },
+
+    // Function called when download progresses
+    function(xhr) {
+      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    // Function called when download errors
+    function(xhr) {
+      console.log('An error happened');
+    }
+  );
+}
+
+function onDocumentMouseDown(event) {
+
+  // PICKING DETAILS: 
+  // convert mouse.xy = [-1,1]^2 (NDC)
+  // unproject (mouse.xy, 1) to a point on the far plane (in world coordinate)
+  // set raycaster (origin, direction)
+  // find intersection objects, (closest first) 
+  // each record as
+  // [ { distance, point, face, faceIndex, object }, ... ]
+
+  event.preventDefault();
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  // if recursive set to true, can go deeper into object3D hierarchy 
+  //  var intersects = raycaster.intersectObjects( pickables, true );
+  var intersects = raycaster.intersectObjects(pickables);
+  /**/
+  if (intersects.length > 0) {
+    if (intersects[0].object.name === "11") alert("cube1");
+    else if (intersects[0].object.name === "12") alert("cube2");
+  }
+
+}
+function onDocumentMouseMove(event) {
+
+  event.preventDefault();
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  var intersects = raycaster.intersectObjects(pickables);
+
+  if (intersects.length > 0) {
+    document.body.style.cursor = 'pointer';
+  } else {
+    document.body.style.cursor = 'auto';
+  }
+}
+
+
+
+
+function animate() {
+	if (texture !== undefined) {
+	// texture already loaded ...
+		wall0.material.map = texture;
+		plane.material.map = texture;
+		//room.material.map = texture;
+		// tell Three.js that something needs update
+		wall0.material.needsUpdate = true;
+		plane.material.needsUpdate = true;
+		//room.material.needsUpdate = true;
+	}
+	controls.update();
+	requestAnimationFrame(animate);
+	render();
+}
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+</script>
+</body>
+
+</html>
