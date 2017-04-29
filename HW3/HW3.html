@@ -281,7 +281,7 @@ function init() {
 		
 		objLoader.setPath('skull-obj/');
 		objLoader.load('skull.obj',function(object) {
-			var theObject =  unitize (object, 20);
+			var theObject =  unitize (skull1, 20);
 		  
 			scene.add(theObject);
 			//scene.add (box = new THREE.BoxHelper (theObject));
@@ -299,7 +299,7 @@ function init() {
 		}, onProgress, onError);
 	
 	});
-	torusKnot.position.set(45,30,30);
+	skull1.position.set(45,30,30);
   
   
   
