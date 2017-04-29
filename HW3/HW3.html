@@ -23,8 +23,8 @@ body {
 <body> 
 
 <div id="info">
-  <h1 > Homework 2 </h1>
-
+  <h1 > Homework 3 </h1>
+  <h2 > <a href="https://jsfiddle.net/shine85810/6xp9aLng/">jsfiddle</a></h2>
   <button id="toggle" style="width:20%">toggle
     <br>
   </button>
@@ -32,8 +32,6 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
-<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
-<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 
@@ -137,12 +135,6 @@ function init() {
 
   document.body.appendChild(renderer.domElement);
   
-
-  
-  
-  
-  
-  
   ////////////////////////////////////////////////////////////////////////
 	plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 280), new THREE.MeshLambertMaterial({
 		transparent: true,
@@ -221,7 +213,7 @@ function init() {
 	torusKnot.name="11";
 	torusKnots.add( torusKnot );
 	
-	var geometry = new THREE.TorusKnotBufferGeometry( 5, 3, 100, 16 );
+	var geometry = new THREE.TorusKnotBufferGeometry( 5, 2, 100, 16,1,7 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xdddddd } );
 	var torusKnot2 = new THREE.Mesh( geometry, material );
 	torusKnot2.position.set(-45,30,30);
@@ -230,6 +222,7 @@ function init() {
 	scene.add(torusKnots);
 	
 	pickables.push(torusKnot,torusKnot2);
+	
 	spotlightbuild(0,70,30,-45,30,30,130);
 	spotlightbuild(0,70,30,45,30,30,130);
 	
@@ -261,86 +254,9 @@ function init() {
 	raycaster = new THREE.Raycaster();
   document.addEventListener('mousedown', onDocumentMouseDown, false);
   document.addEventListener('mousemove', onDocumentMouseMove, false);
-  ////////////////////////////////////////////////////////////////////
   
-	var onProgress = function(xhr) {
-		if (xhr.lengthComputable) {
-			var percentComplete = xhr.loaded / xhr.total * 100;
-			console.log(Math.round(percentComplete, 2) + '% downloaded');
-		}
-	};
-	var onError = function(xhr) {};
-	var mtlloader = new THREE.MTLLoader();
-	mtlloader.setBaseUrl( 'skull-obj/' );
-	mtlloader.setPath('skull-obj/');
-	mtlloader.load('skull.mtl',function(materials){
-		materials.preload();
-
-		var objLoader = new THREE.OBJLoader();
-		objLoader.setMaterials( materials );
-		
-		objLoader.setPath('skull-obj/');
-		objLoader.load('skull.obj',function(object) {
-			var theObject =  unitize (skull1, 20);
-		  
-			scene.add(theObject);
-			//scene.add (box = new THREE.BoxHelper (theObject));
-			//box.add(theObject);
-			
-			object.traverse (
-				function(mesh) {
-					if (mesh instanceof THREE.Mesh) {
-						mesh.material.side = THREE.DoubleSide;
-					}
-				}
-			);
-
-
-		}, onProgress, onError);
-	
-	});
-	skull1.position.set(45,30,30);
-  
-  
-  
-	
 }
-///////////////////////////////////////////////////
-function unitize (object, targetSize) {  
-	
-	// find bounding box of 'object'
-	var box3 = new THREE.Box3();
-	box3.setFromObject (object);
-	var size = new THREE.Vector3();
-	size.subVectors (box3.max, box3.min);
-	var center = new THREE.Vector3();
-	center.addVectors(box3.max, box3.min).multiplyScalar (0.5);
-	
-	console.log ('center: ' + center.x + ', '+center.y + ', '+center.z );
-	console.log ('size: ' + size.x + ', ' +  size.y + ', '+size.z );
-	
-	// uniform scaling according to objSize
-	var objSize = findMax (size);
-	var scaleSet = targetSize/objSize;
-				
-	var theObject =  new THREE.Object3D();
-	theObject.add (object);
-	object.scale.set (scaleSet, scaleSet, scaleSet);
-	object.position.set (-center.x*scaleSet, -center.y*scaleSet + size.y/2*scaleSet, -center.z*scaleSet);
-	
-	return theObject;
-	
-	
-	// helper function
-	function findMax(v) {
-		if (v.x > v.y) {
-			return v.x > v.z ? v.x : v.z;
-		} else { // v.y > v.x
-			return v.y > v.z ? v.y : v.z;
-		} 
-	}
-			
-}
+
 
 ///////////////////////////////////////////////////
 function buildFaceGeometry(x1,y1,z1) {
@@ -434,8 +350,8 @@ function onDocumentMouseDown(event) {
   var intersects = raycaster.intersectObjects(pickables);
   /**/
   if (intersects.length > 0) {
-    if (intersects[0].object.name === "11") alert("cube1");
-    else if (intersects[0].object.name === "12") alert("cube2");
+    if (intersects[0].object.name === "11") alert("NO.1");
+    else if (intersects[0].object.name === "12") alert("NO.2");
   }
 
 }
