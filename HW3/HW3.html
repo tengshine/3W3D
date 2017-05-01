@@ -47,7 +47,7 @@ var raycaster;
 var mouse = new THREE.Vector2();
 var pickables = [];
 var draws=[];
-var i=11;
+var i=13;
 var box = new THREE.Object3D();
 var skull1=new THREE.Object3D();
 init();
@@ -189,11 +189,11 @@ function init() {
 	
 	scene.add(room);
 	////////////////////////////////////////////////////////////////////////
-	buildTexturedFace(buildFaceGeometry(12,12,12),-60,30,-136.98,0,0,0,'http://i.imgur.com/2Pafhx9.jpg');
-	buildTexturedFace(buildFaceGeometry(12,10,12),20,30,-136.98,0,0,0,'http://i.imgur.com/tYzBZgL.jpg');
-	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,0,0,-Math.PI/2,0,'http://i.imgur.com/PdfIUzh.jpg');
-	buildTexturedFace(buildFaceGeometry(8,12,12),96.98,30,-60,0,-Math.PI/2,0,'http://i.imgur.com/XVP7GvQ.jpg');
-	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,60,0,-Math.PI/2,0,'http://i.imgur.com/cpJcgO8.jpg');
+	buildTexturedFace(buildFaceGeometry(12,12,12),-60,30,-136.98,0,0,0,'http://i.imgur.com/2Pafhx9.jpg',"13");
+	buildTexturedFace(buildFaceGeometry(12,10,12),20,30,-136.98,0,0,0,'http://i.imgur.com/tYzBZgL.jpg',"14");
+	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,0,0,-Math.PI/2,0,'http://i.imgur.com/PdfIUzh.jpg',"15");
+	buildTexturedFace(buildFaceGeometry(8,12,12),96.98,30,-60,0,-Math.PI/2,0,'http://i.imgur.com/XVP7GvQ.jpg',"16");
+	buildTexturedFace(buildFaceGeometry(12,10,12),96.98,30,60,0,-Math.PI/2,0,'http://i.imgur.com/cpJcgO8.jpg',"17");
 	
 	
 	
@@ -284,8 +284,8 @@ function buildFaceGeometry(x1,y1,z1) {
   geometry.computeVertexNormals();
   return geometry;
 }
-
-function buildTexturedFace(geometry,posx1,posy1,posz1,rotx,roty,rotz,url) {
+var ii=0;
+function buildTexturedFace(geometry,posx1,posy1,posz1,rotx,roty,rotz,url,name1) {
 
   // instantiate a loader
   var loader = new THREE.TextureLoader();
@@ -312,10 +312,10 @@ function buildTexturedFace(geometry,posx1,posy1,posz1,rotx,roty,rotz,url) {
 	  draw1.rotation.x=rotx;
 	  draw1.rotation.y=roty;
 	  draw1.rotation.z=rotz;
-	  //draws.push(draw1);
-	  draw1.name="i";
+	  draw1.name=name1;
+	  
 	  pickables.push(draw1);
-	  i++;
+	  
     },
 
     // Function called when download progresses
@@ -351,7 +351,10 @@ function onDocumentMouseDown(event) {
   /**/
   if (intersects.length > 0) {
     if (intersects[0].object.name === "11") alert("NO.1");
-    else if (intersects[0].object.name === "12") alert("NO.2");
+    if (intersects[0].object.name === "12") alert("NO.2");
+	if (intersects[0].object.name === "13") alert("NO.3");
+	if (intersects[0].object.name === "14") alert("NO.4");
+	if (intersects[0].object.name === "15") alert("NO.5");
   }
 
 }
