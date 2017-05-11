@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -55,8 +56,8 @@ var clock = new THREE.Clock();
 var ts;
 var lastPos = new THREE.Vector3();
 var keys = [
-  [0, [-40, 35, 10]],
-  [1, [-40, 55, 100]]
+  [0, [20, 55, 70]],
+  [1, [20, 55, 70]]
 ];
 var T = .52;
 var gcontrols;
@@ -262,7 +263,7 @@ function init() {
 
   /////////////////////////////////////////
   target = new THREE.Vector3();
-  target.set(-20, 35, 20);
+  target.set(20, 55, 70);
   setarm();
   for (var i = 0; i < 3; i++)
     joints[i] = new THREE.Vector3();
