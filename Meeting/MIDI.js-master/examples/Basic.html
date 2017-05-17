@@ -81,14 +81,14 @@ $('#chromaticup').mouseup ( function() {
 	//console.log ('mouse UP')
 	MIDI.noteOff(0, i, 0);
 });
-$('#chromaticdown').mousedown ( function() {
-	console.log ('mouse down');
-	
-	MIDI.noteOn(0, i--, 127, 0);
+$('#chromaticdown').click ( function() {
+	//console.log ('mouse down');
+	chromaticDown
+	//MIDI.noteOn(0, i--, 127, 0);
 });
 $('#chromatidown').mouseup ( function() {
-	console.log ('mouse UP')
-	MIDI.noteOff(0, i, 0);
+	//console.log ('mouse UP')
+	//MIDI.noteOff(0, i, 0);
 });
 
 function chromaticUp(){　
@@ -99,19 +99,25 @@ function chromaticUp(){　
 	
 	myStopFunction();
 	MIDI.noteOff(0, i, 0);
-	if(cou<13){ 
+	if(cou<12){ 
 		t=setTimeout("chromaticUp()", 1000*60/bpm1);
-	
-		
 	}
-	else if(cou>=13)cou=0;
-	
-	//document.fm.displayBox.value=x;
-	
-　  
+	else if(cou>=12)cou=0;
 }
 
-
+function chromaticDown(){　
+	var bpm1 = $('#tempo').val();
+	cou++;
+	console.log(i);
+	MIDI.noteOn(0, i--, 127, 0);
+	
+	myStopFunction();
+	MIDI.noteOff(0, i, 0);
+	if(cou<12){ 
+		t=setTimeout("chromaticDown()", 1000*60/bpm1);
+	}
+	else if(cou>=12)cou=0;
+}
 
 window.onload = function () {
 	MIDI.loadPlugin({
