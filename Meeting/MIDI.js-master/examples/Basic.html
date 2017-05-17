@@ -24,50 +24,60 @@ BPM<input id='tempo' type=range min=30 max=210><span id='bpm'></span>
 <br><br>
 <button id='playA'> play A </button>
 <button id='playAChord'> chord </button>
-<button> chromatic up/down </button>
-<button id='turn1'> turn </button>
+<button id='chromaticup'> chromatic up </button>
+<button id='chromaticdown'> chromatic down </button>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
-var turn=true;
-$('#turn1').click(
-  function() {
-    turn = !turn;
-    
-  }
-);
+var i =69;
+
 $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
-	//while(turn){
-	//setInterval(function(){ console.log('1'); }, 1000/($('#tempo').val()*24)/60);
-	//if(turn)
-	setInterval(function(){ console.log('1'); }, 1000*60/($('#tempo').val()));
-	//if(!turn)
-	//setInterval(function(){ MIDI.chordOn(0, [69,73,76], 127, 0); }, 1000*60/($('#tempo').val()));
-	
-	//}
-	//i=;
-	
-	
-	
+	var bpm1 = $('#tempo').val();
+	setInterval(function(){
+		console.log('1');
+	},1000*60/bpm1);
 });
 $('#playA').mousedown ( function() {
 	console.log ('mouse down');
-	MIDI.noteOn(40, 69, 127, 0);
+	MIDI.noteOn(0, 69, 127, 0);
 });
 $('#playA').mouseup ( function() {
 	console.log ('mouse UP')
-	MIDI.noteOff(40, 69, 0);
+	MIDI.noteOff(0, 69, 0);
 });
 
 $('#playAChord').mousedown ( function() {
 	console.log ('mouse down');
-	MIDI.chordOn(40, [69,73,76], 127, 0);
+	MIDI.chordOn(0, [69,73,76], 127, 0);
 });
 $('#playAChord').mouseup ( function() {
 	console.log ('mouse UP')
-	MIDI.chordOff(40, [69,73,76], 0);
+	MIDI.chordOff(0, [69,73,76], 0);
 });
+$('#chromaticup').mousedown ( function() {
+	console.log ('mouse down');
+	var bpm1 = $('#tempo').val();
+	
+	//MIDI.noteOn(0, i++, 127, 0);
+	for(var ii=0;ii<13;ii++){
+		setTimeout(function(){ MIDI.noteOn(0, i++, 127, 0); }, 1000*60/bpm1/2);
+	}
+});
+$('#chromaticup').mouseup ( function() {
+	console.log ('mouse UP')
+	MIDI.noteOff(0, i, 0);
+});
+$('#chromaticdown').mousedown ( function() {
+	console.log ('mouse down');
+	
+	MIDI.noteOn(0, i--, 127, 0);
+});
+$('#chromatidown').mouseup ( function() {
+	console.log ('mouse UP')
+	MIDI.noteOff(0, i, 0);
+});
+
 
 
 
