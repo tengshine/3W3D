@@ -99,10 +99,10 @@ function chromaticUp(){　
 	
 	myStopFunction();
 	MIDI.noteOff(0, i, 0);
-	if(cou<12){ 
+	if(cou<13){ 
 		t=setTimeout("chromaticUp()", 1000*60/bpm1);
 	}
-	else if(cou>=12){
+	else if(cou>=13){
 		cou=0;
 		i--;
 	}
@@ -116,12 +116,12 @@ function chromaticDown(){　
 	
 	myStopFunction();
 	MIDI.noteOff(0, i, 0);
-	if(cou<12){ 
+	if(cou<13){ 
 		t=setTimeout("chromaticDown()", 1000*60/bpm1);
 	}
-	else if(cou>=12){
+	else if(cou>=13){
 		cou=0;
-		i--;
+		i++;
 	}
 }
 
