@@ -26,10 +26,11 @@ BPM<input id='tempo' type=range min=30 max=210><span id='bpm'></span>
 <button id='playAChord'> chord </button>
 <button id='chromaticup'> chromatic up </button>
 <button id='chromaticdown'> chromatic down </button>
-
+<button id='example'>example</button>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 var i =69;
+var notes=[];
 
 $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
@@ -38,15 +39,15 @@ $('#tempo').change ( function() {
 	myStopFunction;
 
 });
+$('#example').click(function(){
+	playexample1();
+});
 var t;
 var cou=0;
 function countSecond(){　
-	//x = x+1;
-	//cou++;
 	var bpm1 = $('#tempo').val();
 	console.log("1");
 	myStopFunction();
-	//document.fm.displayBox.value=x;
 	
 　  t=setTimeout("countSecond()", 1000*60/bpm1);
 }
@@ -55,11 +56,12 @@ function myStopFunction() {
 }
 $('#playA').mousedown ( function() {
 	console.log ('mouse down');
-	MIDI.noteOn(0, 69, 127, 0);
+	MIDI.noteOn(0, 69, 127, 1);
+	setTimeout(function(){MIDI.noteOff(0, 69, 0);},2000);
 });
 $('#playA').mouseup ( function() {
 	console.log ('mouse UP')
-	MIDI.noteOff(0, 69, 0);
+	
 });
 
 $('#playAChord').mousedown ( function() {
@@ -124,7 +126,60 @@ function chromaticDown(){　
 		i++;
 	}
 }
+function playexample1(){
+	music(0,69,0.8);
+	music(1,69,0.8);
+	music(2,76,0.8);
+	music(3,76,0.8);
+	music(4,79,0.8);
+	music(5,79,0.8);
+	music(6,76,1.8);
+	music(8,74,0.8);
+	music(9,74,0.8);
+	music(10,73,0.8);
+	music(11,73,0.8);
+	
+	music(12,71,0.8);
+	music(13,71,0.8);
+	music(14,69,1.8);
+	
+	/*
+	for(var j=0;j<notes.length;j++){
+		var time = notes[j].time;
+		var n=notes[j].note1;
+		setTimeout(function(){
+			
+			console.log(n);
+		},time);
+	}*/
+	playMusic();
+	
+	//console.log(notes);
+}
+var j=0;
+function playMusic(){
+	
+	console.log(notes[j].note1);
+	var time=notes[j].time;
+	if(j<notes.length-1){
+		time=notes[j+1].time-notes[j].time;
+	}
+	if(j<notes.length-1){
+		setTimeout(function(){
+			playMusic();
+		},time*1000);
+	}
+	j++;
+}
+function music(time,note,duration){
+	var obj={
+		time:time,
+		note1:note,
+		duration:duration
+	}
+	notes.push(obj);
 
+}
 window.onload = function () {
 	MIDI.loadPlugin({
 		soundfontUrl: "./soundfont/",
