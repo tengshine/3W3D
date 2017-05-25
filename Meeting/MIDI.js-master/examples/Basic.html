@@ -102,11 +102,15 @@ function chromaticUp(){
 	//var time=notes[j].time;
 	
 	i++;
-	cou=(cou+1)%13;
+	
 	if(cou<13){
 		setTimeout(function(){
 			chromaticUp();
 		},1000*60/bpm1);
+	}
+	else if(cou>=13){
+		cou=0;
+		i--;
 	}
 	
 	/*　
@@ -128,14 +132,21 @@ function chromaticUp(){
 
 function chromaticDown(){　
 	var bpm1 = $('#tempo').val();
-	cou++;
+	
 	console.log(i);
-	MIDI.noteOn(0, i--, 127, 0);
-
-	//myStopFunction();
-	MIDI.noteOff(0, i, 0);
+	MIDI.noteOn(0,i,127,0);
+	setTimeout(function(){
+		MIDI.noteOff(0,i,0);
+		console.log(i +'off');
+	},30);
+	//var time=notes[j].time;
+	
+	i--;
+	
 	if(cou<13){
-		t=setTimeout("chromaticDown()", 1000*60/bpm1);
+		setTimeout(function(){
+			chromaticUp();
+		},1000*60/bpm1);
 	}
 	else if(cou>=13){
 		cou=0;
