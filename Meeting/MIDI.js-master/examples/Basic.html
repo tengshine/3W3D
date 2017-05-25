@@ -137,12 +137,12 @@ function playexample1(){
 }
 var j=0;
 function playMusic(){
-
-	console.log(notes[j].note);
-	MIDI.noteOn(0,notes[j].note,127,0);
+	var note1=notes[j].note;
+	console.log(note1);
+	MIDI.noteOn(0,note1,127,0);
 	setTimeout(function(){
-		MIDI.noteOff(0,notes[j].note,0);
-		console.log(notes[j].note+'off');
+		MIDI.noteOff(0,note1,0);
+		console.log(note1+'off');
 	},30);
 	var time=notes[j].time;
 	if(j<notes.length-1){
