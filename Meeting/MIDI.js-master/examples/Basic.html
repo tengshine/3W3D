@@ -48,7 +48,7 @@ var t;
 var cou=0;
 function countSecond(){　
 	var bpm1 = $('#tempo').val();
-	console.log("1");
+	//console.log("1");
 	myStopFunction();
 
 　  t=setTimeout("countSecond()", 1000*60/bpm1);
@@ -74,15 +74,22 @@ $('#playAChord').mouseup ( function() {
 	MIDI.chordOff(0, [69,73,76], 0);
 });
 $('#chromaticup').click ( function() {
-	chromaticUp();
-});
-$('#chromaticup').mouseup ( function() {
-	MIDI.noteOff(0, i, 0);
-});
-$('#chromaticdown').click ( function() {
-	chromaticDown();
+	playScaleUp();
+	//chromaticUp();
 });
 
+$('#chromaticdown').click ( function() {
+	playScaleDown();
+	//chromaticDown();
+});
+
+function playScaleUp(){
+	chromaticUp();
+}
+
+function playScaleDown(){
+	chromaticDown();
+}
 function chromaticUp(){　
 	var bpm1 = $('#tempo').val();
 	cou++;
