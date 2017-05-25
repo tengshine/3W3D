@@ -96,7 +96,7 @@ function chromaticUp(){　
 	console.log(i);
 	MIDI.noteOn(0, i++, 127, 0);
 
-	myStopFunction();
+	//myStopFunction();
 	MIDI.noteOff(0, i, 0);
 	if(cou<13){
 		t=setTimeout("chromaticUp()", 1000*60/bpm1);
@@ -113,7 +113,7 @@ function chromaticDown(){　
 	console.log(i);
 	MIDI.noteOn(0, i--, 127, 0);
 
-	myStopFunction();
+	//myStopFunction();
 	MIDI.noteOff(0, i, 0);
 	if(cou<13){
 		t=setTimeout("chromaticDown()", 1000*60/bpm1);
