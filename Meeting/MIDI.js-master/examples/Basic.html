@@ -44,6 +44,7 @@ $('#tempo').change ( function() {
 
 $('#example').click(function(){
 	playexample1();
+	turn=true;
 });
 
 var t;
@@ -79,10 +80,12 @@ $('#playAChord').mouseup ( function() {
 });
 $('#chromaticup').click ( function() {
 	playScaleUp();
+	turn=true;
 });
 
 $('#chromaticdown').click ( function() {
 	playScaleDown();
+	turn=true;
 });
 $('#stop').click(function(){
 	turn=false;
