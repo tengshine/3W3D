@@ -96,7 +96,7 @@ function chromaticUp(){
 	console.log(i);
 	MIDI.noteOn(0,i,127,0);
 	setTimeout(function(){
-		MIDI.noteOff(0,i,0);
+		MIDI.noteOff(0,i--,0);
 		console.log(i +'off');
 	},30);
 	//var time=notes[j].time;
