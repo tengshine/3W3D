@@ -57,7 +57,7 @@ function myStopFunction() {
 $('#playA').mousedown ( function() {
 	console.log ('mouse down');
 	MIDI.noteOn(0, 69, 127, 2);
-	MIDI.noteOff(0, 69, 4);
+	MIDI.noteOff(0, 69, -0.75);
 	//setTimeout(function(){MIDI.noteOff(0, 69, 2);},2000);
 });
 $('#playA').mouseup ( function() {
