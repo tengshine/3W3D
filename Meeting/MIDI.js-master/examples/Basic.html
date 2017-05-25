@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -48,7 +49,7 @@ function countSecond(){　
 	var bpm1 = $('#tempo').val();
 	console.log("1");
 	myStopFunction();
-	
+
 　  t=setTimeout("countSecond()", 1000*60/bpm1);
 }
 function myStopFunction() {
@@ -57,12 +58,10 @@ function myStopFunction() {
 $('#playA').mousedown ( function() {
 	console.log ('mouse down');
 	MIDI.noteOn(0, 69, 127, 0);
-	//MIDI.noteOff(0, 69, 0);
-	setTimeout(function(){MIDI.noteOff(0, 69, 0);},50);
 });
 $('#playA').mouseup ( function() {
 	console.log ('mouse UP')
-	
+	MIDI.noteOff(0, 69, 0);
 });
 
 $('#playAChord').mousedown ( function() {
@@ -74,24 +73,13 @@ $('#playAChord').mouseup ( function() {
 	MIDI.chordOff(0, [69,73,76], 0);
 });
 $('#chromaticup').click ( function() {
-	//console.log ('mouse down');
-	//var bpm1 = $('#tempo').val();
 	chromaticUp();
-	//MIDI.noteOn(0, i++, 127, 0);
-	
 });
 $('#chromaticup').mouseup ( function() {
-	//console.log ('mouse UP')
 	MIDI.noteOff(0, i, 0);
 });
 $('#chromaticdown').click ( function() {
-	//console.log ('mouse down');
 	chromaticDown();
-	//MIDI.noteOn(0, i--, 127, 0);
-});
-$('#chromatidown').mouseup ( function() {
-	//console.log ('mouse UP')
-	//MIDI.noteOff(0, i, 0);
 });
 
 function chromaticUp(){　
@@ -99,10 +87,10 @@ function chromaticUp(){　
 	cou++;
 	console.log(i);
 	MIDI.noteOn(0, i++, 127, 0);
-	
+
 	myStopFunction();
 	MIDI.noteOff(0, i, 0);
-	if(cou<13){ 
+	if(cou<13){
 		t=setTimeout("chromaticUp()", 1000*60/bpm1);
 	}
 	else if(cou>=13){
@@ -116,10 +104,10 @@ function chromaticDown(){　
 	cou++;
 	console.log(i);
 	MIDI.noteOn(0, i--, 127, 0);
-	
+
 	myStopFunction();
 	MIDI.noteOff(0, i, 0);
-	if(cou<13){ 
+	if(cou<13){
 		t=setTimeout("chromaticDown()", 1000*60/bpm1);
 	}
 	else if(cou>=13){
@@ -132,50 +120,46 @@ function playexample1(){
 	music(1,69,0.8);
 	music(2,76,0.8);
 	music(3,76,0.8);
-	music(4,79,0.8);
-	music(5,79,0.8);
+	music(4,78,0.8);
+	music(5,78,0.8);
 	music(6,76,1.8);
 	music(8,74,0.8);
 	music(9,74,0.8);
 	music(10,73,0.8);
 	music(11,73,0.8);
-	
+
 	music(12,71,0.8);
 	music(13,71,0.8);
 	music(14,69,1.8);
-	
-	/*
-	for(var j=0;j<notes.length;j++){
-		var time = notes[j].time;
-		var n=notes[j].note1;
-		setTimeout(function(){
-			
-			console.log(n);
-		},time);
-	}*/
+
 	playMusic();
-	
-	//console.log(notes);
+
 }
 var j=0;
 function playMusic(){
-	
-	console.log(notes[j].note1);
+
+	console.log(notes[j].note);
+	MIDI.noteOn(0,notes[j].note,127,0);
+	setTimeout(function(){
+		MIDI.noteOff(0,notes[j].note,0);
+		console.log(notes[j].note+'off');
+	},30);
 	var time=notes[j].time;
 	if(j<notes.length-1){
 		time=notes[j+1].time-notes[j].time;
 	}
+	j++;
 	if(j<notes.length-1){
 		setTimeout(function(){
 			playMusic();
 		},time*1000);
 	}
-	j++;
+	
 }
 function music(time,note,duration){
 	var obj={
 		time:time,
-		note1:note,
+		note:note,
 		duration:duration
 	}
 	notes.push(obj);
@@ -189,14 +173,7 @@ window.onload = function () {
 			console.log(state, progress);
 		},
 		onsuccess: function() {
-/*		
-			var delay = 0; // play one note every quarter second
-			var note = 69; // the MIDI note
-			var velocity = 127; // how hard the note hits
-			MIDI.setVolume(0, 127);
-			MIDI.noteOn(0, note, velocity, delay);
-			MIDI.noteOff(0, note, delay + 0.75);
-*/
+
 		}
 	});
 };
