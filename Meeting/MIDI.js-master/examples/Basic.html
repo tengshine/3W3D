@@ -2,6 +2,49 @@
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
+<style>
+	.light_1 {
+	  background: 0#00ff00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 190px;
+	  top: 400px;
+	  position: absolute;
+	}
+	.light_2 {
+	  background: 0#00ff00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 220px;
+	  top: 400px;
+	  position: absolute;
+	}
+	.light_3 {
+	  background: 0#00ff00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 250px;
+	  top: 400px;
+	  position: absolute;
+	}
+	.light_4 {
+	  background: 0#00ff00;
+	  border: 1px solid#000;
+	  border-radius: 10px;
+	  width: 20px;
+	  height: 20px;
+	  left: 280px;
+	  top: 400px;
+	  position: absolute;
+	}
+
+</style>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<!-- polyfill -->
 	<script src="../inc/shim/Base64.js" type="text/javascript"></script>
@@ -29,10 +72,16 @@ BPM<input id='tempo' type=range min=30 max=210><span id='bpm'></span>
 <button id='chromaticdown'> chromatic down </button>
 <button id='example'>example</button>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<div id='light1' class='light_1' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light2' class='light_2' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light3' class='light_3' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light4' class='light_4' style='float:left; margin:10px 10px 20px 20px;'></div>
 <script>
 var notei =69;
 var notes=[];
 $('#bpm').text ($('#tempo').val());
+
+bpmLamp();
 $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
 	var bpm1 = $('#tempo').val();
@@ -229,6 +278,34 @@ window.onload = function () {
 		}
 	});
 };
+
+function Lamp(lampId) {
+
+  var name = '#' + lampId;
+
+	var status = true;
+	var hue='hsl(0,100%,50%)';
+	$('#light1').css ('backgroundColor', 'hsl(120,100%,50%)');
+	$('#light2').css ('backgroundColor', 'hsl(120,100%,50%)');
+	$('#light3').css ('backgroundColor', 'hsl(120,100%,50%)');
+	$('#light4').css ('backgroundColor', 'hsl(120,100%,50%)');
+	$(name).css ('backgroundColor', hue);
+	
+  
+
+	bpmLamp();
+  
+  
+}
+var lampi=0;
+function bpmLamp(){
+	var bpm1 = $('#tempo').val();
+	lampi=(lampi)%4+1;
+	setTimeout(function(){ 
+		new Lamp('light'+lampi);
+	}, 1000*60/bpm1);
+}
+
 </script>
 </body>
 </html>
