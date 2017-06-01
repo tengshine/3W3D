@@ -142,9 +142,9 @@ function chromaticUp(){
 	var bpm1 = $('#tempo').val();
 	var nn = notei;
 	console.log(nn);
-	MIDI.noteOn(1,nn,127,0);
+	MIDI.noteOn(0,nn,127,0);
 	setTimeout(function(){
-		MIDI.noteOff(1,nn,0);
+		MIDI.noteOff(0,nn,0);
 		console.log(nn +'off');
 	},30);
 	//var time=notes[j].time;
@@ -166,9 +166,9 @@ function chromaticDown(){　
 	var bpm1 = $('#tempo').val();
 	var nn = notei;
 	console.log(nn);
-	MIDI.noteOn(1,nn,127,0);
+	MIDI.noteOn(0,nn,127,0);
 	setTimeout(function(){
-		MIDI.noteOff(1,nn,0);
+		MIDI.noteOff(0,nn,0);
 		console.log(nn +'off');
 	},30);
 	notei--;
