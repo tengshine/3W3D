@@ -240,10 +240,10 @@ function playMusic(){
 	var bpm1 = $('#tempo').val();
 	var note1=notes[notej].note;
 	console.log(note1);
-	MIDI.noteOn(1,note1,127,0);
+	MIDI.noteOn(0,note1,127,0);
 	var duration1 = notes[notej].duration;
 	setTimeout(function(){
-		MIDI.noteOff(1,note1,0);
+		MIDI.noteOff(0,note1,0);
 		console.log(note1+'off');
 	},duration1*1000*60/bpm1);
 	var time=notes[notej].time;
