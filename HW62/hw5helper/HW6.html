@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+#container {
+  float: left;
+  margin: 3px;
+  width: 60vw;
+  height: 60vw
+}
+
+#widgets {
+  float: left;
+  margin-left: 10px;
+  width: 32vw;
+}
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+
+}
+body {
+    <!-- overflow: hidden; -->
+	overflow: scroll;
+}
+
+</style>
+</head>
+
+<body>
+<div id="container"></div>
+<div id="widgets">
+
+<h1 > Homework 6 </h1>
+Login
+<input type='text' id='loginID' style="width:30%">
+<br><br>
+<button id='save' style="width:48%">Save</button>
+<button id='download'>Download</button>
+<br><br>
+<button id='view1'>view1</button>
+<button id='view2'>view2</button><br><br>
+<button id='speed1'>1X</button>
+<button id='speed2'>2X</button>
+<button id='speed3'>0.5X</button><br><br>
+<span id='loginReport'></span>
+<br><br>
+
+<div id='recordPanel' style="height:20vh"></div>
+<div id='result'></div>
+
+<button id="play" style="width:50%">Playback </button>
+<br>
+<br>
+<button id="clear" style="width:50%">Clear </button>
+<br>
+<br>
+<button id="restore" style="width:50%">Restore </button>
+<br>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+var viewview=false;
+$('#view1').click(function() {
+	viewview=true;
+});
+$('#view2').click(function() {
+	camera.position.set(0, 200, 0);
+	camera.lookAt(new THREE.Vector3(50, 0, -50));
+
+	viewview=false;
+});
+
+var speedvalue=1;
+$('#speed1').click(function() {
+	speedvalue=1;
+});
+$('#speed2').click(function() {
+	speedvalue=2;
+});
+$('#speed3').click(function() {
+	speedvalue=0.5;
+});
+
+$('#play').click(function() {
+	startPlayback();
+});
+
+$('#clear').click (function() {
+	ti = [];
+	xyi = [];
+	logs = [];
+	firstPick = true;
+	move.material.visible = false;
+});
+
+$('#restore').click (function() {
+	logs = JSON.parse (localStorage.getItem ('activity'));
+});
+
+var camera, scene, renderer, light, controls;
+var wall0;
+//var room;
+var texture;
+var texture1;
+
+var logs = [];
+var ti = [];
+var xyi = [];
+var firstPick = true;
+var isMoving = false;
+var move;
+var moveStart;
+
+var startTime = new Date().getTime();
+var pos = {
+  '1': [35, -10],
+  '2': [10, -40],
+  '3': [70, -55],
+  '4': [75, -85],
+  '5': [35, -85],
+  '6': [35, -65],
+  '7': [35, -35]
+}
+var pickables = [];
+var mouse = new THREE.Vector2();
+var raycaster = new THREE.Raycaster();
+var pick;
+var loginName;
+var log;
+var logFilename;
+var rec;
+
+
+init();
+animate();
+$('#loginID').change( function() {
+
+	loginName = $(this).val();
+	console.log ( 'login name: ' + loginName );
+
+	$.get( "http://127.0.0.1:1337/login?name="+ $(this).val(), function( data ) {
+		console.log ('after get');
+		console.log ('code: ' + data.status);
+		console.log ('output: ' + data.output);
+
+		if(data && data.status === 1) {
+			if (data.output === "1")
+				$('#loginReport').text ( loginName + ', you have been added!' );
+			else
+				$('#loginReport').text ( loginName + ', welcome back!' );
+		}
+	});(null)
+	startD = new Date();
+	
+	//addRecord();
+});
+
+$('#save').click(function() {
+	( function() {
+	var records = [];
+	var record1 = {dt: 201, code: 1};
+	var record2 = {dt: 432, code: 2};
+	var record3 = {dt: 310, code: 4};
+	records.push (record1, record2, record3);
+	//var log1=[];
+	//log1.push(logs);
+	console.log(logs);
+	var dd = [];
+	dd.push (new Date().getTime());
+	//console.log(log1);
+	dd.push (logs.length);
+	for (var i = 0; i < logs.length; i++) {
+		dd.push (logs[i].dt);
+		dd.push (logs[i].code);
+	}
+	console.log ('dd: ' + dd);
+	
+	log = jQuery.param ({ data: dd });
+	
+	console.log (log);
+})();
+  console.log(JSON.stringify(logs));
+
+  localStorage.setItem('activity', JSON.stringify(logs));
+  var d = new Date();
+	var YYYYMMDD = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+
+	logFilename = loginName + YYYYMMDD + '.log';
+	console.log ('filename:' + logFilename);
+	console.log ('before get:' + log);
+
+	$.get ("http://127.0.0.1:1337/writelog?filename=" + logFilename + '&'+ log, function ( data ) {
+
+	});
+});
+$('#download').click ( function() {
+
+	console.log ('in download ...');
+
+	// which one to retrieve?
+
+	$.get ("http://127.0.0.1:1337/readlog?filename="+logFilename, function ( data ) {
+		console.log ('dataOut: ' + data.output);
+
+		var logs = data.output.split (' ');
+		var date = logs[0];
+
+		var records=[];
+
+		var n = recs.length;
+		for (var i = 0; i < n; i++) {
+			//var record = {dt: logs[2+2*i], code: logs[2+2*i+1]};
+			var record = {dt: recs[i].ET, code: recs[i].LOC };
+			records.push (record);
+		}
+		logs = JSON.parse (localStorage.getItem ('activity'));
+		$('#result').html (logFilename + '<br><br>' + JSON.stringify (logs));
+
+	});
+});
+
+var startD;
+var recs = [];
+
+function addRecord() {
+
+  $('#recordPanel').append("<br><input><input>");
+  $('#recordPanel').append($("<button />", {
+    class: 'rec',
+    text: 'RR',
+    click: function() {
+    	//console.log (parseInt ($(this).prev().val() ));
+    	// allow only meaningful input
+      if (isNaN (parseInt ($(this).prev().val()))) return;
+
+      var d = new Date();
+      var elapsed = d.getTime() - startD.getTime();
+      $(this).prev().prev().val(elapsed);
+      rec = {
+        ET: elapsed,
+        LOC: $(this).prev().val()
+      };
+      console.log(rec);
+      recs.push(rec);
+      addRecord();
+    }
+  }));
+}
+function startPlayback () {
+	if (logs.length === 0)
+		return;
+
+	for (var i = 0; i < logs.length; i++) {
+		ti.push (logs[i].dt);
+		xyi.push (pos[ logs[i].code]);
+	}
+	isMoving = true;
+	move.material.visible = true;
+	//avatarMaterial = new THREE.MeshLambertMaterial({visible: true});
+	moveStart = new Date().getTime();
+
+}
+
+function loadTexture( url ) {
+
+	// instantiate a loader
+	var loader = new THREE.TextureLoader();
+	loader.setCrossOrigin('');
+
+	// load a resource
+	loader.load(
+		// resource URL
+		url,
+		// Function when resource is loaded
+		function (tex) {
+			texture = tex; // for global access with Keypress
+		},
+	);
+}
+function loadTexture1( url ) {
+
+	// instantiate a loader
+	var loader = new THREE.TextureLoader();
+	loader.setCrossOrigin('');
+
+	// load a resource
+	loader.load(
+		// resource URL
+		url,
+		// Function when resource is loaded
+		function (tex) {
+			texture1 = tex; // for global access with Keypress
+		},
+	);
+}
+
+function init() {
+	var ww = $("#container").innerWidth();
+	var hh = $("#container").innerHeight();
+	renderer = new THREE.WebGLRenderer();
+	//renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(ww,hh);
+	renderer.setClearColor(0x888888);
+	document.body.appendChild(renderer.domElement);
+
+	scene = new THREE.Scene();
+
+	camera = new THREE.PerspectiveCamera(50, ww/hh, 1, 1000);
+
+	camera.position.set(0, 200, 0);
+	camera.lookAt(new THREE.Vector3(50, 0, -50));
+	scene.add(camera);
+	
+	camera3rd = new THREE.PerspectiveCamera(80, ww/hh, 1, 1000);
+	scene.add(camera3rd);
+	var helper = new THREE.CameraHelper( camera3rd );
+	//scene.add( helper );
+	light = new THREE.PointLight(0xffffff);
+	light.position.set(100, 300, 250);
+	scene.add(light);
+
+	var gridXZ = new THREE.GridHelper(200, 20, 'red', 'white');
+	scene.add(gridXZ);
+
+	var axes = new THREE.AxisHelper(40);
+	scene.add(axes);
+
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+	//document.body.appendChild(renderer.domElement);
+	$('#container').append(renderer.domElement);
+	window.addEventListener('resize', onWindowResize, false);
+	////////////////////////////////////////////////////////////////////////
+	var floormaterial = new THREE.MeshBasicMaterial({
+		transparent: true,
+		//opacity: 0.6,
+		visible: true
+	});
+	
+	plane = new THREE.Mesh(new THREE.PlaneGeometry(55, 92.5), floormaterial);
+	loadTexture1('http://i.imgur.com/TXpAton.jpg');
+	scene.add(plane);
+	plane.position.set(47,0.01,-46.25);
+	plane.rotation.x = -Math.PI / 2;
+	
+	plane1 = new THREE.Mesh(new THREE.PlaneGeometry(20, 32.25), floormaterial);
+	scene.add(plane);
+	plane1.position.set(10,0.01,-46.125);
+	plane1.rotation.x = -Math.PI / 2;
+	scene.add(plane1);
+	
+	plane2 = new THREE.Mesh(new THREE.PlaneGeometry(53.5,65), floormaterial);
+	scene.add(plane);
+	plane2.position.set(62.75,0.01,-60);
+	plane2.rotation.x = -Math.PI / 2;
+	scene.add(plane2);
+
+	///////////////////////////////////////////////////////////////
+	
+	var material = new THREE.MeshBasicMaterial({
+		transparent:true,
+		//map:THREE.ImageUtils.loadTexture('http://i.imgur.com/SeNKtXY.jpg')
+		//opacity:0.7,
+		//color:0x000000
+	});
+	var room = new THREE.Object3D();
+	wall0 = new THREE.Mesh(new THREE.BoxGeometry(55,30,0.5), material);
+	wall0.position.set(47,15,-0.25);
+	room.add(wall0);
+	//wall0.material.map=texture;
+	wall1 = new THREE.Mesh(new THREE.BoxGeometry(0.5,30,30), material);
+	wall1.position.set(19.5,15,-15);
+	room.add(wall1);
+
+	wall2 = new THREE.Mesh(new THREE.BoxGeometry(0.5,30,26.5), material);
+	wall2.position.set(74.5,15,-13.25);
+	room.add(wall2);
+	/////////////////////////////////////
+	
+	loadTexture('http://i.imgur.com/q8TbjPC.jpg');
+	var material1 = new THREE.MeshBasicMaterial({
+		transparent:true,
+		//map:THREE.ImageUtils.loadTexture('http://i.imgur.com/SeNKtXY.jpg')
+		//opacity:0.7,
+		//color:0x000000
+	});
+		
+	wall3 = new THREE.Mesh(new THREE.BoxGeometry(2.5,30,32.25), material);
+	wall3.position.set(1.25,15,-46.125);
+	room.add(wall3);
+
+	wall4 = new THREE.Mesh(new THREE.BoxGeometry(20,30,2.5), material);
+	wall4.position.set(10,15,-31.25);
+	room.add(wall4);
+
+	wall40 = wall4.clone();
+	wall40.position.set(10,15,-61);
+	room.add(wall40);
+
+	wall5 = new THREE.Mesh(new THREE.BoxGeometry(2.5,30,51), material);
+	wall5.position.set(18.75,15,-66);
+	room.add(wall5);
+
+	wall6 = new THREE.Mesh(new THREE.BoxGeometry(30,30,2.5), material);
+	wall6.position.set(32.5,15,-91.5);
+	room.add(wall6);
+
+	wall7 = new THREE.Mesh(new THREE.BoxGeometry(44,30,2.5), material);
+	wall7.position.set(67.5,15,-27.75);
+	room.add(wall7);
+
+	wall8 = new THREE.Mesh(new THREE.BoxGeometry(2.5,30,65), material);
+	wall8.position.set(88.25,15,-60);
+	room.add(wall8);
+
+	wall9 = new THREE.Mesh(new THREE.BoxGeometry(33.5,30,2.5), material);
+	wall9.position.set(72.75,15,-91.25);
+	room.add(wall9);
+
+	wall10 = new THREE.Mesh(new THREE.BoxGeometry(1,30,8), material);
+	wall10.position.set(47,15,-88);
+	room.add(wall10);
+
+	wall11 = new THREE.Mesh(new THREE.BoxGeometry(7,30,1), material);
+	wall11.position.set(23.5,15,-73.5);
+	room.add(wall11);
+
+	wall12 = new THREE.Mesh(new THREE.BoxGeometry(10.5,30,1), material);
+	wall12.position.set(41.25,15,-73.5);
+	room.add(wall12);
+
+	wall13 = new THREE.Mesh(new THREE.BoxGeometry(1,30,12.5), material);
+	wall13.position.set(47,15,-71.75);
+	room.add(wall13);
+
+	wall14 = new THREE.Mesh(new THREE.BoxGeometry(1,30,15), material);
+	wall14.position.set(47,15,-48);
+	room.add(wall14);
+
+	wall15 = new THREE.Mesh(new THREE.BoxGeometry(27.5,30,2.5), material);
+	wall15.position.set(33,15,-41.75);
+	room.add(wall15);
+
+	wall16 = new THREE.Mesh(new THREE.BoxGeometry(8.5,30,1), material);
+	wall16.position.set(85.25,15,-65.5);
+	room.add(wall16);
+
+	scene.add(room);
+	///////////////////////////////////////////
+	avatar = new THREE.Object3D();
+	avatarMaterial = new THREE.MeshLambertMaterial({visible: true});
+	body = new THREE.Mesh(new THREE.CylinderGeometry(3,3,9,32),avatarMaterial);
+	//scene.add(body);
+	//body.position.set(0,12.5,0);
+	avatar.add(body);
+	head = new THREE.Mesh(new THREE.SphereGeometry( 3, 32, 32 ),avatarMaterial);
+	head.position.set(0,7.5,0);
+	//scene.add(head);
+	avatar.add(head);
+	rleg = new THREE.Mesh(new THREE.CylinderGeometry(1,1,6,32),avatarMaterial);
+	lleg = rleg.clone();
+	rsleg = rleg.clone();
+	lsleg = rleg.clone();
+
+	rleg.position.set(2,-7,0);
+	lleg.position.set(-2,-7,0);
+	rsleg.position.set(2,-13,0);
+	lsleg.position.set(-2,-13,0);
+	/**/
+	avatar.add(rleg);
+	avatar.add(lleg);
+	avatar.add(rsleg);
+	avatar.add(lsleg);
+
+	rarm = new THREE.Mesh(new THREE.CylinderGeometry(1,1,10,32),avatarMaterial);
+	larm = rarm.clone();
+	rarm.position.set(3.5,-0.7,0);
+
+	larm.position.set(-3.5,-0.7,0);
+	avatar.add(rarm);
+	avatar.add(larm);
+
+	noise = new THREE.Mesh(new THREE.ConeGeometry( 0.5, 1, 32 ),avatarMaterial);
+	noise.position.set(0,7,3.5);
+	noise.rotation.x=Math.PI/2;
+	avatar.add(noise);
+	avatar.position.set(0,16.5,0);
+	scene.add(avatar);
+	///////////////////////////////////////////////
+	var geometry = new THREE.CircleGeometry(4, 32);
+	var material = new THREE.MeshBasicMaterial();
+	var circle = new THREE.Mesh(geometry, material);
+
+	addLoc(0xff0000, 75, -85, '4');
+	addLoc(0xff00ff, 35, -85, '5');
+	addLoc(0xffff00, 35, -65, '6');
+	addLoc(0x00ffff, 70, -55, '3');
+	addLoc(0x0000ff, 35, -10, '1');
+	addLoc(0x00ff00, 10, -40, '2');
+	addLoc(0x123422, 35, -35, '7');
+	function addLoc(hexColor, x, z, name) {
+		var cc = circle.clone();
+		cc.material = new THREE.MeshBasicMaterial({
+			color: hexColor
+		});
+		cc.rotation.x=-Math.PI/2;
+		cc.position.set(x, 0.02, z);
+		scene.add(cc);
+		cc.name = name;
+		pickables.push(cc);
+	}
+
+	move = new THREE.Mesh (new THREE.CircleGeometry (3, 6), new THREE.MeshBasicMaterial());
+	move.rotation.x=-Math.PI/2;
+	scene.add (move);
+	move.material.visible = false;
+	pick = new THREE.Mesh (new THREE.RingGeometry (4, 5, 32), new THREE.MeshBasicMaterial());
+	scene.add (pick);
+	pick.rotation.x=-Math.PI/2;
+	pick.material.visible = true;
+
+	//window.addEventListener('resize', onWindowResize, false);
+	window.addEventListener('mousedown', onDocumentMouseDown, false);
+	window.addEventListener('mouseup', onDocumentMouseUp, false);
+
+	console.log(startTime);
+}
+
+function onDocumentMouseUp () {
+	pick.material.visible = false;
+}
+/*
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}*/
+
+function onWindowResize() {
+
+  var ww = $("#canvas").innerWidth();
+  var hh = $("#canvas").innerHeight();
+
+  camera.aspect = ww / hh;
+  camera.updateProjectionMatrix();
+  renderer.setSize(ww, hh);
+}
+function onDocumentMouseDown(event) {
+
+  //event.preventDefault();
+  var viewportPos = $('#container').get(0).getBoundingClientRect();
+  mouse.x = ((event.clientX - viewportPos.left) / $('#container').innerWidth()) * 2 - 1;
+  mouse.y = -((event.clientY - viewportPos.top) / $('#container').innerHeight()) * 2 + 1;
+  //mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  //mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  var intersects = raycaster.intersectObjects(pickables);
+  if (intersects.length > 0) {
+
+  	pick.material.visible = true;
+    var xy = pos[intersects[0].object.name];
+
+    pick.position.x = xy[0];
+	pick.position.y = 0.02;
+    pick.position.z = xy[1];
+
+  	if (firstPick) {
+    	firstPick = false;
+      //startTime = startD.getTime();
+	  startTime = new Date().getTime();
+      dt = 0;
+    } else {
+    	dt = new Date().getTime() - startTime;
+    }
+    var record = {
+      dt: dt,
+      code: intersects[0].object.name
+    };
+    logs.push(record);
+  }
+
+}
+function animate() {
+	if (texture !== undefined) {
+	// texture already loaded ...
+		wall0.material.map = texture;
+		plane.material.map = texture1;
+		// tell Three.js that something needs update
+		wall0.material.needsUpdate = true;
+		plane.material.needsUpdate = true;
+	}
+	if (isMoving){
+	
+		t = new Date().getTime() - moveStart;
+		t=speedvalue*t;
+		console.log(t);
+		//console.log();
+		
+		if (t > logs[logs.length-1].dt) {
+			isMoving = false;
+			return;
+		}
+		
+		var mov = interpolate (t);
+		move.position.x = mov[0];
+		move.position.y = 0.02;
+		move.position.z = mov[1];
+
+		avatar.position.x = mov[0];
+		avatar.position.y = 16.5;
+		avatar.position.z = mov[1];
+		
+		var mov1 = interpolate (t+50);
+		var quaternion = new THREE.Quaternion();
+		var localDir = new THREE.Vector3(1,0,0);
+
+		var vec = new THREE.Vector3(mov1[0]-mov[0],16.5,mov1[1]-mov[1]);
+		console.log(vec);
+		var vec1 = Math.atan2(-vec.z,vec.x);
+		
+		avatar.rotation.y = vec1 + Math.PI / 2;
+			if(viewview){
+				var cameraOffset = avatar.localToWorld (new THREE.Vector3(0,18,-5));
+				camera.position.copy(cameraOffset);
+				var look = avatar.localToWorld (new THREE.Vector3(0,0,20));
+				camera.lookAt(look);
+				//camera3rd
+			}
+	}
+	
+	function interpolate(t) {
+		for (var i = 0; i < ti.length; i++) {
+			if (t < ti[i]) break;
+		}
+		var s = (t - ti[i-1])/(ti[i] - ti[i-1]);
+		var x = (1-s)*xyi[i-1][0] + s*xyi[i][0];
+		var y = (1-s)*xyi[i-1][1] + s*xyi[i][1];
+		return [x,y];
+	}
+
+  
+	//controls.update();
+	requestAnimationFrame(animate);
+	render();
+}
+
+
+function render() {
+  renderer.render(scene, camera);
+}
+
+</script>
+</body>
+
+</html>
