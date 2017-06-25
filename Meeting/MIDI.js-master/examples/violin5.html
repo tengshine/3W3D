@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -458,8 +457,8 @@ function init() {
 	rArm2.position.set(0,-1.5,0);
 
 	var LeftArm1 = new THREE.Object3D();
-	LeftArm1.rotation.x=-Math.PI/5;
-	LeftArm1.rotation.y=-Math.PI/8.5;
+	LeftArm1.rotation.x=-Math.PI/3.5;
+	LeftArm1.rotation.y=-Math.PI/18.5;
 	LeftArm1.rotation.z=Math.PI/6;
 	LeftArm1.position.set(1.15,6,0);
 	var lArm1=rArm1.clone();
@@ -469,9 +468,9 @@ function init() {
 
 	var LeftArm2 = new THREE.Object3D();
 	LeftArm2.position.set(0,-3,0);
-	LeftArm2.rotation.x=-Math.PI/3.5;
+	LeftArm2.rotation.x= -Math.PI/3;
 	//LeftArm1.rotation.y=Math.PI/5;
-	LeftArm2.rotation.z=Math.PI/4.5;
+	//LeftArm2.rotation.z=Math.PI/4.5;
 	var lArm2=rArm2.clone();
 	LeftArm2.add(lArm2);
 	LeftArm1.add(LeftArm2);
