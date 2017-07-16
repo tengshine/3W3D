@@ -150,7 +150,7 @@ function velUp(){
 		MIDI.noteOff(1,69,0);
 		
 		console.log(nn +'off');
-		if()if(cou<13)velUp();
+		if(cou<13)velUp();
 		if(cou>=13)cou=0;
 	},1000*60/bpm1);
 	vel-=3;
