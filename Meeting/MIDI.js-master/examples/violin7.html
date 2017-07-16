@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -124,6 +126,7 @@ var startClick=false;
 var startT;
 var notej =0;
 var bowP1=6.35,bowP2=6.47;
+var tempP1=bowP1,tempP2=bowP2;
 $('#start1').click(function(){
 	startT = new Date().getTime();
 	startClick=true;
@@ -138,28 +141,47 @@ $('#stop1').click(function(){
 $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
 });
+var anglei=0,anglej=0;
 $('#string_E').click(function(){
 	//stringAngle=12;
-	bowP1 = 6.30;
-	bowP2 = 6.48;
+	tempP1 = bowP1;
+	tempP2 = bowP2;
+	bowP1 = 6.27;
+	bowP2 = 6.47;
+	p1top2();
 
 });
 $('#string_A').click(function(){
 	//stringAngle=22;
+	tempP1 = bowP1;
+	tempP2 = bowP2;
 	bowP1 = 6.35;
 	bowP2 = 6.47;
-	
+	p1top2();
+
 });
 $('#string_D').click(function(){
 	//stringAngle=-29;
+	tempP1 = bowP1;
+	tempP2 = bowP2;
 	bowP1 = 6.4;
 	bowP2 = 6.47;
+	p1top2();
 });
 $('#string_G').click(function(){
 	//stringAngle=-13;
-	bowP1 = 6.53;
+	tempP1 = bowP1;
+	tempP2 = bowP2;
+	bowP1 = 6.475;
 	bowP2 = 6.47;
+	p1top2();
 });
+function p1top2(){
+	if(tempP1>bowP1)anglei=-0.01;
+	if(tempP1<bowP1)anglei=0.01;
+	if(tempP2>bowP2)anglej=-0.01;
+	if(tempP2<bowP2)anglej=0.01;
+}
 
 var CCDsys = function() {
 
@@ -439,17 +461,20 @@ function init() {
 	var x = rightArm2.position.x;
 
 	console.log(x);
+
 	rightArm2.add(rArm2);
 	rArm2.position.set(0,-1.5,0);
 
 	link1 = makeLink(UPPERARM_LEN);
 	link1.position.set(-1.15,6,0);
-	
+	//link1.rotation.y=Math.PI/4;
 	scene.add(link1);
 	link2 = makeLink(FOREARM_LEN);
 	link1.add(link2);
 	link2.position.set(3, 0, 0);
+	
 	human.add(link1);
+	
 	var LeftArm1 = new THREE.Object3D();
 	LeftArm1.rotation.x=-Math.PI/3.1;
 	LeftArm1.rotation.y=Math.PI/18.5;
@@ -491,8 +516,8 @@ function init() {
 	violin3.position.set(1.78,0,0);
 	violin1.add(violin3);
 	////////////////////////////////////
-	
-	
+
+
 	THREE.ImageUtils.crossOrigin = '';
     var material = new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide,
@@ -512,7 +537,7 @@ function init() {
 	violin1.add( bow3 );
 	bow3.position.set(-0.79,0.516,0.3);
 	///scene.add( bow3 );
-	//bow3.rotation.y=Math.PI/2;
+	///bow3.rotation.y=Math.PI/2;
 	//bow3.rotation.z=Math.PI/2;
 	//bow3.rotation.x=Math.PI/2;
 	bow2 = new THREE.Object3D();
@@ -528,22 +553,23 @@ function init() {
 	violin.rotation.x=Math.PI/8;
 	violin.rotation.y=-Math.PI/3;
 	violin.rotation.z=Math.PI/10;
-/**/
 
 	tsphere = new THREE.Mesh (new THREE.SphereGeometry(0.4), new THREE.MeshBasicMaterial({wireframe:true}));
 	scene.add(tsphere);
 	window.addEventListener('resize', onWindowResize, false);
 
 	ccdSys = new CCDsys ();
-	ccdSys.thetas.push (0,Math.PI/2);  // initial values of thetas
- // for (var i = 0; i < 3; i++)
- //   ccdSys.joints.push ( new THREE.Vector3() );
 
-  // setting ccd_box
+	
+	ccdSys.thetas.push (0,Math.PI/2);  // initial values of thetas
+	// for (var i = 0; i < 3; i++)
+	//   ccdSys.joints.push ( new THREE.Vector3() );
+
+	// setting ccd_box
 	ccdSys.setFK (fk);
 
 	ccdSys.axes.push ( new ccdSys.CCD_axis(new THREE.Vector3(0, 1, 0), 0) );
-	ccdSys.axes.push ( new ccdSys.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14) );
+	ccdSys.axes.push ( new ccdSys.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14) );	
 
 	bowB = makeBow();
 	//scene.add (bowB);
@@ -555,7 +581,6 @@ function init() {
 	//scene.add(plane1);
 	plane1.rotation.x = -Math.PI / 2;
 	plane1.position.set(0,5,0);
-	
 
 }
 
@@ -614,90 +639,106 @@ function animate() {
 	<!-- ccdSys.target.copy (target); -->
 	<!-- tsphere.position.copy(target); -->
 	//bow.rotation.x=Math.PI/stringAngle;
-	//////旋轉bow2//////////
+	//////旋轉bow2弓//////////
 	/**/
 	var quaternion = new THREE.Quaternion();
 	var localDir = new THREE.Vector3(0,1,0);
-	
+
 	v = bow.localToWorld(new THREE.Vector3(0,1,0));
 	v1 = bow.localToWorld(new THREE.Vector3(0,0.5,0));
-	v.y=bowP1;
-	v1.y=bowP2;
+
 	
-	console.log(v);
-	console.log(v1);
-	
+	if(anglei<0){
+		if(bowP1<tempP1)tempP1+=anglei;
+	}
+	if(anglei>0){
+		if(bowP1>tempP1)tempP1+=anglei;
+	}
+	if(anglej<0){
+		if(bowP2<tempP2)tempP2+=anglej;
+	}
+	if(anglej>0){
+		if(bowP2<tempP2)tempP2+=anglej;
+	}
+	v.y=tempP1;
+	v1.y=tempP2;
+
 	var vv =v.clone().sub(v1);
-	
+
 	var angle = localDir.angleTo (vv);
 	var axis = new THREE.Vector3();
 	axis.crossVectors (localDir, vv).normalize();
 	quaternion.setFromAxisAngle (axis,angle);
-	
+
 	bow2.quaternion.copy (quaternion);
 	
-	
-	//////////////////////////
+
+	//////////旋轉bow3(球跑的路線)////////////////
 
 	var localDir3 = new THREE.Vector3(1,0,0);
+	
 	var vv1 =v1.clone().sub(v);
 	var angle = localDir3.angleTo (vv1);
 
 	var axis = new THREE.Vector3();
 	axis.crossVectors (localDir3, vv1).normalize();
 	quaternion.setFromAxisAngle (axis,angle);
-	
+
 	bow3.quaternion.copy (quaternion);
-	
+
 	bow3.rotation.x=Math.PI/2-angle/3;
+	//bow3.rotation.x=angle;
 	//bow3.rotation.z=Math.PI/2;
 	bow3.rotation.y=Math.PI/2;
-	console.log(angle);
+	//console.log(angle);
+	//////手臂角度////////////////////
+	
+	var localDir3 = new THREE.Vector3(1,0,0);
+	var vv1 =v1.clone().sub(v);
+	var angle = localDir3.angleTo (vv1);
+
+	var axis = new THREE.Vector3();
+	axis.crossVectors (localDir3, vv1).normalize();
+	quaternion.setFromAxisAngle (axis,-angle);
+
+	
+	link1.quaternion.copy (quaternion);
 	//////////////////////////
 	
+
 	var localDir1 = new THREE.Vector3(0,0,1);
 	var angle1 = localDir1.angleTo (vv);
 	var axis1 = new THREE.Vector3();
 	axis1.crossVectors (localDir1, vv).normalize();
 	quaternion.setFromAxisAngle (axis1,angle1);
-	
-	
+
+
 	plane1.quaternion.copy (quaternion);
-	
+
 	var localDir1 = new THREE.Vector3(1,0,0);
 	var angle1 = localDir1.angleTo (vv);
 	var axis1 = new THREE.Vector3();
 	axis1.crossVectors (localDir1, vv).normalize();
 	quaternion.setFromAxisAngle (axis1,angle1);
-	
+
 	//link1.quaternion.copy (quaternion);
 	plane1.quaternion.copy (quaternion);
-	
-	
-	
-	
-	link1.rotation.z=-Math.PI/stringAngle;
-	
-	
-	//plane1.rotation.y=-Math.PI/2;
-	//link1.rotation.z=-Math.PI/4;
-	//bow2.rotation.x=Math.PI/(stringAngle);
+
 	update();
 	render();
 }
-
+target=0;
 function update() {
 
 	controls.update();
+	
 	var T = bow3.localToWorld(new THREE.Vector3(0,target,0));
 
-		tsphere.position.copy (T);
+	tsphere.position.copy (T);
 
-		bow2.position.copy (T);
-		ccdSys.target.copy (T);
-		ccdSys.update();
-
-
+	bow2.position.copy (T);
+	ccdSys.target.copy (T);
+	ccdSys.update();
 }
 
 function onWindowResize() {
@@ -718,8 +759,8 @@ function render() {
 
 	//rightArm2.rotation.x = ccdSys.thetas[3];
 	//console.log (ccdSys.thetas[0] + ',' + ccdSys.thetas[1]);
-	  link1.rotation.y = ccdSys.thetas[0];  //theta1;
-	  link2.rotation.y = ccdSys.thetas[1];  //theta2;
+	link1.rotation.y = ccdSys.thetas[0];  //theta1;
+	link2.rotation.y = ccdSys.thetas[1];  //theta2;
 
 	renderer.render(scene, camera);
 }
