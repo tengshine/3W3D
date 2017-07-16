@@ -148,11 +148,14 @@ function velUp(){
 	MIDI.noteOn(1,69,nn,0);
 	setTimeout(function(){
 		MIDI.noteOff(1,69,0);
+		
 		console.log(nn +'off');
+		if()if(cou<13)velUp();
+		if(cou>=13)cou=0;
 	},1000*60/bpm1);
-	vel+=2;
+	vel-=3;
 	cou++;
-	if(cou<13)velUp();
+	
 	//var time=notes[j].time;
 
 	
