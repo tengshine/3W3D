@@ -53,7 +53,7 @@ animate();
 $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
 	var bpm1 = $('#tempo').val();
-	countSecond();
+	//countSecond();
 	//myStopFunction;
 
 });
@@ -68,6 +68,7 @@ function playQ(){
 }
 function playQuarter(){
 	var bpm1 = $('#tempo').val();
+	console.log(bpm1);
 	MIDI.noteOn(0,69,127,0);
 	console.log('Q');
 	setTimeout(function(){
@@ -86,6 +87,7 @@ function playQuarter(){
 
 function playHalf(){
 	var bpm1 = $('#tempo').val();
+	console.log(bpm1);
 	MIDI.noteOn(0,69,127,0);
 	console.log('H');
 	setTimeout(function(){
