@@ -54,11 +54,17 @@ $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
 	var bpm1 = $('#tempo').val();
 	countSecond();
-	myStopFunction;
+	//myStopFunction;
 
 });
 function myStopFunction() {
     clearTimeout(t);
+}
+function playH(){
+	playHalf();
+}
+function playQ(){
+	playQuarter();
 }
 function playQuarter(){
 	var bpm1 = $('#tempo').val();
@@ -76,6 +82,7 @@ function playQuarter(){
 		cou=0;
 	}
 }
+
 function playHalf(){
 	var bpm1 = $('#tempo').val();
 	MIDI.noteOn(0,69,127,0);
@@ -142,9 +149,9 @@ function onDocumentMouseDown(event) {
   if (intersects.length > 0) {
   console.log (intersects[0].object.name);
 		if(intersects[0].object.name =='half')
-			playHalf();
+			playH();
 		if(intersects[0].object.name =='quarter')
-			playQuarter();
+			playQ();
 	}
 
 }
