@@ -70,7 +70,7 @@ function playQuarter(){
 	if(cou<4){
 		setTimeout(function(){
 			playQuarter();
-		},0);
+		},1000*60/bpm1);
 	}
 	else if(cou>=4){
 		cou=0;
@@ -86,7 +86,7 @@ function playHalf(){
 	if(cou<4){
 		setTimeout(function(){
 			playQuarter();
-		},0);
+		},2*1000*60/bpm1);
 	}
 	else if(cou>=4){
 		cou=0;
