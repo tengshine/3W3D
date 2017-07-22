@@ -69,6 +69,7 @@ function playQ(){
 function playQuarter(){
 	var bpm1 = $('#tempo').val();
 	MIDI.noteOn(0,69,127,0);
+	console.log('Q');
 	setTimeout(function(){
 		MIDI.noteOff(0,69,0);
 	},1000*60/bpm1);
@@ -86,6 +87,7 @@ function playQuarter(){
 function playHalf(){
 	var bpm1 = $('#tempo').val();
 	MIDI.noteOn(0,69,127,0);
+	console.log('H');
 	setTimeout(function(){
 		MIDI.noteOff(0,69,0);
 	},2*1000*60/bpm1);
