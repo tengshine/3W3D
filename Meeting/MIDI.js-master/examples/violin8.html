@@ -836,7 +836,7 @@ window.onload = function () {
 		var bpm1 = $('#tempo').val();
 
 		console.log(note1);
-		MIDI.noteOn(1,note1,127,0);
+		MIDI.noteOn(1,note1,127*eventArray[notej].volume,0);
 		var duration1 = eventArray[notej].duration-0.1;
 		setTimeout(function(){
 			MIDI.noteOff(1,note1,0);
