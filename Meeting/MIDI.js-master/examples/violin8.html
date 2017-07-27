@@ -396,20 +396,20 @@ function makeSequence(eventArray) {
 function fk(theta, joints) {
 	joints[0] = new THREE.Vector3(0, 0, 0);
 
-  var m = new THREE.Matrix4();
-  m.makeRotationY(theta[0]);
-  m.multiply(new THREE.Matrix4().makeTranslation(UPPERARM_LEN, 0, 0));
-  var localzero = new THREE.Vector3(0, 0, 0);
-  localzero.applyMatrix4(m);
-  joints[1].copy(localzero);
+	var m = new THREE.Matrix4();
+	m.makeRotationY(theta[0]);
+	m.multiply(new THREE.Matrix4().makeTranslation(UPPERARM_LEN, 0, 0));
+	var localzero = new THREE.Vector3(0, 0, 0);
+	localzero.applyMatrix4(m);
+	joints[1].copy(localzero);
 
-  m.multiply(new THREE.Matrix4().makeRotationY(theta[1]));
-  m.multiply(new THREE.Matrix4().makeTranslation(FOREARM_LEN, 0, 0));
-  localzero.set(0, 0, 0);
-  localzero.applyMatrix4(m);
-  joints[2].copy(localzero);
+	m.multiply(new THREE.Matrix4().makeRotationY(theta[1]));
+	m.multiply(new THREE.Matrix4().makeTranslation(FOREARM_LEN, 0, 0));
+	localzero.set(0, 0, 0);
+	localzero.applyMatrix4(m);
+	joints[2].copy(localzero);
 
-  end.copy (joints[2]);
+	end.copy (joints[2]);
 }
 function makeBow() {
 	var bow = new THREE.Object3D();
@@ -661,40 +661,7 @@ function animate() {
 	v = bow.localToWorld(new THREE.Vector3(0,1,0));
 	v1 = bow.localToWorld(new THREE.Vector3(0,0.5,0));
 
-	if(event.string=='G'){
-		tempP1 = bowP1;
-		tempP2 = bowP2;
-		bowP1 = 6.475;
-		bowP2 = 6.47;
-		p1top2();
 	
-	
-	}
-	if(event.string=='D'){
-		tempP1 = bowP1;
-		tempP2 = bowP2;
-		bowP1 = 6.4;
-		bowP2 = 6.47;
-		p1top2();
-	
-	
-	}
-	if(event.string=='A'){
-		tempP1 = bowP1;
-		tempP2 = bowP2;
-		bowP1 = 6.35;
-		bowP2 = 6.47;
-		p1top2();
-		
-	
-	}
-	if(event.string=='E'){
-		tempP1 = bowP1;
-		tempP2 = bowP2;
-		bowP1 = 6.27;
-		bowP2 = 6.47;
-		p1top2();
-	}
 	if(anglei<0){
 		if(bowP1<tempP1)tempP1+=anglei;
 	}
@@ -856,6 +823,40 @@ window.onload = function () {
  function playMusic(){
 
 	var note1=eventArray[notej].note;
+	if(eventArray[notej].string=='G'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.475;
+		bowP2 = 6.47;
+		p1top2();
+	
+	
+	}
+	if(eventArray[notej].string=='D'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.4;
+		bowP2 = 6.47;
+		p1top2();
+	
+	
+	}
+	if(eventArray[notej].string=='A'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.35;
+		bowP2 = 6.47;
+		p1top2();
+		
+	
+	}
+	if(eventArray[notej].string=='E'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.27;
+		bowP2 = 6.47;
+		p1top2();
+	}
 	if(startClick) {
 		var bpm1 = $('#tempo').val();
 
