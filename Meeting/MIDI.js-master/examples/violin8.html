@@ -309,6 +309,7 @@ function makeEventArray () {
 	eventArray.push(new Event(6, 1, 72, 'U',0.75, 0.5));
 	eventArray.push(new Event(7, 1, 71, 'D', 0.75, 0.5));
 	eventArray.push(new Event(8, 3, 69, 'U', 0.5, 1));*/
+	/*
 	eventArray.push(new Event(0, 0.5, 69, 'D', 0.25, 0.5,'A'));
 	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.25, 0.5,'A'));
 	eventArray.push(new Event(1, 0.5, 72, 'D', 0.25, 0.5,'A'));
@@ -321,19 +322,34 @@ function makeEventArray () {
 	eventArray.push(new Event(4.5, 0.5, 76, 'U', 0.25, 0.5,'E'));
 	eventArray.push(new Event(5, 0.5, 78, 'D', 0.25, 0.5,'E'));
 	eventArray.push(new Event(5.5, 0.5, 74, 'U', 0.25, 0.5,'A'));
-	eventArray.push(new Event(6, 2, 72, 'D', 0.5, 1,'A'));
+	eventArray.push(new Event(6, 2, 72, 'D', 0.5, 1,'A'));*/
+	
+	eventArray.push(new Event(0, 0.5, 69, 'D', 0.25,'A', 0.2));
+	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.25,'A',0.3));
+	eventArray.push(new Event(1, 0.5, 72, 'D', 0.25,'A',0.4));
+	eventArray.push(new Event(1.5, 0.5, 74, 'U', 0.25,'A',0.5));
+	eventArray.push(new Event(2, 0.5, 74, 'D', 0.25, 'A',0.5));
+	eventArray.push(new Event(2.5, 0.5, 76, 'U',0.25, 'E',0.6));
+	eventArray.push(new Event(3, 0.5, 78, 'D', 0.25, 'E',0.7));
+	eventArray.push(new Event(3.5, 0.5, 79, 'U', 0.25, 'E',0.8));
+	eventArray.push(new Event(4, 0.5, 79, 'D', 0.25, 'E',0.8));
+	eventArray.push(new Event(4.5, 0.5, 76, 'U', 0.25, 'E',0.8));
+	eventArray.push(new Event(5, 0.5, 78, 'D', 0.25, 'E',0.6));
+	eventArray.push(new Event(5.5, 0.5, 74, 'U', 0.25, 'A',0.4));
+	eventArray.push(new Event(6, 2, 72, 'D', 0.5, 1,'A',0.4));
 	return eventArray;
 }
 
 // event constructor
-function Event (beat, duration, note, type, position, length,string) {
+function Event (beat, duration, note, type, position,string,volume) {
   this.beat = beat || 0.0;
   this.duration = duration || 1.0; // default: quarter note
   this.note = note || 69; // default: (A4, 69)
   this.type = type || 'D'; // default: Down bow
   this.position = position || 0.5; // default: middle bow
-  this.length = length || 0.3; // default: 0.3
-  this.string = string || 'A'; // default: 0.3
+  this.length =  (volume+duration)/2|| 0.3; // default: 0.3
+  if((volume+duration)/2>1)this.length = 1;
+  this.string = string || 'A';
 }
 
 function makeSequence(eventArray) {
@@ -787,14 +803,13 @@ window.onload = function () {
  function playMusic(){
 
 	var note1=eventArray[notej].note;
+	//////////////////換弦////////////////////
 	if(eventArray[notej].string=='G'){
 		tempP1 = bowP1;
 		tempP2 = bowP2;
 		bowP1 = 6.475;
 		bowP2 = 6.47;
 		p1top2();
-	
-	
 	}
 	if(eventArray[notej].string=='D'){
 		tempP1 = bowP1;
@@ -802,8 +817,6 @@ window.onload = function () {
 		bowP1 = 6.4;
 		bowP2 = 6.47;
 		p1top2();
-	
-	
 	}
 	if(eventArray[notej].string=='A'){
 		tempP1 = bowP1;
@@ -811,8 +824,6 @@ window.onload = function () {
 		bowP1 = 6.35;
 		bowP2 = 6.47;
 		p1top2();
-		
-	
 	}
 	if(eventArray[notej].string=='E'){
 		tempP1 = bowP1;
