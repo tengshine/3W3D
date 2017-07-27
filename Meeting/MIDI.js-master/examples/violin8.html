@@ -350,6 +350,7 @@ function Event (beat, duration, note, type, position,string,volume) {
   this.length =  (volume+duration)/2|| 0.3; // default: 0.3
   if((volume+duration)/2>1)this.length = 1;
   this.string = string || 'A';
+  this.volume = volume || 127;
 }
 
 function makeSequence(eventArray) {
