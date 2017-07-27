@@ -144,37 +144,37 @@ $('#tempo').change ( function() {
 var anglei=0,anglej=0;
 $('#string_E').click(function(){
 	//stringAngle=12;
-	tempP1 = bowP1;
-	tempP2 = bowP2;
-	bowP1 = 6.27;
-	bowP2 = 6.47;
-	p1top2();
+	<!-- tempP1 = bowP1; -->
+	<!-- tempP2 = bowP2; -->
+	<!-- bowP1 = 6.27; -->
+	<!-- bowP2 = 6.47; -->
+	<!-- p1top2(); -->
 
 });
 $('#string_A').click(function(){
 	//stringAngle=22;
-	tempP1 = bowP1;
-	tempP2 = bowP2;
-	bowP1 = 6.35;
-	bowP2 = 6.47;
-	p1top2();
+	<!-- tempP1 = bowP1; -->
+	<!-- tempP2 = bowP2; -->
+	<!-- bowP1 = 6.35; -->
+	<!-- bowP2 = 6.47; -->
+	<!-- p1top2(); -->
 
 });
 $('#string_D').click(function(){
 	//stringAngle=-29;
-	tempP1 = bowP1;
-	tempP2 = bowP2;
-	bowP1 = 6.4;
-	bowP2 = 6.47;
-	p1top2();
+	<!-- tempP1 = bowP1; -->
+	<!-- tempP2 = bowP2; -->
+	<!-- bowP1 = 6.4; -->
+	<!-- bowP2 = 6.47; -->
+	<!-- p1top2(); -->
 });
 $('#string_G').click(function(){
 	//stringAngle=-13;
-	tempP1 = bowP1;
-	tempP2 = bowP2;
-	bowP1 = 6.475;
-	bowP2 = 6.47;
-	p1top2();
+	<!-- tempP1 = bowP1; -->
+	<!-- tempP2 = bowP2; -->
+	<!-- bowP1 = 6.475; -->
+	<!-- bowP2 = 6.47; -->
+	<!-- p1top2(); -->
 });
 function p1top2(){
 	if(tempP1>bowP1)anglei=-0.01;
@@ -345,30 +345,31 @@ function makeEventArray () {
 	eventArray.push(new Event(6, 1, 72, 'U',0.75, 0.5));
 	eventArray.push(new Event(7, 1, 71, 'D', 0.75, 0.5));
 	eventArray.push(new Event(8, 3, 69, 'U', 0.5, 1));*/
-	eventArray.push(new Event(0, 0.5, 69, 'D', 0.25, 0.5));
-	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.25, 0.5));
-	eventArray.push(new Event(1, 0.5, 73, 'D', 0.25, 0.5));
-	eventArray.push(new Event(1.5, 0.5, 74, 'U', 0.25, 0.5));
-	eventArray.push(new Event(2, 0.5, 74, 'D', 0.5, 1));
-	eventArray.push(new Event(2.5, 0.5, 76, 'U',0.75, 0.5));
-	eventArray.push(new Event(3, 0.5, 78, 'D', 0.75, 0.5));
-	eventArray.push(new Event(3.5, 0.5, 80, 'U', 0.5, 1));
-	eventArray.push(new Event(4, 0.5, 80, 'D', 0.5, 1));
-	eventArray.push(new Event(4.5, 0.5, 76, 'U', 0.5, 1));
-	eventArray.push(new Event(5, 0.5, 78, 'D', 0.5, 1));
-	eventArray.push(new Event(5.5, 0.5, 74, 'U', 0.5, 1));
-	eventArray.push(new Event(6, 2, 73, 'D', 0.5, 1));
+	eventArray.push(new Event(0, 0.5, 69, 'D', 0.25, 0.5,'A'));
+	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.25, 0.5,'A'));
+	eventArray.push(new Event(1, 0.5, 72, 'D', 0.25, 0.5,'A'));
+	eventArray.push(new Event(1.5, 0.5, 74, 'U', 0.25, 0.5,'A'));
+	eventArray.push(new Event(2, 0.5, 74, 'D', 0.5, 1,'A'));
+	eventArray.push(new Event(2.5, 0.5, 76, 'U',0.75, 0.5,'E'));
+	eventArray.push(new Event(3, 0.5, 78, 'D', 0.75, 0.5,'E'));
+	eventArray.push(new Event(3.5, 0.5, 79, 'U', 0.5, 1,'E'));
+	eventArray.push(new Event(4, 0.5, 79, 'D', 0.5, 1,'E'));
+	eventArray.push(new Event(4.5, 0.5, 76, 'U', 0.5, 1,'E'));
+	eventArray.push(new Event(5, 0.5, 78, 'D', 0.5, 1,'E'));
+	eventArray.push(new Event(5.5, 0.5, 74, 'U', 0.5, 1,'A'));
+	eventArray.push(new Event(6, 2, 72, 'D', 0.5, 1,'A'));
 	return eventArray;
 }
 
 // event constructor
-function Event (beat, duration, note, type, position, length) {
+function Event (beat, duration, note, type, position, length,string) {
   this.beat = beat || 0.0;
   this.duration = duration || 1.0; // default: quarter note
   this.note = note || 69; // default: (A4, 69)
   this.type = type || 'D'; // default: Down bow
   this.position = position || 0.5; // default: middle bow
   this.length = length || 0.3; // default: 0.3
+  this.string = string || 'A'; // default: 0.3
 }
 
 function makeSequence(eventArray) {
@@ -660,7 +661,40 @@ function animate() {
 	v = bow.localToWorld(new THREE.Vector3(0,1,0));
 	v1 = bow.localToWorld(new THREE.Vector3(0,0.5,0));
 
+	if(event.string=='G'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.475;
+		bowP2 = 6.47;
+		p1top2();
 	
+	
+	}
+	if(event.string=='D'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.4;
+		bowP2 = 6.47;
+		p1top2();
+	
+	
+	}
+	if(event.string=='A'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.35;
+		bowP2 = 6.47;
+		p1top2();
+		
+	
+	}
+	if(event.string=='E'){
+		tempP1 = bowP1;
+		tempP2 = bowP2;
+		bowP1 = 6.27;
+		bowP2 = 6.47;
+		p1top2();
+	}
 	if(anglei<0){
 		if(bowP1<tempP1)tempP1+=anglei;
 	}
