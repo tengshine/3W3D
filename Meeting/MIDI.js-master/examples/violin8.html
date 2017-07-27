@@ -837,7 +837,7 @@ window.onload = function () {
 
 		console.log(note1);
 		var violinVolume=127*eventArray[notej].volume;
-		MIDI.noteOn(1,note1,,0);
+		MIDI.noteOn(1,note1,violinVolume,0);
 		var duration1 = eventArray[notej].duration-0.1;
 		setTimeout(function(){
 			MIDI.noteOff(1,note1,0);
