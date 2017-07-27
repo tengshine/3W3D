@@ -103,10 +103,7 @@ strong {
   violin demo
   <br>
 BPM <input id='tempo' type="range" min=30 max=210 value = 60><span id = "bpm">60</span><br>
-<button id='string_E'>string E</button>
-<button id='string_A'>string A</button>
-<button id='string_D'>string D</button>
-<button id='string_G'>string G</button>
+
 <br>
 <button id='start1'>Start</button>
 <button id='stop1'>Stop</button>
@@ -142,40 +139,7 @@ $('#tempo').change ( function() {
 	$('#bpm').text ($(this).val());
 });
 var anglei=0,anglej=0;
-$('#string_E').click(function(){
-	//stringAngle=12;
-	<!-- tempP1 = bowP1; -->
-	<!-- tempP2 = bowP2; -->
-	<!-- bowP1 = 6.27; -->
-	<!-- bowP2 = 6.47; -->
-	<!-- p1top2(); -->
 
-});
-$('#string_A').click(function(){
-	//stringAngle=22;
-	<!-- tempP1 = bowP1; -->
-	<!-- tempP2 = bowP2; -->
-	<!-- bowP1 = 6.35; -->
-	<!-- bowP2 = 6.47; -->
-	<!-- p1top2(); -->
-
-});
-$('#string_D').click(function(){
-	//stringAngle=-29;
-	<!-- tempP1 = bowP1; -->
-	<!-- tempP2 = bowP2; -->
-	<!-- bowP1 = 6.4; -->
-	<!-- bowP2 = 6.47; -->
-	<!-- p1top2(); -->
-});
-$('#string_G').click(function(){
-	//stringAngle=-13;
-	<!-- tempP1 = bowP1; -->
-	<!-- tempP2 = bowP2; -->
-	<!-- bowP1 = 6.475; -->
-	<!-- bowP2 = 6.47; -->
-	<!-- p1top2(); -->
-});
 function p1top2(){
 	if(tempP1>bowP1)anglei=-0.01;
 	if(tempP1<bowP1)anglei=0.01;
