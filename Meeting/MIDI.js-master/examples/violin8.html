@@ -126,7 +126,7 @@ var notej =0;
 var bowP1=6.35,bowP2=6.47;
 var tempP1=bowP1,tempP2=bowP2;
 $('#start1').click(function(){
-	startT = new Date().getTime();
+	
 	startClick=true;
 	lampi=0;
 	playMusic();
@@ -784,7 +784,10 @@ function bpmLamp(){
 	if(startClick){
 		lampj=lampj+1;
 		lampi=(lampj)%4+1;
-		if(lampj==4)startClick1=true;
+		if(lampj==4){
+			startClick1=true;
+			startT = new Date().getTime();
+		}
 		//lampi=lampi%4;
 		
 	}
