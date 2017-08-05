@@ -120,6 +120,7 @@ BPM <input id='tempo' type="range" min=30 max=210 value = 60><span id = "bpm">60
 
 var stringAngle=22;
 var startClick=false;
+var startClick1=false;
 var startT;
 var notej =0;
 var bowP1=6.35,bowP2=6.47;
@@ -301,14 +302,6 @@ animate();
 
 function makeEventArray () {
 	var eventArray = [];
-	/*eventArray.push(new Event(0, 1, 69, 'D', 0.25, 0.5));
-	eventArray.push(new Event(1, 1, 71, 'U', 0.25, 0.5));
-	eventArray.push(new Event(2, 1, 72, 'D', 0.25, 0.5));
-	eventArray.push(new Event(3, 1, 74, 'U', 0.25, 0.5));
-	eventArray.push(new Event(4, 2, 74, 'D', 0.5, 1));
-	eventArray.push(new Event(6, 1, 72, 'U',0.75, 0.5));
-	eventArray.push(new Event(7, 1, 71, 'D', 0.75, 0.5));
-	eventArray.push(new Event(8, 3, 69, 'U', 0.5, 1));*/
 	/*
 	eventArray.push(new Event(0, 0.5, 69, 'D', 0.25, 0.5,'A'));
 	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.25, 0.5,'A'));
@@ -617,7 +610,7 @@ function animate() {
 	var time = new Date().getTime() - startT;  // in msec
 	var b = time2Beat(time);
 
-	if(startClick){
+	if(startClick1){
 		//console.log(time);
 		//console.log('start');
 		target = interpolate(b) * 4;
@@ -777,12 +770,25 @@ var bpm1 = $('#tempo').val();
 	}, 1000*60/bpm1);
 
 }
-var lampi=0;
+var lampi=0,lampj=0;
+
 function bpmLamp(){
 
 	var bpm1 = $('#tempo').val();
-	if(!startClick)lampi=0;
-	if(startClick)lampi=(lampi)%4+1;
+	if(!startClick){
+		lampi=0;
+		lampj=0;
+		startClick1=false;
+	}
+	
+	if(startClick){
+		lampj=lampj+1;
+		lampi=(lampj)%4+1;
+		if(lampj==4)startClick1=true;
+		//lampi=lampi%4;
+		
+	}
+	
 	new Lamp('light'+lampi);
 
 }
@@ -833,7 +839,7 @@ window.onload = function () {
 		bowP2 = 6.47;
 		p1top2();
 	}
-	if(startClick) {
+	if(startClick1) {
 		var bpm1 = $('#tempo').val();
 
 		console.log(note1);
@@ -851,12 +857,12 @@ window.onload = function () {
 		notej++;
 
 	}
-	if(!startClick) {
+	if(!startClick1) {
 		notej= 0;
 		MIDI.noteOff(1,note1,0);
 	}
 
-	if(notej<eventArray.length && startClick){
+	if(notej<eventArray.length && startClick1){
 		setTimeout(function(){
 			playMusic();
 		},time*1000*60/bpm1);
