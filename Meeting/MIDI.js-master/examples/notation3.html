@@ -27,6 +27,7 @@ body {
 
 <body>
 <div id="info">
+<button id='playnotes'>play</button>
 <button id='undo'>Undo</button><br>
 <span id = "bpm"></span>
 </div>
@@ -63,6 +64,9 @@ var msecsPrevious = 0;
 
 init();
 animate();
+$('#playnotes').click(function(){
+  startPlayList(notes);
+});
 $('#undo').click(function(){
 	notes.pop();
 	scene.remove(scene.getObjectByName(notesymbolnums--));
