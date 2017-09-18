@@ -405,17 +405,52 @@ function makeEventArray () {
 
 // event constructor
 
-function Event (beat, duration, note, type,volume ,position) {
-  this.beat = beat || 0.0;
-  this.duration = duration || 1.0; // default: quarter note
-  this.note = note || 69; // default: (A4, 69)
-  this.type = type || 'D'; // default: Down bow
-  this.pos = position || 0.5; // default: middle bow
-  this.length =  (volume+duration)/2|| 0.3; // default: 0.3
-  if((volume+duration)/2>1)this.length = 1;
-  this.volume = volume || 127;
-  this.string = notetoString(note);
-  console.log(notetoString(note));
+function Event (beat, duration, note, type,volume ,pos) {
+	/*  this.beat = beat || 0.0;
+	this.duration = duration || 1.0; // default: quarter note
+	this.note = note || 69; // default: (A4, 69)
+	this.type = type || 'D'; // default: Down bow
+	this.pos = position || 0.5; // default: middle bow
+	this.length =  (volume+duration)/2|| 0.3; // default: 0.3
+	if((volume+duration)/2>1)this.length = 1;
+	this.volume = volume || 127;
+	this.string = notetoString(note);
+	console.log(notetoString(note));*/
+  
+	this.beat = beat;
+	this.duration = duration; // default: 1 QN
+	this.note = note; // default: (A4, 69)
+
+	// if note == 0 ... this is a rest
+
+	// default or running parameters  
+	Event.type = Event.type === undefined ? 'D' : Event.type;
+	if (type === undefined) {   // not given, use the previous type
+	if (note !== 0) this.type = Event.type; // for note only
+	} else {
+	this.type = type;
+	Event.type = type;
+	}   
+
+	Event.volume = Event.volume === undefined ? 0.5 : Event.volume;
+	if (volume === undefined) {
+	this.volume = Event.volume; 
+	} else {
+	this.volume = volume;
+	Event.volume = volume;
+	}
+
+	Event.pos = Event.pos === undefined ? 0.5 : Event.pos;
+	if (pos === undefined) {
+	this.pos = Event.pos; 
+	} else {
+	this.pos = pos;
+	Event.pos = pos;
+	}
+
+
+
+	this.length = dynamic2Length (this.dynamics, this.pos, this.duration); 
 }
 
 function notetoString(note){
@@ -1114,6 +1149,7 @@ window.onload = function () {
  		}
  	});
  };
+
 
  function playMusic(){
 
