@@ -450,7 +450,23 @@ function Event (beat, duration, note, type,volume ,pos) {
 
 
 
-	this.length = dynamic2Length (this.dynamics, this.pos, this.duration); 
+	this.length = dynamic2Length (this.volume, this.pos, this.duration); 
+}
+function dynamic2Length (dynamic, bowCenter, duration) {
+
+  // 0. extra long stroke ... return 1.0
+ 
+  // 1. consider duration (2 beats <--> 1.0)
+  
+  var len = Math.min (duration/2, 1.0);  
+  
+  // 2. consider dynamics
+  len = len * dynamic;
+  
+  console.log ('dy:' + dynamic + ' len: ' + len);
+  
+  return len;
+
 }
 
 function notetoString(note){
