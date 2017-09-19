@@ -1211,9 +1211,10 @@ window.onload = function () {
 		else if(eventArray[0].beat!=0){
 			
 			setTimeout(function(){
+				notej++;
 				playMusic();
 			},eventArray[0].beat*1000*60/bpm1);
-			notej++;
+			
 		
 			
 			
@@ -1242,7 +1243,7 @@ window.onload = function () {
 		},time*1000*60/bpm1);
 	}
 	if(notej==eventArray.length){
-		startClick1=false;
+		//startClick1=false;
 		notej=0;
 	}
 }
