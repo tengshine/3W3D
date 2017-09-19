@@ -1236,7 +1236,7 @@ window.onload = function () {
 		MIDI.noteOff(1,note1,0);
 	}
 
-	if(notej<eventArray.length && startClick1){
+	if((notej!=0&&notej<eventArray.length && startClick1){
 		setTimeout(function(){
 			playMusic();
 		},time*1000*60/bpm1);
