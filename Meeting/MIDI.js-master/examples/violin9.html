@@ -405,7 +405,7 @@ function makeEventArray () {
 
 // event constructor
 
-function Event (beat, duration, note, type,volume ,pos) {
+function Event (beat, duration, note, type, volume, pos) {
 	/*  this.beat = beat || 0.0;
 	this.duration = duration || 1.0; // default: quarter note
 	this.note = note || 69; // default: (A4, 69)
@@ -950,6 +950,7 @@ function interpolate(beat) {
 		}
 		return p; // [0,1]
 }
+
 function makeLink(length) {
 	var oneLink = new THREE.Object3D();
 	var mesh = new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25, length, 32), new THREE.MeshNormalMaterial());
@@ -1203,8 +1204,15 @@ window.onload = function () {
 		var bpm1 = $('#tempo').val();
 
 		console.log(note1);
-		var violinVolume=127*eventArray[notej].volume;
-		MIDI.noteOn(1,note1,violinVolume,0);
+		var violinVolume=127*eventArray[notej].volume;	//音量大小
+		if(notej!=0){
+			MIDI.noteOn(1,note1,violinVolume,0);
+		}
+		if(notej==0){
+			setTimeout(function(){
+				playMusic();
+			},eventArray[0].beat*1000*60/bpm1);
+		}
 		var duration1 = eventArray[notej].duration-0.1;
 		setTimeout(function(){
 			MIDI.noteOff(1,note1,0);
