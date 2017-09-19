@@ -1205,20 +1205,14 @@ window.onload = function () {
 
 		console.log(note1);
 		var violinVolume=127*eventArray[notej].volume;	//音量大小
-		if(eventArray[0].beat==0){
+		if(eventArray[notej].beat==0){
 			MIDI.noteOn(1,note1,violinVolume,0);
 		}
-		else if(eventArray[0].beat!=0){
-			
+		else if(eventArray[notej].beat!=0){
 			setTimeout(function(){
 				notej++;
 				playMusic();
 			},eventArray[0].beat*1000*60/bpm1);
-			
-		
-			
-			
-			
 		}
 		var duration1 = eventArray[notej].duration-0.1;
 		setTimeout(function(){
