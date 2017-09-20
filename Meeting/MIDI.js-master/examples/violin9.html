@@ -949,18 +949,38 @@ function sequenceStart() {
 function interpolate(beat) {
 
 	//if(startClick){}
-		if (beat <= period) {
-			var b = beat % period;
-			for (var i = 0; i < keyframes.length; i++) {
-				if (b < keyframes[i].key) break;
-				// take i-1 & i
-			}
-			var p = keyframes[i - 1].pos + (keyframes[i].pos - keyframes[i - 1].pos) * (b - keyframes[i - 1].key) / (keyframes[i].key - keyframes[i - 1].key);
-		}
-		else { // last position
-			var p = keyframes[keyframes.length - 1].pos;
-		}
-		return p; // [0,1]
+		<!-- if (beat <= period) { -->
+			<!-- var b = beat % period; -->
+			<!-- for (var i = 0; i < keyframes.length; i++) { -->
+				<!-- if (b < keyframes[i].key) break; -->
+				<!-- // take i-1 & i -->
+			<!-- } -->
+			<!-- var p = keyframes[i - 1].pos + (keyframes[i].pos - keyframes[i - 1].pos) * (b - keyframes[i - 1].key) / (keyframes[i].key - keyframes[i - 1].key); -->
+		<!-- } -->
+		<!-- else { // last position -->
+			<!-- var p = keyframes[keyframes.length - 1].pos; -->
+		<!-- } -->
+		<!-- return p; // [0,1] -->
+		//var b = beat % period;
+	b = beat;
+	
+    for (var i = 0; i < keyframes.length; i++) {
+      if (b < keyframes[i].key) break;
+    }
+
+//	console.log (b.toFixed(2) + ':' + i + ',' + keyframes[i]);
+	
+    // take i-1 & i
+    var m = (b - keyframes[i - 1].key) / (keyframes[i].key - keyframes[i - 1].key);
+    var p = (1-m)*keyframes[i - 1].pos + m*keyframes[i].pos;
+
+  } else { // last position
+
+    var p = keyframes[keyframes.length - 1].pos
+  }
+
+  return p; // [0,1]  
+		
 }
 
 function makeLink(length) {
