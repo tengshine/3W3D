@@ -254,7 +254,7 @@ var CCDsys = function() {
 
 
 		var njoints = axes[axes.length - 1].jointid + 1;
-		console.log ('njoints: ' + njoints);
+		//console.log ('njoints: ' + njoints);
 		var joints = [];
 		for (var i = 0; i <= njoints; i++) joints[i] = new THREE.Vector3();
 
@@ -309,7 +309,7 @@ var CCDsys = function() {
 		if (iter < MAXITER)
 		return 1;
 		else {
-			console.log("do not converge");
+			//console.log("do not converge");
 			return 0;
 		}
 	}
@@ -447,6 +447,7 @@ function Event (beat, duration, note, type, volume, pos) {
 	this.pos = pos;
 	Event.pos = pos;
 	}
+
 	this.string = notetoString(note);
 
 	this.length = dynamic2Length (this.volume, this.pos, this.duration); 
@@ -1234,6 +1235,8 @@ window.onload = function () {
 		bowP2 = 6.47;
 		p1top2();
 	}
+	
+	//////////////////////////////////////////////////
 	if(startClick1) {
 		var bpm1 = $('#tempo').val();
 
@@ -1279,6 +1282,7 @@ window.onload = function () {
 		//startClick1=false;
 		notej=0;
 	}
+	
 }
 
 </script>
