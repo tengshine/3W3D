@@ -448,7 +448,7 @@ function Event (beat, duration, note, type, volume, pos) {
 	Event.pos = pos;
 	}
 
-
+	this.string = notetoString(note);
 
 	this.length = dynamic2Length (this.volume, this.pos, this.duration); 
 }
