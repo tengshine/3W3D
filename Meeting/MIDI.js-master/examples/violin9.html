@@ -722,6 +722,18 @@ function makeSequence(eventArray) {
 	return keyframes;
 
 }
+function _Move (slurType, moveRatio, strokeLength) {
+   var sign = (slurType === 'D') ? 1: -1;
+   return sign * moveRatio * strokeLength;
+}
+
+function _Length (lastKeyStop, slurType, slurLength) {
+   // slur starts from lastKeyStop
+   var maxStroke = (slurType === 'D') ? 1 - lastKeyStop : lastKeyStop;
+   return Math.min (slurLength, maxStroke);
+}
+
+
 function fk(theta, joints) {
 	joints[0] = new THREE.Vector3(0, 0, 0);
 
