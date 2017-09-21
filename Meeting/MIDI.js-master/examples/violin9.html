@@ -1269,10 +1269,10 @@ window.onload = function () {
 	}
 	
 	if(notej==1&&eventArray[0].beat!=0){
-		notej--;
+		
 		setTimeout(function(){
 			console.log("1");
-			
+			notej--;
 			playMusic();
 		},eventArray[0].beat*1000*60/bpm1);
 	}
