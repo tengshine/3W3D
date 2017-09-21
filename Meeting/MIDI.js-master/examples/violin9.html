@@ -1244,17 +1244,11 @@ window.onload = function () {
 		var violinVolume=127*eventArray[notej].volume;	//音量大小
 		if(notej==0&&eventArray[notej].beat==0){
 			MIDI.noteOn(1,note1,violinVolume,0);
+			console.log("0");
 		}
 		
 		
-		else if(notej==0&&eventArray[notej].beat!=0){
-			setTimeout(function(){
-				//notej++;
-				console.log("1");
-				
-				playMusic();
-			},eventArray[0].beat*1000*60/bpm1);
-		}
+		
 		else if(notej!=0){
 			MIDI.noteOn(1,note1,violinVolume,0);
 			console.log("2");
@@ -1268,7 +1262,7 @@ window.onload = function () {
 		if(notej<eventArray.length-1){
 			time=eventArray[notej+1].beat-eventArray[notej].beat;
 		}
-		notej++;
+		
 
 	}
 	if(!startClick1) {
@@ -1276,12 +1270,21 @@ window.onload = function () {
 		MIDI.noteOff(1,note1,0);
 		console.log("3");
 	}
-
+	
+	
 	if(notej!=0&&notej<eventArray.length && startClick1){
 		setTimeout(function(){
 			console.log("4");
 			playMusic();
 		},time*1000*60/bpm1);
+	}
+	else if(notej==0&&eventArray[notej].beat!=0){
+		setTimeout(function(){
+			notej--;
+			console.log("1");
+			
+			playMusic();
+		},eventArray[0].beat*1000*60/bpm1);
 	}
 	if(notej==eventArray.length){
 		startClick1=false;
@@ -1289,6 +1292,7 @@ window.onload = function () {
 		notej=0;
 		console.log("5");
 	}
+	notej++;
 	
 }
 
