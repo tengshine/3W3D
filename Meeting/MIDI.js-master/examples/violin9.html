@@ -161,6 +161,9 @@ var startT;
 var notej =0;
 var bowP1=6.35,bowP2=6.47;
 var tempP1=bowP1,tempP2=bowP2;
+
+let time2Beat = (msec) => ( msec / 1000 * BPM / 60 );
+let beat2Time = (beat) => ( beat * 60000 / BPM );  // return msec
 let isSlur = (type) => { 
 	if (type && type[0] === 'S')
 		return true;
