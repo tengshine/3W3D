@@ -1237,63 +1237,34 @@ window.onload = function () {
 	}
 	
 	//////////////////////////////////////////////////
-	if(startClick1) {
-		var bpm1 = $('#tempo').val();
-
-		//console.log(note1);
-		var violinVolume=127*eventArray[notej].volume;	//音量大小
-		if(notej==0&&eventArray[notej].beat==0){
-			MIDI.noteOn(1,note1,violinVolume,0);
-			console.log("0");
-		}
-		
-		
-		
-		else if(notej!=0){
-			MIDI.noteOn(1,note1,violinVolume,0);
-			console.log("2");
-		}
-		var duration1 = eventArray[notej].duration-0.1;
-		setTimeout(function(){
-			MIDI.noteOff(1,note1,0);
-			//console.log(note1+'off');
-		},duration1*1000*60/bpm1);
-		var time=eventArray[notej].beat;
-		if(notej<eventArray.length-1){
-			time=eventArray[notej+1].beat-eventArray[notej].beat;
-		}
-		notej++;
-
-	}
-	if(!startClick1) {
-		notej= 0;
-		MIDI.noteOff(1,note1,0);
-		console.log("3");
-	}
-	
-	if(notej==1&&eventArray[0].beat!=0){
-		notej--;
-		setTimeout(function(){
-			console.log("1");
-			
-			playMusic();
-		},eventArray[0].beat*1000*60/bpm1);
-	}
-	if(notej!=0&&notej<eventArray.length && startClick1){
-		setTimeout(function(){
-			console.log("4");
-			playMusic();
-		},time*1000*60/bpm1);
-	}
-	
-	if(notej==eventArray.length){
-		
-		notej=0;
-		console.log("5");
-	}
+	eventArray.forEach ( function (event) {
+   	if (event.note !== 0) {
+   		setTimeout ( function () {NoteOn (event.note, event.duration, event.dynamics, event.type)}, 
+   			beat2Time (4 + event.beat) );
+    }
+   });
 	
 }
 
+function NoteOn (note, duration, dynamics, type) {
+   console.log ('On: ' + note + ' - ' + dynamics + ':' + type);
+
+   MIDI.noteOn(1, note, 127*dynamics, 0);
+   
+   var dutyCycle;
+   dutyCycle = isStaccato(type) ? 0.1 : 0.9;
+   if (isLift (type))
+   	dutyCycle = 0.3;
+   	
+   setTimeout ( function() { NoteOff (note);}, dutyCycle*beat2Time (duration));
+}
+
+function NoteOff (note) {
+   console.log ('   Off: ' + note);
+   
+   MIDI.noteOff(1,note,0);
+
+}
 </script>
 </body>
 
