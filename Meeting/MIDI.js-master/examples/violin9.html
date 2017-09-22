@@ -149,6 +149,8 @@ BPM <input id='tempo' type="range" min=30 max=210 value = 60><span id = "bpm">60
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/MTLLoader.js"></script>
+<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/OBJLoader.js"></script>
 
 <script src="test1.js"></script>
 
@@ -340,7 +342,7 @@ var theta0 = 0; // was torsoTurn = 0;
 
 var axes = [];
 var joints = [];
-
+var violinvv = new THREE.Object3D();
 var zz = 0;
 var rightArm1, rightArm2;
 var bowbow;
@@ -860,28 +862,88 @@ function init() {
 	var violin1 = new THREE.Mesh( new THREE.CylinderGeometry( 0.89,0.89, 0.336, 32 ),new THREE.MeshLambertMaterial( {color: 0xBB3D00} ));
 	violin1.position.set(2.67,0,0);
 
+	<!-- violin.add(violin1); -->
+
+	<!-- var violin2 = new THREE.Mesh( new THREE.CylinderGeometry( 1.04, 1.04, 0.336, 32 ),new THREE.MeshLambertMaterial( {color: 0xBB3D00} )); -->
+	<!-- violin2.position.set(-1.63,0,0); -->
+	<!-- violin1.add(violin2); -->
+
+	<!-- var violin3 = new THREE.Mesh( new THREE.CylinderGeometry( 0.168, 0.168, 3.56, 32 ),new THREE.MeshLambertMaterial( {color: 0x444444} )); -->
+	<!-- violin3.rotation.z=Math.PI/2; -->
+	<!-- violin3.position.set(1.78,0,0); -->
+	<!-- violin1.add(violin3); -->
+	<!-- //////////////////////////////////// -->
+
+
+	<!-- THREE.ImageUtils.crossOrigin = ''; -->
+    <!-- var material = new THREE.MeshBasicMaterial({ -->
+        <!-- side: THREE.DoubleSide, -->
+        <!-- transparent: true, -->
+				<!-- map:THREE.ImageUtils.loadTexture('http://i.imgur.com/ZsC906W.png')}); -->
+	<!-- var bridge = new THREE.Mesh(new THREE.BoxGeometry( 0.0001, 0.2, 0.5 ), material); -->
+	<!-- violin1.add(bridge); -->
+	<!-- bridge.position.set(-1,0.268,0); -->
+	<!-- bridge.rotation.y=Math.PI; -->
+	violin1.material.transparent = true;
+	violin1.material.opacity = 0;
 	violin.add(violin1);
 
 	var violin2 = new THREE.Mesh( new THREE.CylinderGeometry( 1.04, 1.04, 0.336, 32 ),new THREE.MeshLambertMaterial( {color: 0xBB3D00} ));
 	violin2.position.set(-1.63,0,0);
+	violin2.material.transparent = true;
+	violin2.material.opacity = 0;
 	violin1.add(violin2);
 
 	var violin3 = new THREE.Mesh( new THREE.CylinderGeometry( 0.168, 0.168, 3.56, 32 ),new THREE.MeshLambertMaterial( {color: 0x444444} ));
 	violin3.rotation.z=Math.PI/2;
 	violin3.position.set(1.78,0,0);
+	violin3.material.transparent = true;
+	violin3.material.opacity = 0;
 	violin1.add(violin3);
-	////////////////////////////////////
+
+	var onProgress = function(xhr) {
+    if (xhr.lengthComputable) {
+      var percentComplete = xhr.loaded / xhr.total * 100;
+      console.log(Math.round(percentComplete, 2) + '% downloaded');
+    }
+  };
+
+  var onError = function(xhr) {};
+
+  //THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+
+  var mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setPath('violinmesh/');
+ 	mtlLoader.load('violin.mtl', function(materials) {
+
+    materials.preload();
+
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath('violinmesh/');
+    objLoader.load('violin.obj', function(object) {
+
+			var theObject =  unitize (object, 6);
+			theObject.position.set(0,5.8,3.5);
+			theObject.rotation.y = Math.PI;
+			violinvv.add(theObject);
+			violinvv.rotation.y = Math.PI/6;
+			violin1.add(violinvv);
+			scene.add (violinvv);
+
+			//////// MATERIAL ADJUSTMENT for porsche ///////////////
+			// transparent window: double-side fix
+			object.traverse (
+				function(mesh) {
+					if (mesh instanceof THREE.Mesh) {
+						mesh.material.side = THREE.DoubleSide;
+					}
+				});
 
 
-	THREE.ImageUtils.crossOrigin = '';
-    var material = new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide,
-        transparent: true,
-				map:THREE.ImageUtils.loadTexture('http://i.imgur.com/ZsC906W.png')});
-	var bridge = new THREE.Mesh(new THREE.BoxGeometry( 0.0001, 0.2, 0.5 ), material);
-	violin1.add(bridge);
-	bridge.position.set(-1,0.268,0);
-	bridge.rotation.y=Math.PI;
+    }, onProgress, onError);
+
+  });
 	bow = new THREE.Mesh( new THREE.CylinderGeometry( 0.05, 0.05, 10, 32 ),new THREE.MeshLambertMaterial( {color: 0xdddddd,visible:false} ));
 	violin1.add( bow );
 	bow.position.set(-0.79,0.416,0.3);
@@ -938,6 +1000,41 @@ function init() {
 	plane1.position.set(0,5,0);
 
 }
+
+function unitize (object, targetSize) {
+
+	// find bounding box of 'object'
+	var box3 = new THREE.Box3();
+	box3.setFromObject (object);
+	var size = new THREE.Vector3();
+	size.subVectors (box3.max, box3.min);
+	var center = new THREE.Vector3();
+	center.addVectors(box3.max, box3.min).multiplyScalar (0.5);
+
+	console.log ('center: ' + center.x + ', '+center.y + ', '+center.z );
+	console.log ('size: ' + size.x + ', ' +  size.y + ', '+size.z );
+
+	// uniform scaling according to objSize
+	var objSize = findMax (size);
+	var scaleSet = targetSize/objSize;
+
+	var theObject =  new THREE.Object3D();
+	theObject.add (object);
+	object.scale.set (scaleSet, scaleSet, scaleSet);
+	object.position.set (-center.x*scaleSet, -center.y*scaleSet + size.y/2*scaleSet, -center.z*scaleSet);
+
+	return theObject;
+
+	function findMax(v) {
+		if (v.x > v.y) {
+			return v.x > v.z ? v.x : v.z;
+		} else { // v.y > v.x
+			return v.y > v.z ? v.y : v.z;
+		}
+	}
+
+}
+
 
 function time2Beat(msec) {
   return msec / 1000 * $('#tempo').val() / 60;
