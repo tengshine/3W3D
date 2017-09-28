@@ -1369,12 +1369,12 @@ function playMusic(){
 	}
 	
 	if(notej==eventArray.length){
-		
-		notej=0;
-		console.log("5");
 		setTimeout(function(){
 			startClick = false;
-		},eventArray[eventArray.length-1].duration);
+		},eventArray[notej-1].duration);
+		notej=0;
+		console.log("5");
+		
 	}
 	
 	
