@@ -1369,10 +1369,14 @@ function playMusic(){
 	}
 	
 	if(notej==eventArray.length){
-		startClick = false;
+		
 		notej=0;
 		console.log("5");
+		setTimeout(function(){
+			startClick = false;
+		},eventArray[eventArray.length-1].duration);
 	}
+	
 	
 }
 </script>
