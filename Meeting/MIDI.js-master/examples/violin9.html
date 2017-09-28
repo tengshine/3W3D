@@ -220,7 +220,6 @@ function p1top2(){
 
 var CCDsys = function() {
 
-
 	this.thetas = [];
 	this.axes = [];
 
@@ -232,12 +231,11 @@ var CCDsys = function() {
 		this.fk = fkEval;
 
 	}
-
 	this.CCD_axis = function(axis, id, angleLo, angleHi) {
 
 		this.axis = axis.clone();
 		this.jointid = id;
-		var thetaLo = angleLo === undefined? -1e4 : angleLo; // default: no limits
+		var thetaLo = angleLo === undefined? 29 : angleLo; // default: no limits
 		var thetaHi = angleHi === undefined? 1e4  : angleHi;
 		this.limits = new THREE.Vector2(thetaLo, thetaHi);
 
@@ -254,7 +252,7 @@ var CCDsys = function() {
 
 
 		var njoints = axes[axes.length - 1].jointid + 1;
-		//console.log ('njoints: ' + njoints);
+		console.log ('njoints: ' + njoints);
 		var joints = [];
 		for (var i = 0; i <= njoints; i++) joints[i] = new THREE.Vector3();
 
@@ -456,18 +454,18 @@ function Event (beat, duration, note, type, volume, pos) {
 }
 function dynamic2Length (dynamic, bowCenter, duration) {
 
-  // 0. extra long stroke ... return 1.0
+	// 0. extra long stroke ... return 1.0
 
-  // 1. consider duration (2 beats <--> 1.0)
+	// 1. consider duration (2 beats <--> 1.0)
 
-  var len = Math.min (duration/2, 1.0);
+	var len = Math.min (duration/2, 1.0);
 
-  // 2. consider dynamics
-  len = len * dynamic;
+	// 2. consider dynamics
+	len = len * dynamic;
 
-  console.log ('dy:' + dynamic + ' len: ' + len);
+	console.log ('dy:' + dynamic + ' len: ' + len);
 
-  return len;
+	return len;
 
 }
 
@@ -480,40 +478,40 @@ function notetoString(note){
 
 function makeSequence(eventArray) {
 
-  var keyframes = [];
-  var lastKeyStop;
+	var keyframes = [];
+	var lastKeyStop;
 
 
-  // count-in standby
-  var keyframe0 = {};
-  keyframe0.key = -4; keyframe0.pos = 0.5;  // standby at midbow
-  keyframes.push (keyframe0);
+	// count-in standby
+	var keyframe0 = {};
+	keyframe0.key = -4; keyframe0.pos = 0.5;  // standby at midbow
+	keyframes.push (keyframe0);
 
-  // SET UP based on first event
-  event = eventArray[0];
-  var keyframe0 = {};
-  keyframe0.key = event.beat - 1; keyframe0.pos = 0.5;
-  keyframes.push (keyframe0);
-  var keyframe1 = {};
-  keyframe1.key = event.beat;
-  keyframe1.pos = isDownBow (event.type) ? event.pos - event.length / 2 : event.pos + event.length / 2;
-  keyframes.push(keyframe1);
-  lastKeyStop = keyframe1.pos;
+	// SET UP based on first event
+	event = eventArray[0];
+	var keyframe0 = {};
+	keyframe0.key = event.beat - 1; keyframe0.pos = 0.5;
+	keyframes.push (keyframe0);
+	var keyframe1 = {};
+	keyframe1.key = event.beat;
+	keyframe1.pos = isDownBow (event.type) ? event.pos - event.length / 2 : event.pos + event.length / 2;
+	keyframes.push(keyframe1);
+	lastKeyStop = keyframe1.pos;
 
-  // slur states
-  // first three: cumulative
-  var eventsInSlur = [];  // events in this stroke (including the first event)
-  var slurDur = 0;  // time
-  var slurLength;  // motion length
-  var slurType, slurStart; // set by first event in this stroke;
+	// slur states
+	// first three: cumulative
+	var eventsInSlur = [];  // events in this stroke (including the first event)
+	var slurDur = 0;  // time
+	var slurLength;  // motion length
+	var slurType, slurStart; // set by first event in this stroke;
 
-  for (var i = 0; i < eventArray.length; i++) {
+	for (var i = 0; i < eventArray.length; i++) {
 
-    var event = eventArray[i];
-    var prevEvent = eventArray[i-1];
-    var nextEvent = eventArray[i+1];  // could be undefined (for last event)
+		var event = eventArray[i];
+		var prevEvent = eventArray[i-1];
+		var nextEvent = eventArray[i+1];  // could be undefined (for last event)
 
-  //console.log ('event: ' + event.beat + ' pos: ' + event.pos);
+		//console.log ('event: ' + event.beat + ' pos: ' + event.pos);
 
 
 		if (event.note == 0 && ! isSlur(event.type)) { // standalone rest (not in a slur)
