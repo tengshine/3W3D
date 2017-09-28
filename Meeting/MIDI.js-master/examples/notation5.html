@@ -85,9 +85,9 @@ $('#tempo').change ( function() {
 	//BPM = $('#tempo').val();
 });
 //////////////////////////////////////////////////
-eventArray=makeEvenArray();
-function makeEvenArray(){
-	var eventArray=[];
+eventArray = makeEventArray();
+function makeEventArray(){
+	var eventArray = [];
 	eventArray.push(new Event(0, 0.5, 69, 'D', 0.2, 0.25));
 	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.3, 0.25));
 	eventArray.push(new Event(1, 0.5, 72, 'D', 0.4, 0.25));
@@ -119,15 +119,17 @@ function Event(beat,duration,note,type,volume,position){
 }
 
 ////////Array轉譜////////////////////////////////////
+
 function eventToScore(){
-	notesymbol1=notesymbol.clone();
 	eventToScore.counter=eventToScore.counter || 0;
+	notesymbol1=notesymbol.clone();
+	
 	var count=eventToScore.counter;
-	var val=0;
+	var val;
 	if(eventArray[count].beat<4)val=31;
-	else if(eventArray[count].beat<8)val=27;
-	else if(eventArray[count].beat<12)val=23;
-	else if(eventArray[count].beat<16)val=19;
+	else if(eventArray[count].beat>3&&eventArray[count].beat<8)val=27;
+	else if(eventArray[count].beat>7&&eventArray[count].beat<12)val=23;
+	else if(eventArray[count].beat>11&&eventArray[count].beat<16)val=19;
 	notesymbol1.position.x=eventArray[count].beat*4-val;
 	//notesymbol1.position.y=
 	scene.add(notesymbol1);
@@ -285,7 +287,9 @@ function init() {
 	tapBlock.name = "tapBlock";
 	pickables.push(tapBlock);
 	scene.add(tapBlock);
-	eventToScore();
+	//eventToScore();
+	console.log(eventArray);
+	
 }
 
 function onWindowResize() {
