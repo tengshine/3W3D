@@ -493,14 +493,14 @@ function roundUp(numToRound,multiple)
 function startPlayList (eventArray) {
    eventArray.forEach ( function (event) {
    	if (event.note !== 0) {
-   		setTimeout ( function () {NoteOn (event.note, event.duration, event.dynamics)},
+   		setTimeout ( function () {NoteOn (event.note, event.duration, event.volume)},
    			beat2Time (4 + event.beat) );
     }
    });
 }
 
-function NoteOn (note, duration, dynamics) {
-   MIDI.noteOn(0, note, 127*dynamics, 0);
+function NoteOn (note, duration, volume) {
+   MIDI.noteOn(0, note, 127*volume, 0);
    setTimeout ( function() { NoteOff (note);}, beat2Time (duration));
 }
 
