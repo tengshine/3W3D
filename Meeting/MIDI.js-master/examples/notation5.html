@@ -88,19 +88,33 @@ $('#tempo').change ( function() {
 eventArray = makeEventArray();
 function makeEventArray(){
 	var eventArray = [];
-	eventArray.push(new Event(0, 0.5, 69, 'D', 0.2, 0.25));
-	eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.3, 0.25));
-	eventArray.push(new Event(1, 0.5, 72, 'D', 0.4, 0.25));
-	eventArray.push(new Event(1.5, 0.5, 74, 'U',0.5, 0.25));
-	eventArray.push(new Event(2, 0.5, 74, 'D',0.5, 0.25));
-	eventArray.push(new Event(2.5, 0.5, 76, 'U',0.6,0.25));
-	eventArray.push(new Event(3, 0.5, 78, 'D',0.7, 0.25));
-	eventArray.push(new Event(3.5, 0.5, 79, 'U',0.8, 0.25));
-	eventArray.push(new Event(4, 0.5, 79, 'D',0.8, 0.25));
-	eventArray.push(new Event(4.5, 0.5, 76, 'U',0.8, 0.25));
-	eventArray.push(new Event(5, 0.5, 78, 'D',0.6, 0.25));
-	eventArray.push(new Event(5.5, 0.5, 74, 'U',0.4, 0.25));
-	eventArray.push(new Event(6, 2, 72, 'D',0.1, 0.5));
+	<!-- eventArray.push(new Event(0, 0.5, 69, 'D', 0.2, 0.25)); -->
+	<!-- eventArray.push(new Event(0.5, 0.5, 71, 'U', 0.3, 0.25)); -->
+	<!-- eventArray.push(new Event(1, 0.5, 72, 'D', 0.4, 0.25)); -->
+	<!-- eventArray.push(new Event(1.5, 0.5, 74, 'U',0.5, 0.25)); -->
+	<!-- eventArray.push(new Event(2, 0.5, 74, 'D',0.5, 0.25)); -->
+	<!-- eventArray.push(new Event(2.5, 0.5, 76, 'U',0.6,0.25)); -->
+	<!-- eventArray.push(new Event(3, 0.5, 77, 'D',0.7, 0.25)); -->
+	<!-- eventArray.push(new Event(3.5, 0.5, 79, 'U',0.8, 0.25)); -->
+	<!-- eventArray.push(new Event(4, 0.5, 79, 'D',0.8, 0.25)); -->
+	<!-- eventArray.push(new Event(4.5, 0.5, 76, 'U',0.8, 0.25)); -->
+	<!-- eventArray.push(new Event(5, 0.5, 77, 'D',0.6, 0.25)); -->
+	<!-- eventArray.push(new Event(5.5, 0.5, 74, 'U',0.4, 0.25)); -->
+	<!-- eventArray.push(new Event(6, 2, 72, 'D',0.1, 0.5)); -->
+	<!-- eventArray.push(new Event(8, 1, 69, 'D',0.1, 0.5)); -->
+	<!-- eventArray.push(new Event(9, 1, 74, 'D',0.1, 0.5)); -->
+	<!-- eventArray.push(new Event(10, 1, 77, 'D',0.1, 0.5)); -->
+	eventArray.push(new Event(0,   0.5, 74, 'DS', 0.8, 0.5) );
+	eventArray.push(new Event(0.5, 0.5, 76, 'US') );
+	eventArray.push(new Event(1.0,  0.5, 74, 'DS') );
+	eventArray.push(new Event(1.5, 0.5, 71, 'US') );
+	eventArray.push(new Event(2.0, 0.5, 72, 'DS') );
+	eventArray.push(new Event(2.5, 0.5, 74, 'US') );
+	eventArray.push(new Event(3.0,  0.5, 72, 'DS') );
+	eventArray.push(new Event(3.5, 0.5, 69, 'US') );
+	eventArray.push(new Event(4,     1, 67, 'DS') );
+	eventArray.push(new Event(5,     1, 79, 'US') );
+	eventArray.push(new Event(6, 2, 67, 'D') );
 	return eventArray;
 
 }
@@ -114,30 +128,95 @@ function Event(beat,duration,note,type,volume,position){
 	this.length =  (volume+duration)/2|| 0.3; // default: 0.3
 	if((volume+duration)/2>1)this.length = 1;
 	this.volume = volume || 127;
-	
-
 }
 
 ////////Array轉譜////////////////////////////////////
 
-function eventToScore(){
+function eventToScore(eventArray){
 	eventToScore.counter=eventToScore.counter || 0;
-	notesymbol1=notesymbol.clone();
-	
+	////音符、休止符//////////////
+	quarterNote = notesymbol.clone();
+	eighthNotes = notesymbol1.clone();
+	quarterNoteRest = notesymbol2.clone();
+	eighthNoteRest = notesymbol3.clone();
+	eighthNotesdown = notesymbol4.clone();
+	halfNote = notesymbol5.clone();
+	/////////////////////////////////
 	var count=eventToScore.counter;
 	var val;
-	if(eventArray[count].beat<4)val=31;
-	else if(eventArray[count].beat>3&&eventArray[count].beat<8)val=27;
-	else if(eventArray[count].beat>7&&eventArray[count].beat<12)val=23;
-	else if(eventArray[count].beat>11&&eventArray[count].beat<16)val=19;
-	notesymbol1.position.x=eventArray[count].beat*4-val;
-	//notesymbol1.position.y=
-	scene.add(notesymbol1);
+	if(eventArray[count].beat<4)val=31+1;
+	else if(eventArray[count].beat>3&&eventArray[count].beat<8)val=27+1;
+	else if(eventArray[count].beat>7&&eventArray[count].beat<12)val=23+1;
+	else if(eventArray[count].beat>11&&eventArray[count].beat<16)val=19+1;
+	
+	//////放二分音符//////////
+	if(eventArray[count].duration==2){
+		halfNote.position.x=eventArray[count].beat*4-val;
+		if(eventArray[count].note>70){
+			halfNote.rotation.z=Math.PI;
+			halfNote.position.y=noteToPos(eventArray[count].note)-5.7;
+		}
+		else {
+			halfNote.position.y=noteToPos(eventArray[count].note);
+		}
+		scene.add(halfNote);
+	}
+	//////放四分音符//////////
+	if(eventArray[count].duration==1){
+		quarterNote.position.x=eventArray[count].beat*4-val;
+		if(eventArray[count].note>70){
+			quarterNote.rotation.z=Math.PI;
+			quarterNote.position.y=noteToPos(eventArray[count].note)-5.7;
+		}
+		else {
+			quarterNote.position.y=noteToPos(eventArray[count].note);
+		}
+		scene.add(quarterNote);
+	}
+	//////放八分音符//////////
+	if(eventArray[count].duration==0.5&&eventArray[count].note<70){
+		eighthNotes.position.x=eventArray[count].beat*4-val;
+		eighthNotes.position.y=noteToPos(eventArray[count].note)+0.3;
+		scene.add(eighthNotes);
+	}
+	if(eventArray[count].duration==0.5&&eventArray[count].note>70){
+		eighthNotesdown.position.x=eventArray[count].beat*4-val;
+		eighthNotesdown.position.y=noteToPos(eventArray[count].note)+0.3-6.3;
+		scene.add(eighthNotesdown);
+	}
+	//////放休止符//////////
+	if(eventArray[count].duration==0.5&&eventArray[count].note==0){
+		eighthNoteRest.position.x=eventArray[count].beat*4-val;
+		eighthNoteRest.position.y=noteToPos(eventArray[count].note)+0.3;
+		scene.add(eighthNoteRest);
+	}
+	if(eventArray[count].duration==1&&eventArray[count].note==0){
+		quarterNoteRest.position.x=eventArray[count].beat*4-val;
+		quarterNoteRest.position.y=noteToPos(eventArray[count].note)+0.3;
+		scene.add(quarterNoteRest);
+	}
+	
 	eventToScore.counter++;
 	if(eventToScore.counter>eventArray.length)return 0;
-	if(eventToScore.counter<=eventArray.length)eventToScore();
+	if(eventToScore.counter<=eventArray.length-1)eventToScore(eventArray);
 }
+function noteToPos(note){
+	var pos;
+	if(note==60)pos=0.2;
+	if(note==62)pos=1.5;
+	if(note==64)pos=2.8;
+	if(note==65)pos=4.1;
+	if(note==67)pos=5.4;
+	if(note==69)pos=6.7;
+	if(note==71)pos=8;
+	if(note==72)pos=9.3;
+	if(note==74)pos=10.6;
+	if(note==76)pos=11.9;
+	if(note==77)pos=13.2;
+	if(note==79)pos=14.5;
+	return pos;
 
+}
 
 function TapForBPM(){
 	timeSeconds = new Date().getTime();
@@ -259,7 +338,7 @@ function init() {
 		new THREE.Vector3(-31, 12, 0),
 		new THREE.Vector3(-31, -4, 0)
 	);
-	var material = new THREE.LineDashedMaterial({dashSize:1,gapSize:1,color:0xffffff});
+	var material = new THREE.LineDashedMaterial({dashSize:1,gapSize:1,color:0xffffff,visible:false});
 	geometry.computeLineDistances();
 	var yline = new THREE.Line(geometry, material,THREE.LineSegments);
 	for(var i=0;i<=72;i+=4){
@@ -280,18 +359,49 @@ function init() {
 
 	var texture2 = loader.load('http://i.imgur.com/TvJAexM.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture2});
-	notesymbol = new THREE.Mesh(new THREE.PlaneGeometry(6,8),material);
-
+	notesymbol = new THREE.Mesh(new THREE.PlaneGeometry(4,8),material);
+	///////8分音符/////////
+	var texture3 = loader.load('https://i.imgur.com/hUhEWrJ.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture3});
+	notesymbol1 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,8.3),material);
+	notesymbol1.position.set(0,7,0);	//69
+	//scene.add(notesymbol1);
+	///////4分休止符/////////
+	var texture4 = loader.load('https://i.imgur.com/NiKq0LI.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture4});
+	notesymbol2 = new THREE.Mesh(new THREE.PlaneGeometry(3.5,8.3),material);
+	notesymbol2.position.set(5,6.5,0);	//69
+	//scene.add(notesymbol2);
+	///////8分休止符/////////
+	var texture5 = loader.load('https://i.imgur.com/QtYQkxp.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture5});
+	notesymbol3 = new THREE.Mesh(new THREE.PlaneGeometry(2,5.3),material);
+	notesymbol3.position.set(10,5,0);	//69
+	//scene.add(notesymbol3);
+	
+	///////8分音符倒/////////
+	var texture6 = loader.load('https://i.imgur.com/PFYFlqK.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture6});
+	notesymbol4 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,10.5),material);
+	notesymbol4.position.set(10,7,0);	//69
+	//scene.add(notesymbol4);
+	///////2分音符/////////
+	var texture7 = loader.load('https://i.imgur.com/FgviW8X.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture7});
+	notesymbol5 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,10.5),material);
+	notesymbol5.position.set(10,6.8,0);	//69
+	//scene.add(notesymbol5);
+	
 	var tapBlock = new THREE.Mesh(new THREE.PlaneGeometry(8,8),new THREE.MeshBasicMaterial({color:0x791231}));
 	tapBlock.position.y = 25;
 	tapBlock.name = "tapBlock";
 	pickables.push(tapBlock);
 	scene.add(tapBlock);
 	//eventToScore();
-	console.log(eventArray);
+	//console.log(eventArray);
 	
 }
-
+eventToScore(eventArray);
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -307,9 +417,9 @@ function onDocumentMouseDown(event) {
 	var intersects = raycaster.intersectObjects( pickables );
 	if ( intersects.length > 0) {
     if( intersects[0].object.name !== "tapBlock"&&(mouse.x * 50>-35&&mouse.x * 50<-20||mouse.x * 50>-15&&mouse.x * 50<0||mouse.x * 50>5&&mouse.x * 50<20||mouse.x * 50>25&&mouse.x * 50<40)){
-      notesymbol1=notesymbol.clone();
-      notesymbol1.position.set(roundUp(mouse.x* 50,4), roundUp(mouse.y* 50,1.3)+2.8, 0);
-      notesymbol1.name = ++ notesymbolnums;
+      //notesymbol1=notesymbol.clone();
+      //notesymbol1.position.set(roundUp(mouse.x* 50,4), roundUp(mouse.y* 50,1.3)+2.8, 0);
+      //notesymbol1.name = ++ notesymbolnums;
       if(roundUp(mouse.y* 50,1.3)== -2.6){
         var geometry = new THREE.Geometry();
       	geometry.vertices.push(
@@ -321,13 +431,13 @@ function onDocumentMouseDown(event) {
           linewidth: 1.5
       	});
         var line = new THREE.Line( geometry, material );
-        notesymbol1.add(line);
+        //notesymbol1.add(line);
       }
 
       //scene.add(notesymbol1);
   	
 
-    MIDI.noteOn(0,postoNote(notesymbol1.position.y),127,0);
+    //MIDI.noteOn(0,postoNote(notesymbol1.position.y),127,0);
 
     }
     if( intersects[0].object.name === "tapBlock")
@@ -348,24 +458,7 @@ function recoveryBeat(position){
   }
   return position;
 }
-function postoNote(position){
-	var notenumber=69;
-	position=position.toFixed(1);
-	//position=(position-1.5)/1.3;
-	if(position==0.2)notenumber=60;
-	if(position==1.5)notenumber=62;
-	if(position==2.8)notenumber=64;
-	if(position==4.1)notenumber=65;
-	if(position==5.4)notenumber=67;
-	if(position==6.7)notenumber=69;
-	if(position==8)notenumber=71;
-	if(position==9.3)notenumber=72;
-	if(position==10.6)notenumber=74;
-	if(position==11.9)notenumber=76;
-	if(position==13.2)notenumber=77;
-	if(position==14.5)notenumber=79;
-	return notenumber;
-}
+
 
 
 function onDocumentMouseMove(event) {
