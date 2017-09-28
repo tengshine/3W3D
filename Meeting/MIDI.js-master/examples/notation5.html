@@ -73,7 +73,7 @@ let beat2Time = (beat) => ( beat * 60000 / BPM );  // return msec
 init();
 animate();
 $('#playnotes').click(function(){
-  startPlayList(notes);
+  startPlayList(eventArray);
 });
 $('#undo').click(function(){
 	//notes.pop();
