@@ -267,7 +267,7 @@ var CCDsys = function() {
 		var t_end = new THREE.Vector3();
 		var tmpV = new THREE.Vector3();
 
-
+		
 		for (var iter = 0; iter < MAXITER; iter++) {
 			for (var i = axes.length - 1; i >= 0; i--) {
 				base.copy(joints[axes[i].jointid]);
@@ -291,7 +291,7 @@ var CCDsys = function() {
 				tmpV.crossVectors(t_end, t_target);
 				var sign = (tmpV.dot(axis) > 0) ? 1 : -1;
 				theta[i] += sign * angle;
-
+				if(startClick)axes[i].limits.x=-1e4;
 				theta[i] = CLAMP(theta[i], axes[i].limits.x, axes[i].limits.y)
 
 				this.fk(theta, joints);
