@@ -507,12 +507,14 @@ function eventToScore(eventArray){
 		eighthNoteRest.position.y=5;
 		eighthNoteRest.name = ++notesymbolnums;
 		scene.add(eighthNoteRest);
+		eighthNoteRest.position.z=-50;
 	}
 	if(eventArray[count].duration==1&&eventArray[count].note==1){
 		quarterNoteRest.position.x=eventArray[count].beat*4-val;
 		quarterNoteRest.position.y=6.5;
 		quarterNoteRest.name = ++notesymbolnums;
 		scene.add(quarterNoteRest);
+		quarterNoteRest.position.z=-50;
 	}
 	//////放二分音符//////////
 	if(eventArray[count].duration==2){
@@ -525,6 +527,7 @@ function eventToScore(eventArray){
 			halfNote.position.y=noteToPos(eventArray[count].note);
 		}
 		halfNote.name = ++notesymbolnums;
+		halfNote.position.z=-50;
 		scene.add(halfNote);
 	}
 	//////放四分音符//////////
@@ -539,6 +542,9 @@ function eventToScore(eventArray){
 		}
 		quarterNote.name = ++notesymbolnums;
 		scene.add(quarterNote);
+		quarterNote.position.z=-50;
+		
+		//lines.add(quarterNote);
 	}
 	//////放八分音符//////////
 	if(eventArray[count].duration==0.5&&eventArray[count].note<70&&eventArray[count].note>0){
@@ -546,17 +552,19 @@ function eventToScore(eventArray){
 		eighthNotes.position.y=noteToPos(eventArray[count].note)+0.3;
 		eighthNotes.name = ++notesymbolnums;
 		scene.add(eighthNotes);
+		eighthNotes.position.z=-50;
 	}
 	if(eventArray[count].duration==0.5&&eventArray[count].note>70&&eventArray[count].note>0){
 		eighthNotesdown.position.x=eventArray[count].beat*4-val;
 		eighthNotesdown.position.y=noteToPos(eventArray[count].note)+0.3-6.3;
 		eighthNotesdown.name = ++notesymbolnums;
 		scene.add(eighthNotesdown);
+		eighthNotesdown.position.z=-50;
 	}
 
 
 	eventToScore.counter++;
-
+	
 	if(eventToScore.counter<=eventArray.length-1)eventToScore(eventArray);
 	else{
 		eventToScore.counter = 0;
@@ -897,7 +905,7 @@ function init() {
 	light.position.set(50, 150, 150);
 	scene.add(light);
 	controls = new THREE.OrbitControls(camera, renderer.domElement);
-
+	//////////////////////////////////////////////////////////////////////
 	human = new THREE.Object3D();
 	var head = new THREE.Mesh( new THREE.SphereGeometry( 1, 32, 32 ), new THREE.MeshLambertMaterial( {color: 0x666666} ) );
 	head.position.set(0,7,0);
@@ -1161,7 +1169,7 @@ function init() {
 	birdy.position.set(-38,5.7,0);
 	lines.add(birdy);
 
-	lines.position.set(0,0,20);
+	lines.position.set(0,0,-50);
 
 	var texture2 = loader.load('http://i.imgur.com/TvJAexM.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture2});
@@ -1396,7 +1404,16 @@ function animate() {
 
 	//link1.quaternion.copy (quaternion);
 	plane1.quaternion.copy (quaternion);
-
+	lines.lookAt (camera.position);
+	<!-- notesymbol.lookAt (camera.position); -->
+	<!-- notesymbol1.lookAt (camera.position); -->
+	<!-- notesymbol2.lookAt (camera.position); -->
+	<!-- notesymbol3.lookAt (camera.position); -->
+	<!-- notesymbol4.lookAt (camera.position); -->
+	<!-- notesymbol5.lookAt (camera.position); -->
+	
+	
+	
 	update();
 	render();
 }

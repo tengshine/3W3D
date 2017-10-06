@@ -195,6 +195,7 @@ function makeEventArray1b () {
 
 function makeEventArray2 () {  // carmina burana
   var eventArray = [];
+  eventArray.push(new Event(0, 1, 0, 'L') );
   eventArray.push(new Event(1, 2, 71, 'D', 0.4, 0.5) );
   eventArray.push(new Event(3, 1, 72, 'U') );
   eventArray.push(new Event(4, 1, 69, 'D') );
@@ -213,6 +214,7 @@ function makeEventArray3 () {  // rest
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
   eventArray.push(new Event(1, 1, 0) );
   eventArray.push(new Event(2, 1, 69, 'U') );
+  eventArray.push(new Event(3, 1, 0, 'L') );
   period = 3;
   return eventArray;
 }
@@ -222,6 +224,7 @@ function makeEventArray3a () { // rest & lift
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
   eventArray.push(new Event(1, 1, 0, 'L') );
   eventArray.push(new Event(2, 1, 69, 'D') );
+  eventArray.push(new Event(3, 1, 0, 'L') );
   period = 3;
   return eventArray;
 }
