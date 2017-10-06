@@ -195,12 +195,12 @@ function makeEventArray1b () {
 
 function makeEventArray2 () {  // carmina burana
   var eventArray = [];
-  eventArray.push(new Event(0, 1, 0, 'L') );
+  eventArray.push(new Event(0, 1, 1, 'L') );
   eventArray.push(new Event(1, 2, 71, 'D', 0.4, 0.5) );
   eventArray.push(new Event(3, 1, 72, 'U') );
   eventArray.push(new Event(4, 1, 69, 'D') );
   eventArray.push(new Event(5, 1, 69, 'U') );
-  eventArray.push(new Event(6, 1, 0, 'L') );
+  eventArray.push(new Event(6, 1, 1, 'L') );
   eventArray.push(new Event(7, 2, 71, 'D', 1.0, 0.5) ); // second phrase, lift to nut!
   eventArray.push(new Event(9, 1, 72, 'U') );
   eventArray.push(new Event(10, 1, 69, 'D') );
@@ -212,9 +212,9 @@ function makeEventArray2 () {  // carmina burana
 function makeEventArray3 () {  // rest
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 1, 0) );
+  eventArray.push(new Event(1, 1, 1) );
   eventArray.push(new Event(2, 1, 69, 'U') );
-  eventArray.push(new Event(3, 1, 0, 'L') );
+  eventArray.push(new Event(3, 1, 1, 'L') );
   period = 3;
   return eventArray;
 }
@@ -222,9 +222,9 @@ function makeEventArray3 () {  // rest
 function makeEventArray3a () { // rest & lift
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 1, 0, 'L') );
+  eventArray.push(new Event(1, 1, 1, 'L') );
   eventArray.push(new Event(2, 1, 69, 'D') );
-  eventArray.push(new Event(3, 1, 0, 'L') );
+  eventArray.push(new Event(3, 1, 1, 'L') );
   period = 3;
   return eventArray;
 }
@@ -233,7 +233,7 @@ function makeEventArray3a () { // rest & lift
 function makeEventArray3b () {
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 2, 0, 'L') );
+  eventArray.push(new Event(1, 2, 1, 'L') );
   eventArray.push(new Event(3, 1, 69, 'D') );
   period = 4;
   return eventArray;
@@ -243,12 +243,13 @@ function makeEventArray3b () {
 function makeEventArray3c () { // lift with rest
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 0.75, 0, 'L') );
+  eventArray.push(new Event(1, 0.75, 1, 'L') );
   eventArray.push(new Event(1.75, 0.25, 72, 'U', 0.8, 0.25) );
   eventArray.push(new Event(2, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(3, 0.75, 0, 'L') );
+  eventArray.push(new Event(3, 0.75, 1, 'L') );
   eventArray.push(new Event(3.75, 0.25, 72, 'U', 0.8, 0.25) );
   eventArray.push(new Event(4, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 1, 'L') );
   period = 5;
   return eventArray;
 }
@@ -260,7 +261,7 @@ function makeEventArray3d () {  // with rest & staccato
   eventArray.push(new Event(0.333, 0.333, 69, 'S') );
   eventArray.push(new Event(0.666, 0.333, 71, 'S') );
   eventArray.push(new Event(1, 0.5, 72, 'D') );
-  eventArray.push(new Event(1.5, 0.5, 0, 'L') ); // rest
+  eventArray.push(new Event(1.5, 0.5, 1, 'L') ); // rest
   eventArray.push(new Event(2, 2, 72, 'D') );
   period = 4;
   return eventArray;
