@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -365,7 +364,7 @@ var lines = new THREE.Object3D();
 
 var FOREARM_LEN = 3;
 var UPPERARM_LEN = 3;
-
+var rtTexture,sceneRTT;
 
 var eventArray = makeEventArray();
 keyframes = makeSequence(eventArray);
@@ -405,9 +404,9 @@ function makeEventArray () {
 	eventArray.push(new Event(6, 2, 72, 'D',0.1, 0.5));
 	*/
 	eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 1, 71, 'U') );
-  eventArray.push(new Event(2, 1, 72, 'D') );
-  eventArray.push(new Event(3, 1, 74, 'U') );
+	eventArray.push(new Event(1, 1, 71, 'U') );
+	eventArray.push(new Event(2, 1, 72, 'D') );
+	eventArray.push(new Event(3, 1, 74, 'U') );
 	return eventArray;
 }
 
@@ -495,6 +494,8 @@ function eventToScore(eventArray){
 	eighthNoteRest = notesymbol3.clone();
 	eighthNotesdown = notesymbol4.clone();
 	halfNote = notesymbol5.clone();
+	sixteenNote = notesymbol6.clone();
+	sixteenNotedown = notesymbol7.clone();
 	/////////////////////////////////
 	var count=eventToScore.counter;
 	var val;
@@ -504,30 +505,27 @@ function eventToScore(eventArray){
 	else if(eventArray[count].beat>11&&eventArray[count].beat<16)val=19+1;
 	//////放休止符//////////
 	if(eventArray[count].duration==0.5&&eventArray[count].note==1){
+		eighthNoteRest.position.z=-50;
 		eighthNoteRest.position.x=eventArray[count].beat*4-val;
 		eighthNoteRest.position.y=5;
-		eighthNoteRest.name = ++notesymbolnums;
 		scene.add(eighthNoteRest);
-		eighthNoteRest.position.z=-50;
 	}
 	if(eventArray[count].duration==1&&eventArray[count].note==1){
+		quarterNoteRest.position.z=-50;
 		quarterNoteRest.position.x=eventArray[count].beat*4-val;
 		quarterNoteRest.position.y=6.5;
-		quarterNoteRest.name = ++notesymbolnums;
 		scene.add(quarterNoteRest);
-		quarterNoteRest.position.z=-50;
 	}
 	//////放二分音符//////////
 	if(eventArray[count].duration==2){
 		halfNote.position.x=eventArray[count].beat*4-val;
 		if(eventArray[count].note>70){
 			halfNote.rotation.z=Math.PI;
-			halfNote.position.y=noteToPos(eventArray[count].note)-5.7;
+			halfNote.position.y=noteToPos(eventArray[count].note)-5.1;
 		}
 		else {
-			halfNote.position.y=noteToPos(eventArray[count].note);
+			halfNote.position.y=noteToPos(eventArray[count].note)+0.7;
 		}
-		halfNote.name = ++notesymbolnums;
 		halfNote.position.z=-50;
 		scene.add(halfNote);
 	}
@@ -536,41 +534,46 @@ function eventToScore(eventArray){
 		quarterNote.position.x=eventArray[count].beat*4-val;
 		if(eventArray[count].note>70){
 			quarterNote.rotation.z=Math.PI;
-			quarterNote.position.y=noteToPos(eventArray[count].note)-5.7;
+			quarterNote.position.y=noteToPos(eventArray[count].note)-6.4;
 		}
 		else {
-			quarterNote.position.y=noteToPos(eventArray[count].note);
+			quarterNote.position.y=noteToPos(eventArray[count].note)+1.1;
 		}
-		quarterNote.name = ++notesymbolnums;
-		scene.add(quarterNote);
 		quarterNote.position.z=-50;
-		
-		//lines.add(quarterNote);
+		scene.add(quarterNote);
 	}
 	//////放八分音符//////////
 	if(eventArray[count].duration==0.5&&eventArray[count].note<70&&eventArray[count].note>0){
 		eighthNotes.position.x=eventArray[count].beat*4-val;
-		eighthNotes.position.y=noteToPos(eventArray[count].note)+0.3;
-		eighthNotes.name = ++notesymbolnums;
-		scene.add(eighthNotes);
+		eighthNotes.position.y=noteToPos(eventArray[count].note)+0.8;
 		eighthNotes.position.z=-50;
+		scene.add(eighthNotes);
 	}
+	//////放八分音符倒//////////
 	if(eventArray[count].duration==0.5&&eventArray[count].note>70&&eventArray[count].note>0){
 		eighthNotesdown.position.x=eventArray[count].beat*4-val;
-		eighthNotesdown.position.y=noteToPos(eventArray[count].note)+0.3-6.3;
-		eighthNotesdown.name = ++notesymbolnums;
-		scene.add(eighthNotesdown);
+		eighthNotesdown.position.y=noteToPos(eventArray[count].note)+0.3-6.9;
 		eighthNotesdown.position.z=-50;
+		scene.add(eighthNotesdown);
 	}
-
+	//////放16分音符//////////
+	if(eventArray[count].duration==0.25&&eventArray[count].note<70&&eventArray[count].note>0){
+		sixteenNote.position.x=eventArray[count].beat*4-val;
+		sixteenNote.position.y=noteToPos(eventArray[count].note)+0.8;
+		sixteenNote.position.z=-50;
+		scene.add(sixteenNote);
+	}
+	//////放16分音符倒//////////
+	if(eventArray[count].duration==0.25&&eventArray[count].note>70&&eventArray[count].note>0){
+		sixteenNotedown.position.x=eventArray[count].beat*4-val;
+		sixteenNotedown.position.y=noteToPos(eventArray[count].note)+0.3-6.9;
+		sixteenNotedown.position.z=-50;
+		scene.add(sixteenNotedown);
+	}
 
 	eventToScore.counter++;
-	
+	if(eventToScore.counter>eventArray.length)return 0;
 	if(eventToScore.counter<=eventArray.length-1)eventToScore(eventArray);
-	else{
-		eventToScore.counter = 0;
-		return 0;
-	}
 }
 
 function dynamic2Length (dynamic, bowCenter, duration) {
@@ -1096,7 +1099,31 @@ function init() {
 	//scene.add(plane1);
 	plane1.rotation.x = -Math.PI / 2;
 	plane1.position.set(0,5,0);
-
+	
+	
+	
+	sceneRTT = new THREE.Scene();
+	pointLight = new THREE.PointLight(0xffffff);
+  pointLight.position.set(0, 300, 200);
+  sceneRTT.add(pointLight);
+	rtTexture = new THREE.WebGLRenderTarget(
+    1024, 1024, {
+      minFilter: THREE.LinearFilter,
+      magFilter: THREE.NearestFilter,
+      format: THREE.RGBFormat
+    }
+  );
+	var plane = new THREE.PlaneBufferGeometry(40, 20);
+	quad = new THREE.Mesh(plane,
+    new THREE.MeshBasicMaterial({
+		color: 0xffff00,
+		map: rtTexture,
+		side: THREE.DoubleSide
+    }));
+	quad.position.set(0,10,-20);
+	//scene.add(quad);
+	
+	
 	//////////////////////五線譜////////////////////////
 
 	var material = new THREE.LineBasicMaterial({
@@ -1116,6 +1143,7 @@ function init() {
 		line0.name = 'lines'+ i;
 
 	}
+	
 	//////////////////////間(透明線)////////////////////////
 	var line = new THREE.Line( geometry,new THREE.LineBasicMaterial({
 		color: 0xffffff,
@@ -1133,7 +1161,8 @@ function init() {
 		line0.name = 'lines'+ i;
 
 	}
-	scene.add(lines);
+	//scene.add(lines);
+	
 	//////////////////////小節線////////////////////////
 	var geometry = new THREE.Geometry();
 	geometry.vertices.push(
@@ -1171,14 +1200,15 @@ function init() {
 	lines.add(birdy);
 
 	lines.position.set(0,0,-50);
-
+	scene.add(lines);
+	///////4分音符/////////
 	var texture2 = loader.load('http://i.imgur.com/TvJAexM.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture2});
-	notesymbol = new THREE.Mesh(new THREE.PlaneGeometry(4,8),material);
+	notesymbol = new THREE.Mesh(new THREE.PlaneGeometry(4,11),material);
 	///////8分音符/////////
 	var texture3 = loader.load('https://i.imgur.com/hUhEWrJ.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture3});
-	notesymbol1 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,8.3),material);
+	notesymbol1 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,9.5),material);
 	notesymbol1.position.set(0,7,0);	//69
 	//scene.add(notesymbol1);
 	///////4分休止符/////////
@@ -1197,15 +1227,30 @@ function init() {
 	///////8分音符倒/////////
 	var texture6 = loader.load('https://i.imgur.com/PFYFlqK.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture6});
-	notesymbol4 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,10.5),material);
-	notesymbol4.position.set(10,7,0);	//69
+	notesymbol4 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,13),material);
+	notesymbol4.position.set(10,6.6,0);	//69
 	//scene.add(notesymbol4);
 	///////2分音符/////////
 	var texture7 = loader.load('https://i.imgur.com/FgviW8X.png');
 	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture7});
-	notesymbol5 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,10.5),material);
+	notesymbol5 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,13),material);
 	notesymbol5.position.set(10,6.8,0);	//69
 	//scene.add(notesymbol5);
+	///////16分音符/////////
+	var texture8 = loader.load('https://i.imgur.com/4wyDI07.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture8});
+	notesymbol6 = new THREE.Mesh(new THREE.PlaneGeometry(2.5,11.2),material);
+	notesymbol6.position.set(10,7.7,0);	//69
+	//notesymbol6.position.set(10,5,0);
+	//scene.add(notesymbol6);
+
+	///////16分音符倒/////////
+	var texture9 = loader.load('https://i.imgur.com/JNgZtfs.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture9});
+	notesymbol7 = new THREE.Mesh(new THREE.PlaneGeometry(2,12),material);
+	notesymbol7.position.set(10,5,0);	//E
+	//scene.add(notesymbol7);
+
 
 }
 eventToScore(eventArray);
@@ -1412,9 +1457,9 @@ function animate() {
 	<!-- notesymbol3.lookAt (camera.position); -->
 	<!-- notesymbol4.lookAt (camera.position); -->
 	<!-- notesymbol5.lookAt (camera.position); -->
-	
-	
-	
+	lines.lookAt (camera.position);
+	quad.lookAt (camera.position);
+	renderer.render(sceneRTT, camera, rtTexture, true);
 	update();
 	render();
 }
