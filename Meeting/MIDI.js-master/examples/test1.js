@@ -292,6 +292,7 @@ function makeEventArray4 () {  // longer sequence
   eventArray.push(new Event(6, 1, 72, 'U',0.8, 0.75) );
   eventArray.push(new Event(7, 1, 71, 'D') );
   eventArray.push(new Event(8, 3, 69, 'U') );
+  eventArray.push(new Event(8, 3, 1, 'L') );
   period = 11;
 
   return eventArray;
