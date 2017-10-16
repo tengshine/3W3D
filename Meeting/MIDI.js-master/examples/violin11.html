@@ -508,12 +508,14 @@ function eventToScore(eventArray){
 		eighthNoteRest.position.z=-50;
 		eighthNoteRest.position.x=eventArray[count].beat*4-val;
 		eighthNoteRest.position.y=5;
+		eighthNoteRest.name = ++notesymbolnums;
 		scene.add(eighthNoteRest);
 	}
 	if(eventArray[count].duration==1&&eventArray[count].note==1){
 		quarterNoteRest.position.z=-50;
 		quarterNoteRest.position.x=eventArray[count].beat*4-val;
 		quarterNoteRest.position.y=6.5;
+		quarterNoteRest.name = ++notesymbolnums;
 		scene.add(quarterNoteRest);
 	}
 	//////放二分音符//////////
@@ -526,6 +528,7 @@ function eventToScore(eventArray){
 		else {
 			halfNote.position.y=noteToPos(eventArray[count].note)+0.7;
 		}
+		halfNote.name = ++notesymbolnums;
 		halfNote.position.z=-50;
 		scene.add(halfNote);
 	}
@@ -539,6 +542,7 @@ function eventToScore(eventArray){
 		else {
 			quarterNote.position.y=noteToPos(eventArray[count].note)+1.1;
 		}
+		quarterNote.name = ++notesymbolnums;
 		quarterNote.position.z=-50;
 		scene.add(quarterNote);
 	}
@@ -546,6 +550,7 @@ function eventToScore(eventArray){
 	if(eventArray[count].duration==0.5&&eventArray[count].note<70&&eventArray[count].note>0){
 		eighthNotes.position.x=eventArray[count].beat*4-val;
 		eighthNotes.position.y=noteToPos(eventArray[count].note)+0.8;
+		eighthNotes.name = ++notesymbolnums;
 		eighthNotes.position.z=-50;
 		scene.add(eighthNotes);
 	}
@@ -553,6 +558,7 @@ function eventToScore(eventArray){
 	if(eventArray[count].duration==0.5&&eventArray[count].note>70&&eventArray[count].note>0){
 		eighthNotesdown.position.x=eventArray[count].beat*4-val;
 		eighthNotesdown.position.y=noteToPos(eventArray[count].note)+0.3-6.9;
+		eighthNotesdown.name = ++notesymbolnums;
 		eighthNotesdown.position.z=-50;
 		scene.add(eighthNotesdown);
 	}
@@ -560,6 +566,7 @@ function eventToScore(eventArray){
 	if(eventArray[count].duration==0.25&&eventArray[count].note<70&&eventArray[count].note>0){
 		sixteenNote.position.x=eventArray[count].beat*4-val;
 		sixteenNote.position.y=noteToPos(eventArray[count].note)+0.8;
+		sixteenNote.name = ++notesymbolnums;
 		sixteenNote.position.z=-50;
 		scene.add(sixteenNote);
 	}
@@ -567,6 +574,7 @@ function eventToScore(eventArray){
 	if(eventArray[count].duration==0.25&&eventArray[count].note>70&&eventArray[count].note>0){
 		sixteenNotedown.position.x=eventArray[count].beat*4-val;
 		sixteenNotedown.position.y=noteToPos(eventArray[count].note)+0.3-6.9;
+		sixteenNotedown.name = ++notesymbolnums;
 		sixteenNotedown.position.z=-50;
 		scene.add(sixteenNotedown);
 	}
