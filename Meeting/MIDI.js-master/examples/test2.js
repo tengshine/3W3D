@@ -222,7 +222,7 @@ function makeEventArray3 () {  // rest
 function makeEventArray3a () { // rest & lift
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  //eventArray.push(new Event(1, 1, 1) );
+  eventArray.push(new Event(1, 1, 1) );
   eventArray.push(new Event(2, 1, 69, 'D') );
   //eventArray.push(new Event(3, 1, 1, 'S') );
   period = 3;
