@@ -212,9 +212,9 @@ function makeEventArray2 () {  // carmina burana
 function makeEventArray3 () {  // rest
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  //eventArray.push(new Event(1, 1, 1) );
+  eventArray.push(new Event(1, 1, 1) );
   eventArray.push(new Event(2, 1, 69, 'U') );
-  //eventArray.push(new Event(3, 1, 1, 'S') );
+  eventArray.push(new Event(3, 1, 1, 'L') );
   period = 3;
   return eventArray;
 }
@@ -222,9 +222,9 @@ function makeEventArray3 () {  // rest
 function makeEventArray3a () { // rest & lift
   var eventArray = [];
   eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 1, 1) );
+  eventArray.push(new Event(1, 1, 1,'L') );
   eventArray.push(new Event(2, 1, 69, 'D') );
-  //eventArray.push(new Event(3, 1, 1, 'S') );
+  eventArray.push(new Event(3, 1, 1, 'L') );
   period = 3;
   return eventArray;
 }
