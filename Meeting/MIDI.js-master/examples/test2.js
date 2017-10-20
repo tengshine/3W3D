@@ -240,24 +240,7 @@ function makeEventArray3b () {
   return eventArray;
 }
 
-function makeEventArray4 () {  // longer sequence
 
-  var eventArray = [];
-
-  eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.25) );
-  eventArray.push(new Event(1, 1, 71, 'U') );
-  eventArray.push(new Event(2, 1, 72, 'D') );
-  eventArray.push(new Event(3, 1, 74, 'U') );
-  eventArray.push(new Event(4, 2, 76, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(6, 1, 72, 'U',0.8, 0.75) );
-  eventArray.push(new Event(7, 1, 71, 'D') );
-  eventArray.push(new Event(8, 2, 69, 'U') );
-  eventArray.push(new Event(10, 1, 1, 'L') );
-  eventArray.push(new Event(11, 1, 1, 'L') );
-  period = 11;
-
-  return eventArray;
-}
 
 
 
