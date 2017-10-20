@@ -240,47 +240,6 @@ function makeEventArray3b () {
   return eventArray;
 }
 
-
-function makeEventArray3c () { // lift with rest
-  var eventArray = [];
-  eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 0.75, 1, 'L') );
-  eventArray.push(new Event(1.75, 0.25, 72, 'U', 0.8, 0.25) );
-  eventArray.push(new Event(2, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(3, 0.75, 1, 'L') );
-  eventArray.push(new Event(3.75, 0.25, 72, 'U', 0.8, 0.25) );
-  eventArray.push(new Event(4, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(5, 1, 1, 'L') );
-  period = 5;
-  return eventArray;
-}
-
-function makeEventArray3d () {  // with rest & staccato
-  var eventArray = [];
-
-  eventArray.push(new Event(0, 0.333, 67, 'U', 0.8, 0.5) );
-  eventArray.push(new Event(0.333, 0.333, 69, 'S') );
-  eventArray.push(new Event(0.666, 0.333, 71, 'S') );
-  eventArray.push(new Event(1, 0.5, 72, 'D') );
-  eventArray.push(new Event(1.5, 0.5, 1, 'L') ); // rest
-  eventArray.push(new Event(2, 2, 72, 'D') );
-  period = 4;
-  return eventArray;
-}
-
-function makeEventArray3e () {  // lift with implicit rest
-  var eventArray = [];
-
-  eventArray.push(new Event(0, 0.333, 67, 'U', 0.8, 0.5) );
-  eventArray.push(new Event(0.333, 0.333, 69, 'S') );
-  eventArray.push(new Event(0.666, 0.333, 71, 'S') );
-  eventArray.push(new Event(1, 1, 72, 'DL') );
-  eventArray.push(new Event(2, 2, 72, 'D') );
-  period = 4;
-  return eventArray;
-}
-
-
 function makeEventArray4 () {  // longer sequence
 
   var eventArray = [];
@@ -292,33 +251,15 @@ function makeEventArray4 () {  // longer sequence
   eventArray.push(new Event(4, 2, 76, 'D', 0.8, 0.5) );
   eventArray.push(new Event(6, 1, 72, 'U',0.8, 0.75) );
   eventArray.push(new Event(7, 1, 71, 'D') );
-  eventArray.push(new Event(8, 3, 69, 'U') );
-  eventArray.push(new Event(8, 3, 1, 'L') );
+  eventArray.push(new Event(8, 2, 69, 'U') );
+  eventArray.push(new Event(10, 1, 1, 'L') );
+  eventArray.push(new Event(11, 1, 1, 'L') );
   period = 11;
 
   return eventArray;
 }
 
-function makeEventArray5 () {  // with slur
-  var eventArray = [];
 
-  eventArray.push(new Event(0, 1.5, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1.5, 0.5, 71, 'S') );
-  eventArray.push(new Event(2, 2, 72, 'U') );
-  period = 4;
-  return eventArray;
-}
-
-function makeEventArray5a () {  // with slur
-  var eventArray = [];
-
-  eventArray.push(new Event(0, 0.333, 67, 'U', 0.8, 0.5) );
-  eventArray.push(new Event(0.333, 0.333, 69, 'S') );
-  eventArray.push(new Event(0.666, 0.333, 71, 'S') );
-  eventArray.push(new Event(1, 1, 72, 'D') );
-  period = 2;
-  return eventArray;
-}
 
 function makeEventArray5b () {  // kreutzer No. 2
   var eventArray = [];
@@ -370,6 +311,7 @@ function makeEventArray5e () {  // slurred staccato
   eventArray.push(new Event(1,  0.5, 79, 'US') );
   eventArray.push(new Event(1.5, 0.5, 77, 'SS') );
   eventArray.push(new Event(2,    1, 76, 'D') );
+  eventArray.push(new Event(3,    1, 1, 'D') );
   period = 3;
   return eventArray;
 }
@@ -524,13 +466,13 @@ function makeEventArray9 () {  // humoresque
   // bar 2
   eventArray.push(new Event(4,    0.5,  79, 'S', 0.8, 0.5) );
   eventArray.push(new Event(4.5,  0.25,  1) );
-  eventArray.push(new Event(4.75, 0.25, 78, 'U') );
+  eventArray.push(new Event(4.75, 0.25, 77, 'U') );
 
   eventArray.push(new Event(5,    0.5,  81, 'S', 0.8, 0.5) );
   eventArray.push(new Event(5.5,  0.25,  1) );
   eventArray.push(new Event(5.75, 0.25, 79, 'D') );
 
-  eventArray.push(new Event(6,    0.5,  78, 'S', 0.8, 0.5) );
+  eventArray.push(new Event(6,    0.5,  77, 'S', 0.8, 0.5) );
   eventArray.push(new Event(6.5,  0.25,  1) );
   eventArray.push(new Event(6.75, 0.25, 81, 'U') );
 
@@ -556,8 +498,10 @@ function makeEventArray9 () {  // humoresque
   eventArray.push(new Event(11.75, 0.25, 71, 'D') );
 
   // bar 4
-  eventArray.push(new Event(12,    3,  69, 'S', 0.8, 0.5) );
-
+  eventArray.push(new Event(12,    1,  69, 'S', 0.8, 0.5) );
+	eventArray.push(new Event(13,    1,  1, 'S', 0.8, 0.5) );
+	eventArray.push(new Event(14,    1,  1, 'S', 0.8, 0.5) );
+	eventArray.push(new Event(15,    1,  1, 'S', 0.8, 0.5) );
   period = 15;
   return eventArray;
 }

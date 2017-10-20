@@ -112,18 +112,14 @@ BPM <input id='tempo' type="range" min=30 max=210 value = 60><span id = "bpm">60
   <option value='ev3'> 3 </option>
   <option value='ev3a'> 3a </option>
   <option value='ev3b'> 3b </option>
-  <option value='ev3c'> 3c </option>
-  <option value='ev3d'> 3d </option>
-  <option value='ev3e'> 3e </option>
   <option value='ev4'> 4 </option>
-  <option value='ev5'> 5 </option>
-  <option value='ev5a'> 5a </option>
+
   <option value='ev5b'> 5b </option>
   <option value='ev5c'> 5c </option>
   <option value='ev5d'> 5d </option>
   <option value='ev5e'> 5e </option>
   <option value='ev5f'> 5f </option>
-  <option value='ev5g'> 5g </option>
+  
   <option value='ev6'> 6 </option>
   <option value='ev6a'> 6a </option>
   <option value='ev6b'> 6b </option>
@@ -460,6 +456,7 @@ function Event (beat, duration, note, type, volume, pos) {
 ////////Array轉譜////////////////////////////////////
 function noteToPos(note){
 	var pos;
+	if(note==59)pos=-1.1;
 	if(note==60)pos=0.2;
 	if(note==62)pos=1.5;
 	if(note==64)pos=2.8;
@@ -472,6 +469,7 @@ function noteToPos(note){
 	if(note==76)pos=11.9;
 	if(note==77)pos=13.2;
 	if(note==79)pos=14.5;
+	if(note==81)pos=15.8;
 	return pos;
 
 }
@@ -494,6 +492,7 @@ function eventToScore(eventArray){
 	halfNote = notesymbol5.clone();
 	sixteenNote = notesymbol6.clone();
 	sixteenNotedown = notesymbol7.clone();
+	sixteenNoteRest = notesymbol8.clone();
 	/////////////////////////////////
 	var count=eventToScore.counter;
 	var val;
@@ -515,6 +514,13 @@ function eventToScore(eventArray){
 		quarterNoteRest.position.y=6.5;
 		quarterNoteRest.name = ++notesymbolnums;
 		scene.add(quarterNoteRest);
+	}
+	if(eventArray[count].duration==0.25&&eventArray[count].note==1){
+		sixteenNoteRest.position.z=-50;
+		sixteenNoteRest.position.x=eventArray[count].beat*4-val;
+		sixteenNoteRest.position.y=5;
+		sixteenNoteRest.name = ++notesymbolnums;
+		scene.add(sixteenNoteRest);
 	}
 	//////放二分音符//////////
 	if(eventArray[count].duration==2){
@@ -576,7 +582,7 @@ function eventToScore(eventArray){
 		sixteenNotedown.position.z=-50;
 		scene.add(sixteenNotedown);
 	}
-	if(eventArray[count].note==60){
+	if(eventArray[count].note==60||eventArray[count].note==59){
 		var geometry = new THREE.Geometry();
       	geometry.vertices.push(
       		new THREE.Vector3(1.7, -2.6, 0),
@@ -590,6 +596,26 @@ function eventToScore(eventArray){
 		line.position.x=eventArray[count].beat*4-val;
 		//line.position.y=eventArray[count].beat*4-val;
 		line.position.z=-50;
+		line.name = ++notesymbolnums;
+		
+        scene.add(line);
+	}
+	if(eventArray[count].note==81||eventArray[count].note==83){
+		var geometry = new THREE.Geometry();
+      	geometry.vertices.push(
+      		new THREE.Vector3(1.7, 13.2, 0),
+      		new THREE.Vector3(-1.7, 13.2, 0)
+      	);
+        var material = new THREE.LineBasicMaterial({
+      		color: 0x000000,
+          linewidth: 1.5
+      	});
+        var line = new THREE.Line( geometry, material );
+		line.position.x=eventArray[count].beat*4-val;
+		//line.position.y=eventArray[count].beat*4-val;
+		line.position.z=-50;
+		line.name = ++notesymbolnums;
+		
         scene.add(line);
 	}
 	
@@ -1275,7 +1301,13 @@ function init() {
 	notesymbol7 = new THREE.Mesh(new THREE.PlaneGeometry(2,12),material);
 	notesymbol7.position.set(10,5,0);	//E
 	//scene.add(notesymbol7);
-
+	///////16分休止符/////////
+	var texture10= loader.load('https://i.imgur.com/S4xNdTy.png');
+	var material = new THREE.MeshBasicMaterial({transparent:true,map:texture10});
+	notesymbol8 = new THREE.Mesh(new THREE.PlaneGeometry(2,10),material);
+	notesymbol8.position.set(10,4,-50);	//E
+	
+	//scene.add(notesymbol8);
 
 }
 eventToScore(eventArray);
