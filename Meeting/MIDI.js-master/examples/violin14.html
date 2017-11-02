@@ -1627,8 +1627,11 @@ function bpmLamp(){
 function Lamp(lampId) {
 	var bpm1 = $('#tempo').val();
 	console.log(lampId);
-	//makeLight(10+lampId*3,10,0,'light'+lampId);
-	//sphereLight.material.color=new THREE.Color( 0xff0000 );
+	if(lampId>0){
+		makeLight(10+(lampId-1)*3,10,0,'light'+lampId);
+		sphereLight.material.color=new THREE.Color( 0xff0000 );
+	
+	}
 	//makeLight(13,10,0,light2);
 	//makeLight(16,10,0,light3);
 	//makeLight(19,10,0,light4);
