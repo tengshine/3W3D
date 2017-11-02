@@ -131,10 +131,10 @@ BPM <input id='tempo' type="range" min=30 max=210 value = 60><span id = "bpm">60
   <option value='ev10'> 10 </option>
 
 </select>
-<div id='light1' class='light_1' style='float:left; margin:10px 10px 20px 20px;'></div>
-<div id='light2' class='light_2' style='float:left; margin:10px 10px 20px 20px;'></div>
-<div id='light3' class='light_3' style='float:left; margin:10px 10px 20px 20px;'></div>
-<div id='light4' class='light_4' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light11' class='light_1' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light21' class='light_2' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light31' class='light_3' style='float:left; margin:10px 10px 20px 20px;'></div>
+<div id='light41' class='light_4' style='float:left; margin:10px 10px 20px 20px;'></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -1132,10 +1132,10 @@ function init() {
 	//scene.add (bowB);
 	//////節拍器燈//////////////////////
 	var name1='light4';
-	makeLight(10,10,0,light1);
-	makeLight(13,10,0,light2);
-	makeLight(16,10,0,light3);
-	makeLight(19,10,0,light4);
+	makeLight(10,10,0,'light1');
+	makeLight(13,10,0,'light2');
+	makeLight(16,10,0,'light3');
+	makeLight(19,10,0,'light4');
 	console.log(sphereLight.name);
 	
 	/////////////////////////////////////
@@ -1580,50 +1580,7 @@ function render() {
 	renderer.setClearColor(0x888888,1.0);
 	renderer.render(scene, camera);
 }
-/*function Lamp(lampId) {
-	var bpm1 = $('#tempo').val();
-	var name = '#' + lampId;
 
-	var status = true;
-	var hue='hsl(0,100%,50%)';
-	var hue1='hsl(60,100%,50%)';
-	$('#light1').css ('backgroundColor', 'hsl(120,100%,50%)');
-	$('#light2').css ('backgroundColor', 'hsl(120,100%,50%)');
-	$('#light3').css ('backgroundColor', 'hsl(120,100%,50%)');
-	$('#light4').css ('backgroundColor', 'hsl(120,100%,50%)');
-	if(lampId=='light1')$(name).css ('backgroundColor', hue1);
-	else $(name).css ('backgroundColor', hue);
-	setTimeout(function(){
-		bpmLamp();
-	}, 1000*60/bpm1);
-
-}
-var lampi=0,lampj=0;
-
-function bpmLamp(){
-
-	var bpm1 = $('#tempo').val();
-	if(!startClick){
-		lampi=0;
-		lampj=0;
-		startClick1=false;
-	}
-
-	if(startClick){
-		lampj=lampj+1;
-		lampi=(lampj)%4+1;
-		if(lampj==4){
-			startClick1=true;
-			startT = new Date().getTime();
-			playMusic();
-		}
-		//lampi=lampi%4;
-
-	}
-
-	new Lamp('light'+lampi);
-
-}*/
 function Lamp(lampId) {
 	var bpm1 = $('#tempo').val();
 	console.log(lampId);
@@ -1632,17 +1589,9 @@ function Lamp(lampId) {
 		sphereLight.material.color=new THREE.Color( 0xff0000 );
 	
 	}
-	
-	//makeLight(13,10,0,light2);
-	//makeLight(16,10,0,light3);
-	//makeLight(19,10,0,light4);
-
-	//if()
-	//else 
 	setTimeout(function(){
 		bpmLamp();
 	}, 1000*60/bpm1);
-
 }
 var lampi=0,lampj=0;
 
@@ -1655,12 +1604,12 @@ function bpmLamp(){
 		startClick1=false;
 		for(var i=1;i<=4;i++){
 			scene.remove(scene.getObjectByName('light'+i));
+			makeLight(10,10,0,'light'+i);
 		}
 		
-		makeLight(10,10,0,'light'+light1);
-		makeLight(13,10,0,'light'+light2);
-		makeLight(16,10,0,'light'+light3);
-		makeLight(19,10,0,'light'+light4);
+		//makeLight(13,10,0,'light'+light2);
+		//makeLight(16,10,0,'light'+light3);
+		//makeLight(19,10,0,'light'+light4);
 	}
 
 	if(startClick){
@@ -1671,19 +1620,16 @@ function bpmLamp(){
 			startT = new Date().getTime();
 			playMusic();
 		}
-		//lampi=lampi%4;
-
 	}
-	//if(lampi>0){
-		for(var i=1;i<=4;i++){
-			scene.remove(scene.getObjectByName('light'+i));
-		}
-		
-		makeLight(10,10,0,'light'+light1);
-		makeLight(13,10,0,'light'+light2);
-		makeLight(16,10,0,'light'+light3);
-		makeLight(19,10,0,'light'+light4);
-	//}
+	for(var i=1;i<=4;i++){
+		scene.remove(scene.getObjectByName('light'+i));
+		makeLight(10,10,0,'light'+i);
+	}
+	
+	//makeLight(13,10,0,'light'+light2);
+	//makeLight(16,10,0,'light'+light3);
+	//makeLight(19,10,0,'light'+light4);
+	
 	Lamp(lampi);
 
 }
