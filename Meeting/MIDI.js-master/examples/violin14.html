@@ -1653,6 +1653,14 @@ function bpmLamp(){
 		lampi=0;
 		lampj=0;
 		startClick1=false;
+		for(var i=1;i<=4;i++){
+			scene.remove(scene.getObjectByName('light'+i));
+		}
+		
+		makeLight(10,10,0,'light'+light1);
+		makeLight(13,10,0,'light'+light2);
+		makeLight(16,10,0,'light'+light3);
+		makeLight(19,10,0,'light'+light4);
 	}
 
 	if(startClick){
@@ -1667,7 +1675,10 @@ function bpmLamp(){
 
 	}
 	if(lampi>0){
-		scene.remove(scene.getObjectByName('light'+lampi));
+		for(var i=1;i<=4;i++){
+			scene.remove(scene.getObjectByName('light'+i));
+		}
+		
 		makeLight(10,10,0,'light'+light1);
 		makeLight(13,10,0,'light'+light2);
 		makeLight(16,10,0,'light'+light3);
