@@ -1668,9 +1668,10 @@ function bpmLamp(){
 	}
 	if(lampi>0){
 		scene.remove(scene.getObjectByName('light'+lampi));
-		makeLight(10+(lampi-1)*3,10,0,'light'+lampi);
-		
-	
+		makeLight(10,10,0,'light'+light1);
+		makeLight(13,10,0,'light'+light2);
+		makeLight(16,10,0,'light'+light3);
+		makeLight(19,10,0,'light'+light4);
 	}
 	new Lamp(lampi);
 
