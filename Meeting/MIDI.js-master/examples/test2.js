@@ -129,12 +129,12 @@ $('#sequence').change ( function() {
  		break;
    	case 'ev10':
 
-      eventArray = makeEventArrayEx1();
+      eventArray = makeEventArray10();
       eventToScore(eventArray);
  		break;
    	case 'ev11':
 
-      eventArray = makeEventArray11();
+      eventArray = makeEventArrayEx1();
       eventToScore(eventArray);
  		break;
    	case 'ev12':
