@@ -1551,11 +1551,14 @@
 				redLineDis=move*8*bpm1/60;
 				
 				redLine.position.x=redLineDis;
-			
+				if(redLine.position.x==32){
+					
+					cameraFront.position.x =redLineDis;
+				}
 			
 			}
-			//cameraDis+=0.1;
-
+			
+				cameraDis+=0.1;
 			//cameraFront.position.x =cameraDis;
 
 			update();
