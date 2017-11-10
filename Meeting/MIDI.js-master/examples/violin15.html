@@ -284,7 +284,7 @@
 		var controls;
 		var lowerArm, upperArm;
 		var clock = new THREE.Clock();
-
+		var startTime;
 		var theta1 = 0,
 			theta2 = 0,
 			theta3 = 0;
@@ -1546,8 +1546,9 @@
 			plane1.quaternion.copy(quaternion);
 			//////////////////////////////////////////
 			var bpm1 = $('#tempo').val();
+			var move = clock.getElapsedTime() - startTime;
 			if(startClick1){
-				redLineDis=(8/(bpm1/60));
+				redLineDis=move/8/bpm1;
 				
 				redLine.position.x+=redLineDis;
 			
@@ -1635,6 +1636,7 @@
 				if(lampj==4){
 					startClick1=true;
 					startT = new Date().getTime();
+					startTime = clock.getElapsedTime();
 					playMusic();
 				}
 			}
