@@ -1547,7 +1547,7 @@
 			//////////////////////////////////////////
 			var bpm1 = $('#tempo').val();
 			if(startClick1){
-				redLineDis=(8/bpm1);
+				redLineDis=(8/(bpm1/60));
 				
 				redLine.position.x+=redLineDis;
 			
