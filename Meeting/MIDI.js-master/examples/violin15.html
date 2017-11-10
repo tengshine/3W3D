@@ -321,9 +321,14 @@
 
 		var FOREARM_LEN = 3;
 		var UPPERARM_LEN = 3;
-		var sceneFront, cameraFront ,frontPlane = new THREE.Object3D();
+		var sceneFront, cameraFront , cameraDis = 0, frontPlane = new THREE.Object3D();
+		
 
 		var eventArray = makeEventArray();
+		
+		var redLine ;//= readScore();
+		var redLineDis = 0;
+		
 		keyframes = makeSequence(eventArray);
 		init();
 		animate();
@@ -331,20 +336,20 @@
 
 		function makeEventArray() {
 			var eventArray = [];
-			
+
 			eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5));
 			eventArray.push(new Event(1, 1, 71, 'U'));
 			eventArray.push(new Event(2, 1, 72, 'D'));
 			eventArray.push(new Event(3, 1, 74, 'U'));
 			makeSheet(3);
-			
+
 			return eventArray;
 		}
 
 		// event constructor
 
 		function Event(beat, duration, note, type, volume, pos) {
-			
+
 
 			this.beat = beat;
 			this.duration = duration; // default: 1 QN
@@ -387,11 +392,11 @@
 			if (note == 59) pos = -1.1;
 			if (note == 60) pos = 0.2;
 			if (note == 62) pos = 1.5;
-			if (note == 64) pos = 2.8;
-			if (note == 65) pos = 4.1;
-			if (note == 67) pos = 5.4;
-			if (note == 69) pos = 6.7;
-			if (note == 71) pos = 8;
+			if (note == 64 ||note == 63) pos = 2.8;
+			if (note == 65 ||note == 66) pos = 4.1;
+			if (note == 67 ) pos = 5.4;
+			if (note == 69 ||note == 68) pos = 6.7;
+			if (note == 71 || note == 70) pos = 8;
 			if (note == 72) pos = 9.3;
 			if (note == 74) pos = 10.6;
 			if (note == 76) pos = 11.9;
@@ -426,9 +431,9 @@
 			sixteenNoteRest = notesymbol8.clone();
 			/////////////////////////////////
 			var count = eventToScore.counter;
-			
+
 			var duration = (timeSignatureY/4)*(4/timeSignatureX);		//duration*以4/4為底的duration
-			
+
 			var val;
 			if (eventArray[count].beat < 4) val = 32;
 			else if (eventArray[count].beat > 3 && eventArray[count].beat < 8) val = 26;
@@ -488,7 +493,7 @@
 				sceneFront.add(quarterNote);
 			}
 			//////放八分音符//////////
-			if (duration*0.5 == eventArray[count].duration && eventArray[count].note < 70 && eventArray[count].note > 0) {
+			if (duration*0.5 == eventArray[count].duration && eventArray[count].note <= 70 && eventArray[count].note > 0) {
 				eighthNotes.position.x = eventArray[count].beat * 8 - val;
 				eighthNotes.position.y = noteToPos(eventArray[count].note) + 0.8;
 				eighthNotes.name = ++notesymbolnums;
@@ -506,7 +511,7 @@
 				sceneFront.add(eighthNotesdown);
 			}
 			//////放16分音符//////////
-			if (duration*0.25 == eventArray[count].duration && eventArray[count].note < 70 && eventArray[count].note > 0) {
+			if (duration*0.25 == eventArray[count].duration && eventArray[count].note <= 70 && eventArray[count].note > 0) {
 				sixteenNote.position.x = eventArray[count].beat * 8 - val;
 				sixteenNote.position.y = noteToPos(eventArray[count].note) + 0.8;
 				sixteenNote.name = ++notesymbolnums;
@@ -523,7 +528,7 @@
 				sixteenNotedown.position.y -=33.5;
 				sceneFront.add(sixteenNotedown);
 			}
-			
+
 			////////上下加線////////////////
 			if (eventArray[count].note == 60 || eventArray[count].note == 59) {
 				var geometry = new THREE.Geometry();
@@ -568,6 +573,20 @@
 				eventToScore.counter = 0;
 				return 0;
 			}
+		}
+		function readScore(){
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(
+				new THREE.Vector3(-32, -18, 5),
+				new THREE.Vector3(-32, -38, 5)
+			);
+			var material = new THREE.LineBasicMaterial({
+				color: 0xff0000,
+				linewidth: 1
+			});
+			redLine = new THREE.Line(geometry,material);
+			sceneFront.add(redLine);
+			//return redLine;
 		}
 
 		function dynamic2Length(dynamic, bowCenter, duration) {
@@ -1079,6 +1098,9 @@
 
 				}, onProgress, onError);
 
+				///////////////////////////////
+				
+
 			});
 			////////////////////////////////////
 
@@ -1097,10 +1119,7 @@
 			}));
 			violin1.add(bow3);
 			bow3.position.set(-0.79, 0.516, 0.3);
-			///scene.add( bow3 );
-			///bow3.rotation.y=Math.PI/2;
-			//bow3.rotation.z=Math.PI/2;
-			//bow3.rotation.x=Math.PI/2;
+
 			bow2 = new THREE.Object3D();
 			bowbow = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 5, 32), new THREE.MeshLambertMaterial({
 				color: 0xBB3D00
@@ -1127,7 +1146,7 @@
 
 
 			ccdSys.thetas.push(0, Math.PI / 2); // initial values of thetas
-			// for (var i = 0; i < 3; i++)
+
 			//   ccdSys.joints.push ( new THREE.Vector3() );
 
 			// setting ccd_box
@@ -1157,15 +1176,15 @@
 			//scene.add(plane1);
 			plane1.rotation.x = -Math.PI / 2;
 			plane1.position.set(0, 5, 0);
-
+			
+			
+			
+			readScore();
 
 		}
 		function makeSheet(lenX){
-		
-			//////////////////////五線譜////////////////////////
-			
-			
 
+			//////////////////////五線譜////////////////////////
 			var material = new THREE.LineBasicMaterial({
 				color: 0x000000
 			});
@@ -1174,7 +1193,7 @@
 				new THREE.Vector3(-40, 0, 0),
 				new THREE.Vector3(2+(lenX-3)/4*37, 0, 0)
 			);
-			
+
 			//////////////////////黑線////////////////////////
 			var line = new THREE.Line(geometry, material);
 			for (var i = 0, j = 0; i < 5; i++, j += 2.6) {
@@ -1202,7 +1221,6 @@
 				line0.name = 'lines' + i;
 
 			}
-			//scene.add(lines);
 
 			//////////////////////小節線////////////////////////
 			var geometry = new THREE.Geometry();
@@ -1248,9 +1266,6 @@
 			birdy.position.set(-38, 5.7, 0);
 			lines.add(birdy);
 
-
-
-
 			lines.position.set(0, -5.5,0);
 			frontPlane.add(lines);
 			frontPlane.position.set(0,-28,0); //21
@@ -1270,7 +1285,7 @@
 			});
 			notesymbol1 = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 9.5), material);
 			notesymbol1.position.set(0, 7, 0); //69
-			//scene.add(notesymbol1);
+
 			///////4分休止符/////////
 			var texture4 = loader.load('https://i.imgur.com/NiKq0LI.png');
 			var material = new THREE.MeshBasicMaterial({
@@ -1334,13 +1349,12 @@
 			});
 			notesymbol8 = new THREE.Mesh(new THREE.PlaneGeometry(2, 10), material);
 			notesymbol8.position.set(10, 4, -50); //E
-			//sceneFront.add( notesymbol8 );
+;
 			///////附點/////////
-			
+
 			circle = new THREE.Mesh( new THREE.CircleGeometry( 0.5, 32 ), new THREE.MeshBasicMaterial( { color: 0x000000 } ) );
 			circle.position.set(0,-33.5,0);
-			//circle.rotation.x=Math.PI/2;
-			//sceneFront.add( circle );
+
 		}
 
 		function makeLight(x,y,z,name){
@@ -1400,19 +1414,6 @@
 
 		function interpolate(beat) {
 
-			//if(startClick){}
-			<!-- if (beat <= period) { -->
-			<!-- var b = beat % period; -->
-			<!-- for (var i = 0; i < keyframes.length; i++) { -->
-			<!-- if (b < keyframes[i].key) break; -->
-			<!-- // take i-1 & i -->
-			<!-- } -->
-			<!-- var p = keyframes[i - 1].pos + (keyframes[i].pos - keyframes[i - 1].pos) * (b - keyframes[i - 1].key) / (keyframes[i].key - keyframes[i - 1].key); -->
-			<!-- } -->
-			<!-- else { // last position -->
-			<!-- var p = keyframes[keyframes.length - 1].pos; -->
-			<!-- } -->
-			<!-- return p; // [0,1] -->
 			// non-repeat!
 			if (beat <= period) {
 
@@ -1459,17 +1460,6 @@
 				target = interpolate(b) * 4;
 			}
 
-			<!-- if (xx < -3 || xx > 3) -->
-			<!-- sign *= -1; -->
-			<!-- xx += sign * 0.1; -->
-
-			<!-- // setting target -->
-			<!-- target.set( xx,	10,FOREARM_LEN); -->
-			<!-- bowB.position.copy (end); -->
-
-			<!-- ccdSys.target.copy (target); -->
-			<!-- tsphere.position.copy(target); -->
-			//bow.rotation.x=Math.PI/stringAngle;
 			//////旋轉bow2弓//////////
 			/**/
 			var quaternion = new THREE.Quaternion();
@@ -1554,6 +1544,18 @@
 
 			//link1.quaternion.copy (quaternion);
 			plane1.quaternion.copy(quaternion);
+			//////////////////////////////////////////
+			var bpm1 = $('#tempo').val();
+			if(startClick1){
+				redLineDis=(8/bpm1);
+				
+				redLine.position.x+=redLineDis;
+			
+			
+			}
+			cameraDis+=0.1;
+
+			//cameraFront.position.x =cameraDis;
 
 			update();
 			render();
@@ -1584,13 +1586,6 @@
 
 		function render() {
 
-			//rightArm1.rotation.z = ccdSys.thetas[1];
-			//rightArm1.rotation.x = ccdSys.thetas[2];
-
-			//rightArm1.rotation.order = 'ZXY';
-
-			//rightArm2.rotation.x = ccdSys.thetas[3];
-			//console.log (ccdSys.thetas[0] + ',' + ccdSys.thetas[1]);
 			link1.rotation.y = ccdSys.thetas[0]; //theta1;
 			link2.rotation.y = ccdSys.thetas[1]; //theta2;
 
