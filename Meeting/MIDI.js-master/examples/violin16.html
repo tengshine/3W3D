@@ -188,16 +188,16 @@
 					color: 0xBB3D00
 				}));
 				violin1.position.set(2.67, 0, 0);
-				violin1.material.transparent = true;
-				violin1.material.opacity = 0;
+				//violin1.material.transparent = true;
+				//violin1.material.opacity = 0;
 				violin.add(violin1);
 
 				var violin2 = new THREE.Mesh(new THREE.CylinderGeometry(1.04, 1.04, 0.336, 32), new THREE.MeshLambertMaterial({
 					color: 0xBB3D00
 				}));
 				violin2.position.set(-1.63, 0, 0);
-				violin2.material.transparent = true;
-				violin2.material.opacity = 0;
+				//violin2.material.transparent = true;
+				//violin2.material.opacity = 0;
 				violin1.add(violin2);
 
 				var violin3 = new THREE.Mesh(new THREE.CylinderGeometry(0.168, 0.168, 3.56, 32), new THREE.MeshLambertMaterial({
@@ -205,8 +205,8 @@
 				}));
 				violin3.rotation.z = Math.PI / 2;
 				violin3.position.set(1.78, 0, 0);
-				violin3.material.transparent = true;
-				violin3.material.opacity = 0;
+				//violin3.material.transparent = true;
+				//violin3.material.opacity = 0;
 				violin1.add(violin3);
 
 				var onProgress = function(xhr) {
@@ -220,7 +220,7 @@
 
 				//THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
-				var mtlLoader = new THREE.MTLLoader();
+				/*var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath('violinmesh/');
 				mtlLoader.load('violin.mtl', function(materials) {
 
@@ -254,7 +254,7 @@
 					///////////////////////////////
 					
 
-				});
+				});*/
 				////////////////////////////////////
 
 				var bow3 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 10, 32), new THREE.MeshLambertMaterial({
@@ -294,10 +294,116 @@
 				this.link1 = link1;
 				this.link2 = link2;
 				this.tsphere = tsphere;
+				this.v = 0;
+				this.v1 = 0;
+				this.vv = 0;
+			}
+			
+			CCDsys(){
+				this.thetas = [];
+				this.axes = [];
+
+				this.target = new THREE.Vector3();
+
+				// FK function set elsewhere
+				this.setFK = function(fkEval) {
+
+					this.fk = fkEval;
+
+				}
+				this.CCD_axis = function(axis, id, angleLo, angleHi) {
+
+					this.axis = axis.clone();
+					this.jointid = id;
+					var thetaLo = angleLo === undefined ? 29 : angleLo; // default: no limits
+					var thetaHi = angleHi === undefined ? 1e4 : angleHi;
+					this.limits = new THREE.Vector2(thetaLo, thetaHi);
+
+				};
+				this.update = function() {
+					var end = new THREE.Vector3();
+					var base = new THREE.Vector3();
+
+					var theta = this.thetas;
+					var axes = this.axes;
+					var target = this.target;
+
+					var njoints = axes[axes.length - 1].jointid + 1;
+					//console.log ('njoints: ' + njoints);
+					var joints = [];
+					for (var i = 0; i <= njoints; i++) joints[i] = new THREE.Vector3();
+
+					this.fk(theta, joints);
+					end.copy(joints[joints.length - 1]);
+
+					// convergence
+					var eps = 1e-1;
+					var MAXITER = 20;
+
+					var t_target = new THREE.Vector3();
+					var t_end = new THREE.Vector3();
+					var tmpV = new THREE.Vector3();
+
+
+					for (var iter = 0; iter < MAXITER; iter++) {
+						for (var i = axes.length - 1; i >= 0; i--) {
+							base.copy(joints[axes[i].jointid]);
+
+
+							var axis = axes[i].axis.clone();
+							for (var j = i - 1; j >= 0; j--)
+								axis.applyMatrix4(new THREE.Matrix4().makeRotationAxis(axes[j].axis, theta[j]));
+
+
+							tmpV.subVectors(target, base);
+							tmpV = proj2plane(tmpV, axis);
+							t_target.copy(tmpV.normalize());
+
+							tmpV.subVectors(end, base);
+							tmpV = proj2plane(tmpV, axis);
+							t_end.copy(tmpV.normalize());
+
+							var dotV = t_end.dot(t_target);
+							var angle = Math.acos(CLAMP(dotV, -1, 1));
+							tmpV.crossVectors(t_end, t_target);
+							var sign = (tmpV.dot(axis) > 0) ? 1 : -1;
+							theta[i] += sign * angle;
+							if (startClick) axes[i].limits.x = -1e4;
+							theta[i] = CLAMP(theta[i], axes[i].limits.x, axes[i].limits.y)
+
+							this.fk(theta, joints);
+							end.copy(joints[joints.length - 1]);
+
+							if (end.distanceTo(target) < eps) {
+								return 1;
+							}
+						}
+
+					}
+
+					if (iter < MAXITER)
+						return 1;
+					else {
+						//console.log("do not converge");
+						return 0;
+					}
+				}
+
+				function proj2plane(p, n) {
+					return p.clone().projectOnPlane(n);
+				}
+
+				function CLAMP(x, xlo, xhi) {
+					if (x < xlo)
+						return xlo;
+					if (x > xhi)
+						return xhi;
+					return x;
+				}
+				
 			}
 		
 		}
-		
 		
 		
 		
@@ -362,109 +468,7 @@
 
 		var CCDsys = function() {
 
-			this.thetas = [];
-			this.axes = [];
-
-			this.target = new THREE.Vector3();
-
-			// FK function set elsewhere
-			this.setFK = function(fkEval) {
-
-				this.fk = fkEval;
-
-			}
-			this.CCD_axis = function(axis, id, angleLo, angleHi) {
-
-				this.axis = axis.clone();
-				this.jointid = id;
-				var thetaLo = angleLo === undefined ? 29 : angleLo; // default: no limits
-				var thetaHi = angleHi === undefined ? 1e4 : angleHi;
-				this.limits = new THREE.Vector2(thetaLo, thetaHi);
-
-			};
-
-			this.update = function() {
-
-				var end = new THREE.Vector3();
-				var base = new THREE.Vector3();
-
-				var theta = this.thetas;
-				var axes = this.axes;
-				var target = this.target;
-
-
-				var njoints = axes[axes.length - 1].jointid + 1;
-				//console.log ('njoints: ' + njoints);
-				var joints = [];
-				for (var i = 0; i <= njoints; i++) joints[i] = new THREE.Vector3();
-
-				this.fk(theta, joints);
-				end.copy(joints[joints.length - 1]);
-
-				// convergence
-				var eps = 1e-1;
-				var MAXITER = 20;
-
-				var t_target = new THREE.Vector3();
-				var t_end = new THREE.Vector3();
-				var tmpV = new THREE.Vector3();
-
-
-				for (var iter = 0; iter < MAXITER; iter++) {
-					for (var i = axes.length - 1; i >= 0; i--) {
-						base.copy(joints[axes[i].jointid]);
-
-
-						var axis = axes[i].axis.clone();
-						for (var j = i - 1; j >= 0; j--)
-							axis.applyMatrix4(new THREE.Matrix4().makeRotationAxis(axes[j].axis, theta[j]));
-
-
-						tmpV.subVectors(target, base);
-						tmpV = proj2plane(tmpV, axis);
-						t_target.copy(tmpV.normalize());
-
-						tmpV.subVectors(end, base);
-						tmpV = proj2plane(tmpV, axis);
-						t_end.copy(tmpV.normalize());
-
-						var dotV = t_end.dot(t_target);
-						var angle = Math.acos(CLAMP(dotV, -1, 1));
-						tmpV.crossVectors(t_end, t_target);
-						var sign = (tmpV.dot(axis) > 0) ? 1 : -1;
-						theta[i] += sign * angle;
-						if (startClick) axes[i].limits.x = -1e4;
-						theta[i] = CLAMP(theta[i], axes[i].limits.x, axes[i].limits.y)
-
-						this.fk(theta, joints);
-						end.copy(joints[joints.length - 1]);
-
-						if (end.distanceTo(target) < eps) {
-							return 1;
-						}
-					}
-
-				}
-
-				if (iter < MAXITER)
-					return 1;
-				else {
-					//console.log("do not converge");
-					return 0;
-				}
-			}
-
-			function proj2plane(p, n) {
-				return p.clone().projectOnPlane(n);
-			}
-
-			function CLAMP(x, xlo, xhi) {
-				if (x < xlo)
-					return xlo;
-				if (x > xhi)
-					return xhi;
-				return x;
-			}
+			
 		}
 		var scene, renderer, camera;
 		var controls;
@@ -490,6 +494,7 @@
 		var notesymbolnums = 0;
 
 		var target = new THREE.Vector3();
+		var target1 = new THREE.Vector3();
 		var xx = 0;
 		var sign = 1;
 
@@ -532,7 +537,6 @@
 		// event constructor
 
 		function Event(beat, duration, note, type, volume, pos) {
-
 
 			this.beat = beat;
 			this.duration = duration; // default: 1 QN
@@ -1132,37 +1136,35 @@
 			light.position.set(50, 150, 150);
 			scene.add(light);
 			controls = new THREE.OrbitControls(camera, renderer.domElement);
-			//////////////////////////////////////////////////////////////////////
+			
+			//////////////////////////////////////////////
 			
 			Peter.makeHumanAndViolin(-5,0,0);
 			
-			
 			John.makeHumanAndViolin(15,0,0);
 			
+			Peter.CCDsys();
+			
+			John.CCDsys();
 			////////////////////////////////////////////
 			bpmLamp();
 			////////////////////////////////////////////
 			
-
-			
 			window.addEventListener('resize', onWindowResize, false);
 
-			ccdSys = new CCDsys();
-
-
-			ccdSys.thetas.push(0, Math.PI / 2); // initial values of thetas
-
+			//ccdSys = new CCDsys();
+			Peter.thetas.push(0, Math.PI / 2);
+			John.thetas.push(0, Math.PI / 2);// initial values of thetas
 			//   ccdSys.joints.push ( new THREE.Vector3() );
 
 			// setting ccd_box
-			ccdSys.setFK(fk);
-
-			ccdSys.axes.push(new ccdSys.CCD_axis(new THREE.Vector3(0, 1, 0), 0));
-			ccdSys.axes.push(new ccdSys.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14));
-
-			//bowB = makeBow();
-			//scene.add (bowB);
-
+			Peter.setFK(fk);
+			Peter.axes.push(new Peter.CCD_axis(new THREE.Vector3(0, 1, 0), 0, 29, 1e4));
+			Peter.axes.push(new Peter.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14));
+			
+			John.setFK(fk);
+			John.axes.push(new John.CCD_axis(new THREE.Vector3(0, 1, 0), 0, 29, 1e4));
+			John.axes.push(new John.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14));
 			//////節拍器燈//////////////////////
 			//var name1='light4';
 			makeLight(-40,-15,0,'light1');
@@ -1463,6 +1465,7 @@
 				//console.log(time);
 				//console.log('start');
 				target = interpolate(b) * 4;
+				target1 = interpolate(b) * 4;
 			}
 
 			//////旋轉bow2弓//////////
@@ -1470,8 +1473,8 @@
 			var quaternion = new THREE.Quaternion();
 			var localDir = new THREE.Vector3(0, 1, 0);
 
-			v = Peter.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
-			v1 = Peter.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
+			Peter.v = Peter.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
+			Peter.v1 = Peter.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
 
 			//v = John.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
 			//v1 = John.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
@@ -1488,14 +1491,14 @@
 			if (anglej > 0) {
 				if (bowP2 < tempP2) tempP2 += anglej;
 			}
-			v.y = tempP1;
-			v1.y = tempP2;
+			Peter.v.y = tempP1;
+			Peter.v1.y = tempP2;
 
-			var vv = v.clone().sub(v1);
+			Peter.vv = Peter.v.clone().sub(Peter.v1);
 
-			var angle = localDir.angleTo(vv);
+			var angle = localDir.angleTo(Peter.vv);
 			var axis = new THREE.Vector3();
-			axis.crossVectors(localDir, vv).normalize();
+			axis.crossVectors(localDir, Peter.vv).normalize();
 			quaternion.setFromAxisAngle(axis, angle);
 
 			Peter.bow2.quaternion.copy(quaternion);
@@ -1505,7 +1508,7 @@
 
 			var localDir3 = new THREE.Vector3(1, 0, 0);
 
-			var vv1 = v1.clone().sub(v);
+			var vv1 = Peter.v1.clone().sub(Peter.v);
 			var angle = localDir3.angleTo(vv1);
 
 			var axis = new THREE.Vector3();
@@ -1524,7 +1527,7 @@
 			//////手臂角度////////////////////
 
 			var localDir3 = new THREE.Vector3(1, 0, 0);
-			var vv1 = v1.clone().sub(v);
+			var vv1 = Peter.v1.clone().sub(Peter.v);
 			var angle = localDir3.angleTo(vv1);
 
 			var axis = new THREE.Vector3();
@@ -1538,18 +1541,18 @@
 
 
 			var localDir1 = new THREE.Vector3(0, 0, 1);
-			var angle1 = localDir1.angleTo(vv);
+			var angle1 = localDir1.angleTo(Peter.vv);
 			var axis1 = new THREE.Vector3();
-			axis1.crossVectors(localDir1, vv).normalize();
+			axis1.crossVectors(localDir1, Peter.vv).normalize();
 			quaternion.setFromAxisAngle(axis1, angle1);
 
 
 			plane1.quaternion.copy(quaternion);
 
 			var localDir1 = new THREE.Vector3(1, 0, 0);
-			var angle1 = localDir1.angleTo(vv);
+			var angle1 = localDir1.angleTo(Peter.vv);
 			var axis1 = new THREE.Vector3();
-			axis1.crossVectors(localDir1, vv).normalize();
+			axis1.crossVectors(localDir1, Peter.vv).normalize();
 			quaternion.setFromAxisAngle(axis1, angle1);
 
 			//link1.quaternion.copy (quaternion);
@@ -1577,7 +1580,7 @@
 			render();
 		}
 		target = 0;
-
+		target1 = 0;
 		function update() {
 
 			controls.update();
@@ -1587,15 +1590,16 @@
 			Peter.tsphere.position.copy(T);
 
 			Peter.bow2.position.copy(T);
-			ccdSys.target.copy(T);
+			Peter.target.copy(T);
 			
-			var T1 = John.bow3.localToWorld(new THREE.Vector3(0, target, 0));
+			var T1 = John.bow3.localToWorld(new THREE.Vector3(0, target1, 0));
 			John.tsphere.position.copy(T1);
 			John.bow2.position.copy(T1);
-			ccdSys.target.copy(T1);
+			John.target.copy(T1);
 			
 			
-			ccdSys.update();
+			Peter.update();
+			John.update();
 		}
 
 		function onWindowResize() {
@@ -1609,11 +1613,11 @@
 
 		function render() {
 
-			Peter.link1.rotation.y = ccdSys.thetas[0]; //theta1;
-			Peter.link2.rotation.y = ccdSys.thetas[1]; //theta2;
+			Peter.link1.rotation.y = Peter.thetas[0]; //theta1;
+			Peter.link2.rotation.y = Peter.thetas[1]; //theta2;
 			
-			John.link1.rotation.y = ccdSys.thetas[0]; //theta1;
-			John.link2.rotation.y = ccdSys.thetas[1]; //theta2;
+			John.link1.rotation.y = John.thetas[0]; //theta1;
+			John.link2.rotation.y = John.thetas[1]; //theta2;
 			
 			
 			renderer.clear();
