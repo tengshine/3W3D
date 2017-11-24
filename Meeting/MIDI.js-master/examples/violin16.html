@@ -108,7 +108,7 @@
 	<script>
 		var stringAngle = 22;
 		var startClick = false;
-		var startClick1 = false;
+		//var startClick1 = false;
 		var startT;
 		var notej = 0;
 		var bowP1 = 6.35,
@@ -188,16 +188,16 @@
 					color: 0xBB3D00
 				}));
 				violin1.position.set(2.67, 0, 0);
-				//violin1.material.transparent = true;
-				//violin1.material.opacity = 0;
+				violin1.material.transparent = true;
+				violin1.material.opacity = 0;
 				violin.add(violin1);
 
 				var violin2 = new THREE.Mesh(new THREE.CylinderGeometry(1.04, 1.04, 0.336, 32), new THREE.MeshLambertMaterial({
 					color: 0xBB3D00
 				}));
 				violin2.position.set(-1.63, 0, 0);
-				//violin2.material.transparent = true;
-				//violin2.material.opacity = 0;
+				violin2.material.transparent = true;
+				violin2.material.opacity = 0;
 				violin1.add(violin2);
 
 				var violin3 = new THREE.Mesh(new THREE.CylinderGeometry(0.168, 0.168, 3.56, 32), new THREE.MeshLambertMaterial({
@@ -205,8 +205,8 @@
 				}));
 				violin3.rotation.z = Math.PI / 2;
 				violin3.position.set(1.78, 0, 0);
-				//violin3.material.transparent = true;
-				//violin3.material.opacity = 0;
+				violin3.material.transparent = true;
+				violin3.material.opacity = 0;
 				violin1.add(violin3);
 
 				var onProgress = function(xhr) {
@@ -220,7 +220,7 @@
 
 				//THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
-				/*var mtlLoader = new THREE.MTLLoader();
+				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath('violinmesh/');
 				mtlLoader.load('violin.mtl', function(materials) {
 
@@ -254,7 +254,7 @@
 					///////////////////////////////
 					
 
-				});*/
+				});
 				////////////////////////////////////
 
 				var bow3 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 10, 32), new THREE.MeshLambertMaterial({
@@ -297,6 +297,8 @@
 				this.v = 0;
 				this.v1 = 0;
 				this.vv = 0;
+				this.startClick1=false;
+				this.startClick2=false;
 			}
 			
 			CCDsys(){
@@ -1461,7 +1463,7 @@
 			var time = new Date().getTime() - startT; // in msec
 			var b = time2Beat(time);
 
-			if (startClick1) {
+			if (Peter.startClick1) {
 				//console.log(time);
 				//console.log('start');
 				target = interpolate(b) * 4;
@@ -1560,7 +1562,7 @@
 			//////////////////////////////////////////
 			var bpm1 = $('#tempo').val();
 			var move = clock.getElapsedTime() - startTime;
-			if(startClick1){
+			if(Peter.startClick1){
 				redLineDis=move*8*bpm1/60;
 				
 				redLine.position.x=redLineDis;
@@ -1572,7 +1574,6 @@
 				//console.log('x：' + cameraFront.position.x);
 			
 			}
-			
 				cameraDis+=0.1;
 			//cameraFront.position.x =cameraDis;
 
@@ -1610,7 +1611,6 @@
 			renderer.setSize(width, height);
 		}
 
-
 		function render() {
 
 			Peter.link1.rotation.y = Peter.thetas[0]; //theta1;
@@ -1618,7 +1618,6 @@
 			
 			John.link1.rotation.y = John.thetas[0]; //theta1;
 			John.link2.rotation.y = John.thetas[1]; //theta2;
-			
 			
 			renderer.clear();
 			//renderer.setClearColor(0x888888);
@@ -1649,7 +1648,7 @@
 			if(!startClick){
 				lampi=0;
 				lampj=0;
-				startClick1=false;
+				Peter.startClick1=false;
 				for(var i=1;i<=4;i++){
 					sceneFront.remove(sceneFront.getObjectByName('light'+i));
 
@@ -1664,7 +1663,7 @@
 				lampj=lampj+1;
 				lampi=(lampj)%4+1;
 				if(lampj==4){
-					startClick1=true;
+					Peter.startClick1=true;
 					startT = new Date().getTime();
 					startTime = clock.getElapsedTime();
 					playMusic();
@@ -1733,7 +1732,7 @@
 			}
 
 			//////////////////////////////////////////////////
-			if (startClick1) {
+			if (Peter.startClick1) {
 				var bpm1 = $('#tempo').val();
 
 				//console.log(note1);
@@ -1757,7 +1756,7 @@
 				notej++;
 
 			}
-			if (!startClick1) {
+			if (!Peter.startClick1) {
 				notej = 0;
 				MIDI.noteOff(1, note1, 0);
 				console.log("3");
@@ -1771,7 +1770,7 @@
 					playMusic();
 				}, eventArray[0].beat * 1000 * 60 / bpm1);
 			}
-			if (notej != 0 && notej < eventArray.length && startClick1) {
+			if (notej != 0 && notej < eventArray.length && Peter.startClick1) {
 				setTimeout(function() {
 					console.log("4");
 					playMusic();
