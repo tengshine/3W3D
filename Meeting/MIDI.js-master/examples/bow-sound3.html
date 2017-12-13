@@ -542,8 +542,11 @@ function NoteOn (note, duration, dynamics, type) {
 
    MIDI.noteOn(1, note, 127*dynamics, 0);
    
-   var dutyCycle;
-   dutyCycle = isStaccato(type) ? 0.1 : 0.9;
+   var dutyCycle=0.8;
+   if( isSlur(type))dutyCycle=0.9;
+   if( isStaccato(type))dutyCycle=0.1;
+   if( isPortato(type))dutyCycle=0.7;
+  
    if (isLift (type))
    	dutyCycle = 0.3;
    	
