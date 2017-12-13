@@ -670,17 +670,17 @@ function animate() {
 //  midi related 
 window.onload = function () {
 	MIDI.loadPlugin({
-		soundfontUrl: "./MIDI.js/examples/soundfont/",
-		instruments: ["acoustic_grand_piano","violin"],
-		onprogress: function(state, progress) {
-			console.log(state, progress);
-		},
-		onsuccess: function() {
-			MIDI.programChange(0, 0);   // 0 for piano1
-			MIDI.programChange(1, 40);  // 40 for violin
-			MIDI.setVolume(0, 127);
-		}
-	});
+				soundfontUrl: "./soundfont/",
+				instruments: ["acoustic_grand_piano", "violin"],
+				onprogress: function(state, progress) {
+					console.log(state, progress);
+				},
+				onsuccess: function() {
+					MIDI.programChange(0, 0);
+					MIDI.programChange(1, 40);
+					MIDI.setVolume(0, 127);
+				}
+			});
 };
 
 </script>
