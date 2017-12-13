@@ -1,168 +1,203 @@
+
+
+
+
 $('#sequence').change ( function() {
    var which = $(this).val();
    removeNotesOnScore();
    switch (which) {
    	case 'ev1':
    		eventArray = makeEventArray1();
+		eventArrayB = makeEventArray0();
+		
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev1a':
    		eventArray = makeEventArray1a();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev1b':
    		eventArray = makeEventArray1b();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev2':
    		eventArray = makeEventArray2();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(11);
  		break;
    	case 'ev3':
 
 		eventArray = makeEventArray3();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3a':
 
 		eventArray = makeEventArray3a();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3b':
 
 		eventArray = makeEventArray3b();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3c':
 
 		eventArray = makeEventArray3c();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3d':
 
 		eventArray = makeEventArray3d();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3e':
 
 		eventArray = makeEventArray3e();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev4':
 
 		eventArray = makeEventArray4();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5':
 
 		eventArray = makeEventArray5();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5a':
 
 		eventArray = makeEventArray5a();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5b':
 
 		eventArray = makeEventArray5b();
+		eventArrayB = makeEventArray0();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5c':
 
       eventArray = makeEventArray5c();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev5d':
 
       eventArray = makeEventArray5d();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev5e':
 
       eventArray = makeEventArray5e();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev5f':
 
       eventArray = makeEventArray5f();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev5g':
 
       eventArray = makeEventArray5g();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6':
 
       eventArray = makeEventArray6();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6a':
    	  eventArray = makeEventArray6a();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6b':
       eventArray = makeEventArray6b();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6c':
       eventArray = makeEventArray6c();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev8':
       eventArray = makeEventArray8();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev8a':
       eventArray = makeEventArray8a();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev8b':
       eventArray = makeEventArray8b();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev9':
 
       eventArray = makeEventArray9();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(15);
  		break;
    	case 'ev10':
 
       eventArray = makeEventArray10();
+	  eventArrayB = makeEventArray0();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev11':
 
       eventArray = makeEventArrayEx1();
+	  eventArrayB = makeEventArrayEx2();
+	  
       eventToScore(eventArray);
 	  makeSheet(20);
  		break;
@@ -173,6 +208,8 @@ $('#sequence').change ( function() {
    }
 
    keyframes = makeSequence(eventArray);
+   keyframesB = makeSequence(eventArrayB);
+   
    //printKeyframe (keyframes);
 
 });
@@ -184,7 +221,15 @@ function printKeyframe(keyframes) {
     }
 }
 
-
+function makeEventArray0 () {
+  var eventArray = [];
+  timeSignatureX=4;
+	timeSignatureY=4;
+  eventArray.push(new Event(0, 1, 0,0,0,0) );
+  
+  period = 21;
+  return eventArray;
+}
 function makeEventArray1 () {
   var eventArray = [];
   timeSignatureX=4;
@@ -591,13 +636,13 @@ function makeEventArrayEx1 () {  // rondo Mozart
 	var eventArray = [];
 	timeSignatureX=12;
 	timeSignatureY=8;
-	eventArray.push(new Event(0   ,  2/3,  1, 'L', 0.8, 0.25) );
-	eventArray.push(new Event(2/3 ,  1/3,  1, 'L') );
-	eventArray.push(new Event(1	  ,  2/3,  1, 'L') );
-	eventArray.push(new Event(1+2/3 ,1/3,  1, 'L') );
-	eventArray.push(new Event(2   ,  2/3,  1, 'L') );
-	eventArray.push(new Event(2+2/3 ,1/3,  1, 'L') );
-	eventArray.push(new Event(3   ,  2/3,  1, 'L') );
+	eventArray.push(new Event(0   ,  2/3,  1,0,0,0) );
+	eventArray.push(new Event(2/3 ,  1/3,  1) );
+	eventArray.push(new Event(1	  ,  2/3,  1) );
+	eventArray.push(new Event(1+2/3 ,1/3,  1) );
+	eventArray.push(new Event(2   ,  2/3,  1) );
+	eventArray.push(new Event(2+2/3 ,1/3,  1) );
+	eventArray.push(new Event(3   ,  2/3,  1, 'L',0.8,0.25) );
 	eventArray.push(new Event(3+2/3, 1/3,65 , 'U') );
 	
 	eventArray.push(new Event(4   ,  2/3,68 , 'D') );
@@ -641,6 +686,48 @@ function makeEventArrayEx1 () {  // rondo Mozart
 	eventArray.push(new Event(18  ,    1,65, 'D') );
 	eventArray.push(new Event(19  ,    1,65, 'S') );
 	eventArray.push(new Event(20  ,  1/3,65, 'S') );
+	
+  period = 21;
+  return eventArray;
+}
+function makeEventArrayEx2 () {  // rondo Mozart
+	var eventArray = [];
+	timeSignatureX=12;
+	timeSignatureY=8;
+	eventArray.push(new Event(0   ,   1,  1, 0,0,0) );
+	eventArray.push(new Event(1   ,   1,  1) );
+	eventArray.push(new Event(2	  ,   1,  1) );
+	eventArray.push(new Event(3	  ,   1,  1, 'L',0.4,0.25) );
+
+	eventArray.push(new Event(4   ,   1,72 , 'D') );
+	eventArray.push(new Event(5   , 2/3,72 , 'S') );
+	eventArray.push(new Event(5+2/3,1/3,74 , 'S') );
+	eventArray.push(new Event(6   ,   1,75 , 'U') );
+	eventArray.push(new Event(7   ,   1,75 , 'S') );
+	
+	eventArray.push(new Event(8   ,   1,72 , 'D') );
+	eventArray.push(new Event(9   , 2/3,72 , 'S') );
+	eventArray.push(new Event(9+2/3,1/3,74 , 'S') );
+	eventArray.push(new Event(10  ,   1,75 , 'U') );
+	eventArray.push(new Event(11  , 2/3,75 , 'S') );
+	eventArray.push(new Event(11+2/3,1/3,73, 'S') );
+	
+	eventArray.push(new Event(12  ,   1,72, 'D') );
+	eventArray.push(new Event(13  ,  2/3,72, 'S') );
+	eventArray.push(new Event(13+2/3,1/3,74, 'S') );
+	eventArray.push(new Event(14  ,  2/3,75, 'U') );
+	eventArray.push(new Event(14+2/3,1/3,77, 'S') );
+	eventArray.push(new Event(15  ,   1,79, 'D') );
+	
+	eventArray.push(new Event(16  ,  2/3,80, 'U') );
+	eventArray.push(new Event(16+2/3,1/3,82, 'S') );
+	eventArray.push(new Event(17  ,  2/3,84, 'D') );
+	eventArray.push(new Event(17+2/3,1/3,82, 'S') );
+	eventArray.push(new Event(18  ,  2/3,81, 'U') );
+	eventArray.push(new Event(18+2/3,1/3,79, 'S') );
+	eventArray.push(new Event(19  ,    1,77, 'D') );
+	
+	eventArray.push(new Event(20  ,  1/3,77, 'S') );
 	
   period = 21;
   return eventArray;
