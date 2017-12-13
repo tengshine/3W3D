@@ -4,7 +4,16 @@ $('#sequence').change ( function() {
    	case 'ev1':
    		eventArray = makeEventArray1();
  		break;
-   	case 'ev1a':
+   	case 'ev1a1':
+   		eventArray = makeEventArray1a1();
+ 		break;
+	case 'ev1a2':
+   		eventArray = makeEventArray1a2();
+ 		break;
+	case 'ev1a3':
+   		eventArray = makeEventArray1a3();
+ 		break;
+	case 'ev1a':
    		eventArray = makeEventArray1a();
  		break;
    	case 'ev1b':
