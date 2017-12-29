@@ -8,188 +8,188 @@ $('#sequence').change ( function() {
    switch (which) {
    	case 'ev1':
    		eventArray = makeEventArray1();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray1();
 		
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev1a':
    		eventArray = makeEventArray1a();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray1a();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev1b':
    		eventArray = makeEventArray1b();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray1b();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev2':
    		eventArray = makeEventArray2();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray2();
 		eventToScore(eventArray);
 		makeSheet(11);
  		break;
    	case 'ev3':
 
 		eventArray = makeEventArray3();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3a':
 
 		eventArray = makeEventArray3a();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3a();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3b':
 
 		eventArray = makeEventArray3b();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3b();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3c':
 
 		eventArray = makeEventArray3c();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3c();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3d':
 
 		eventArray = makeEventArray3d();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3d();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev3e':
 
 		eventArray = makeEventArray3e();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray3e();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev4':
 
 		eventArray = makeEventArray4();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray4();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5':
 
 		eventArray = makeEventArray5();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray5();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5a':
 
 		eventArray = makeEventArray5a();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray5a();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5b':
 
 		eventArray = makeEventArray5b();
-		eventArrayB = makeEventArray0();
+		eventArrayB = makeEventArray5b();
 		eventToScore(eventArray);
 		makeSheet(3);
  		break;
    	case 'ev5c':
 
       eventArray = makeEventArray5c();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray5c();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev5d':
 
       eventArray = makeEventArray5d();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray5d();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev5e':
 
       eventArray = makeEventArray5e();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray5e();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev5f':
 
       eventArray = makeEventArray5f();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray5f();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev5g':
 
       eventArray = makeEventArray5g();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray5g();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6':
 
       eventArray = makeEventArray6();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray6();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6a':
    	  eventArray = makeEventArray6a();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray6a();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6b':
       eventArray = makeEventArray6b();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray6b();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev6c':
       eventArray = makeEventArray6c();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray6c();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
    	case 'ev8':
       eventArray = makeEventArray8();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray8();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev8a':
       eventArray = makeEventArray8a();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray8a();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev8b':
       eventArray = makeEventArray8b();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray8b();
       eventToScore(eventArray);
 	  makeSheet(3);
  		break;
    	case 'ev9':
 
       eventArray = makeEventArray9();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray9();
       eventToScore(eventArray);
 	  makeSheet(15);
  		break;
    	case 'ev10':
 
       eventArray = makeEventArray10();
-	  eventArrayB = makeEventArray0();
+	  eventArrayB = makeEventArray10();
       eventToScore(eventArray);
 	  makeSheet(7);
  		break;
@@ -201,11 +201,33 @@ $('#sequence').change ( function() {
       eventToScore(eventArray);
 	  makeSheet(20);
  		break;
-   	case 'ev12':
-
-      
+   	
+	case 'ev12':
+	  eventArray = makeEventArray0();
+	  eventArrayB = makeEventArray0();
+	  
+      eventToScore(eventArray);
+	  makeSheet(20);
+ 		break;
+		
+    case 'ev13':
+	  eventArray = makeEventArrayStar();
+	  eventArrayB = makeEventArrayStar();
+      eventToScore(eventArray);
+	  makeSheet(15);
+ 		break;
+	case 'ev14':
+	  eventArray = makeEventArrayTest1();
+	  eventArrayB = makeEventArrayTest2();
+      eventToScore(eventArray);
+	  makeSheet(15);
+ 		break;
+    
 
    }
+   
+   
+   makeEventArrayStar
 
    keyframes = makeSequence(eventArray);
    keyframesB = makeSequence(eventArrayB);
@@ -225,9 +247,12 @@ function makeEventArray0 () {
   var eventArray = [];
   timeSignatureX=4;
 	timeSignatureY=4;
-  eventArray.push(new Event(0, 1, 0,0,0,0) );
+  eventArray.push(new Event( 0, 1 , 69 , 'D', 0.5, 0.5 ));
+  eventArray.push(new Event( 1, 1 , 71 , 'U' ));
+  eventArray.push(new Event( 2, 1 , 72 , 'D' ));
+  eventArray.push(new Event( 3, 1 , 74 , 'U' ));
   
-  period = 21;
+  period = 4;
   return eventArray;
 }
 function makeEventArray1 () {
@@ -270,7 +295,7 @@ function makeEventArray2 () {  // carmina burana
   var eventArray = [];
   timeSignatureX=4;
 	timeSignatureY=4;
-  eventArray.push(new Event(0, 1, 1, 'L') );
+  eventArray.push(new Event(0, 1, 1, 'L',0,0) );
   eventArray.push(new Event(1, 2, 71, 'D', 0.4, 0.5) );
   eventArray.push(new Event(3, 1, 72, 'U') );
   eventArray.push(new Event(4, 1, 69, 'D') );
@@ -547,13 +572,13 @@ function makeEventArray9 () {  // humoresque
   // bar 2
   eventArray.push(new Event(4,    0.5,  79, 'S', 0.8, 0.5) );
   eventArray.push(new Event(4.5,  0.25,  1) );
-  eventArray.push(new Event(4.75, 0.25, 77, 'U') );
+  eventArray.push(new Event(4.75, 0.25, 78, 'U') );
 
   eventArray.push(new Event(5,    0.5,  81, 'S', 0.8, 0.5) );
   eventArray.push(new Event(5.5,  0.25,  1) );
   eventArray.push(new Event(5.75, 0.25, 79, 'D') );
 
-  eventArray.push(new Event(6,    0.5,  77, 'S', 0.8, 0.5) );
+  eventArray.push(new Event(6,    0.5,  78, 'S', 0.8, 0.5) );
   eventArray.push(new Event(6.5,  0.25,  1) );
   eventArray.push(new Event(6.75, 0.25, 81, 'U') );
 
@@ -697,7 +722,7 @@ function makeEventArrayEx2 () {  // rondo Mozart
 	eventArray.push(new Event(0   ,   1,  1, 0,0,0) );
 	eventArray.push(new Event(1   ,   1,  1) );
 	eventArray.push(new Event(2	  ,   1,  1) );
-	eventArray.push(new Event(3	  ,   1,  1, 'L',0.4,0.25) );
+	eventArray.push(new Event(3	  ,   1,  1, 'L',0.6,0.25) );
 
 	eventArray.push(new Event(4   ,   1,72 , 'D') );
 	eventArray.push(new Event(5   , 2/3,72 , 'S') );
@@ -732,3 +757,166 @@ function makeEventArrayEx2 () {  // rondo Mozart
   period = 21;
   return eventArray;
 }
+
+function makeEventArrayStar () {  // with staccato
+  var eventArray = [];
+  timeSignatureX=4;
+  timeSignatureY=4;
+  eventArray.push(new Event(0, 1, 60, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(1, 1, 60, 'U') );
+  eventArray.push(new Event(2, 1, 67, 'D') );
+  eventArray.push(new Event(3, 1, 67, 'U') );
+  
+  eventArray.push(new Event(4, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 69, 'U') );
+  eventArray.push(new Event(6, 2, 67, 'D') );
+  
+  eventArray.push(new Event(8, 1, 65, 'U') );
+  eventArray.push(new Event(9, 1, 65, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(10, 1, 64, 'U') );
+  eventArray.push(new Event(11, 1, 64, 'D') );
+  
+  eventArray.push(new Event(12, 1, 62, 'U') );
+  eventArray.push(new Event(13, 1, 62, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(14, 2, 60, 'U') );
+
+  period = 16;
+  return eventArray;
+}
+
+
+function makeEventArrayTest1 () {  
+  var eventArray = [];
+  timeSignatureX=4;
+  timeSignatureY=4;
+  eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(1, 1, 71, 'U') );
+  eventArray.push(new Event(2, 1, 73, 'D') );
+  eventArray.push(new Event(3, 1, 74, 'U') );
+  
+  eventArray.push(new Event(4, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 78, 'U') );
+  eventArray.push(new Event(6, 1, 80, 'D') );
+  eventArray.push(new Event(7, 1, 81, 'U') );
+  
+  eventArray.push(new Event(8, 1, 81, 'D') );
+  eventArray.push(new Event(9, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(10, 1, 78, 'D') );
+  eventArray.push(new Event(11, 1, 76, 'U') );
+  
+  eventArray.push(new Event(12, 1, 74, 'D') );
+  eventArray.push(new Event(13, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(14, 1, 71, 'D') );
+  eventArray.push(new Event(15, 1, 69, 'U') );
+  
+  eventArray.push(new Event(16, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(17, 1, 71, 'U') );
+  eventArray.push(new Event(18, 1, 73, 'D') );
+  eventArray.push(new Event(19, 1, 74, 'U') );
+  
+  eventArray.push(new Event(20, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(21, 1, 78, 'U') );
+  eventArray.push(new Event(22, 1, 80, 'D') );
+  eventArray.push(new Event(23, 1, 81, 'U') );
+  
+  eventArray.push(new Event(24, 1, 81, 'D') );
+  eventArray.push(new Event(25, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(26, 1, 78, 'D') );
+  eventArray.push(new Event(27, 1, 76, 'U') );
+  
+  eventArray.push(new Event(28, 1, 74, 'D') );
+  eventArray.push(new Event(29, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(30, 1, 71, 'D') );
+  eventArray.push(new Event(31, 1, 69, 'U') );
+  
+  eventArray.push(new Event(32, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(33, 1, 71, 'U') );
+  eventArray.push(new Event(34, 1, 73, 'D') );
+  eventArray.push(new Event(35, 1, 74, 'U') );
+  
+  eventArray.push(new Event(36, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(37, 1, 78, 'U') );
+  eventArray.push(new Event(38, 1, 80, 'D') );
+  eventArray.push(new Event(39, 1, 81, 'U') );
+  
+  eventArray.push(new Event(40, 1, 81, 'D') );
+  eventArray.push(new Event(41, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(42, 1, 78, 'D') );
+  eventArray.push(new Event(43, 1, 76, 'U') );
+  
+  eventArray.push(new Event(44, 1, 74, 'D') );
+  eventArray.push(new Event(45, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(46, 1, 71, 'D') );
+  eventArray.push(new Event(47, 1, 69, 'U') );
+  period = 48;
+  return eventArray;
+}
+
+function makeEventArrayTest2 () {  
+  var eventArray = [];
+  timeSignatureX=4;
+  timeSignatureY=4;
+  var n=7;
+  eventArray.push(new Event(0, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(1, 1, 71-n, 'U') );
+  eventArray.push(new Event(2, 1, 73-n, 'D') );
+  eventArray.push(new Event(3, 1, 74-n, 'U') );
+                                    
+  eventArray.push(new Event(4, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 78-n, 'U') );
+  eventArray.push(new Event(6, 1, 80-n, 'D') );
+  eventArray.push(new Event(7, 1, 81-n, 'U') );
+                                    
+  eventArray.push(new Event(8, 1, 81-n, 'D') );
+  eventArray.push(new Event(9, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(10, 1, 78-n, 'D') );
+  eventArray.push(new Event(11, 1, 76-n, 'U') );
+                                     
+  eventArray.push(new Event(12, 1, 74-n, 'D') );
+  eventArray.push(new Event(13, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(14, 1, 71-n, 'D') );
+  eventArray.push(new Event(15, 1, 69-n, 'U') );
+                                     
+  eventArray.push(new Event(16, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(17, 1, 71-n, 'U') );
+  eventArray.push(new Event(18, 1, 73-n, 'D') );
+  eventArray.push(new Event(19, 1, 74-n, 'U') );
+                                     
+  eventArray.push(new Event(20, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(21, 1, 78-n, 'U') );
+  eventArray.push(new Event(22, 1, 80-n, 'D') );
+  eventArray.push(new Event(23, 1, 81-n, 'U') );
+                                     
+  eventArray.push(new Event(24, 1, 81-n, 'D') );
+  eventArray.push(new Event(25, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(26, 1, 78-n, 'D') );
+  eventArray.push(new Event(27, 1, 76-n, 'U') );
+
+  eventArray.push(new Event(28, 1, 74-n, 'D') );
+  eventArray.push(new Event(29, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(30, 1, 71-n, 'D') );
+  eventArray.push(new Event(31, 1, 69-n, 'U') );
+                                     
+  eventArray.push(new Event(32, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(33, 1, 71-n, 'U') );
+  eventArray.push(new Event(34, 1, 73-n, 'D') );
+  eventArray.push(new Event(35, 1, 74-n, 'U') );
+                                     
+  eventArray.push(new Event(36, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(37, 1, 78-n, 'U') );
+  eventArray.push(new Event(38, 1, 80-n, 'D') );
+  eventArray.push(new Event(39, 1, 81-n, 'U') );
+                                     
+  eventArray.push(new Event(40, 1, 81-n, 'D') );
+  eventArray.push(new Event(41, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(42, 1, 78-n, 'D') );
+  eventArray.push(new Event(43, 1, 76-n, 'U') );
+                                    
+  eventArray.push(new Event(44, 1, 74-n, 'D') );
+  eventArray.push(new Event(45, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(46, 1, 71-n, 'D') );
+  eventArray.push(new Event(47, 1, 69-n, 'U') );
+  period = 48;
+  return eventArray;
+}
+
