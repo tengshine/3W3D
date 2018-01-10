@@ -210,9 +210,15 @@ $('#sequence').change ( function() {
 	  makeSheet(20);
  		break;
 		
-   case 'ev13':
+    case 'ev13':
 	  eventArray = makeEventArrayStar();
 	  eventArrayB = makeEventArrayStar();
+      eventToScore(eventArray);
+	  makeSheet(15);
+ 		break;
+	case 'ev14':
+	  eventArray = makeEventArrayTest1();
+	  eventArrayB = makeEventArrayTest2();
       eventToScore(eventArray);
 	  makeSheet(15);
  		break;
@@ -777,3 +783,142 @@ function makeEventArrayStar () {  // with staccato
   period = 16;
   return eventArray;
 }
+
+
+function makeEventArrayTest1 () {  
+  var eventArray = [];
+  timeSignatureX=4;
+  timeSignatureY=4;
+  eventArray.push(new Event(0, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(1, 1, 71, 'U') );
+  eventArray.push(new Event(2, 1, 73, 'D') );
+  eventArray.push(new Event(3, 1, 74, 'U') );
+  
+  eventArray.push(new Event(4, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 78, 'U') );
+  eventArray.push(new Event(6, 1, 80, 'D') );
+  eventArray.push(new Event(7, 1, 81, 'U') );
+  
+  eventArray.push(new Event(8, 1, 81, 'D') );
+  eventArray.push(new Event(9, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(10, 1, 78, 'D') );
+  eventArray.push(new Event(11, 1, 76, 'U') );
+  
+  eventArray.push(new Event(12, 1, 74, 'D') );
+  eventArray.push(new Event(13, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(14, 1, 71, 'D') );
+  eventArray.push(new Event(15, 1, 69, 'U') );
+  
+  eventArray.push(new Event(16, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(17, 1, 71, 'U') );
+  eventArray.push(new Event(18, 1, 73, 'D') );
+  eventArray.push(new Event(19, 1, 74, 'U') );
+  
+  eventArray.push(new Event(20, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(21, 1, 78, 'U') );
+  eventArray.push(new Event(22, 1, 80, 'D') );
+  eventArray.push(new Event(23, 1, 81, 'U') );
+  
+  eventArray.push(new Event(24, 1, 81, 'D') );
+  eventArray.push(new Event(25, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(26, 1, 78, 'D') );
+  eventArray.push(new Event(27, 1, 76, 'U') );
+  
+  eventArray.push(new Event(28, 1, 74, 'D') );
+  eventArray.push(new Event(29, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(30, 1, 71, 'D') );
+  eventArray.push(new Event(31, 1, 69, 'U') );
+  
+  eventArray.push(new Event(32, 1, 69, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(33, 1, 71, 'U') );
+  eventArray.push(new Event(34, 1, 73, 'D') );
+  eventArray.push(new Event(35, 1, 74, 'U') );
+  
+  eventArray.push(new Event(36, 1, 76, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(37, 1, 78, 'U') );
+  eventArray.push(new Event(38, 1, 80, 'D') );
+  eventArray.push(new Event(39, 1, 81, 'U') );
+  
+  eventArray.push(new Event(40, 1, 81, 'D') );
+  eventArray.push(new Event(41, 1, 80, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(42, 1, 78, 'D') );
+  eventArray.push(new Event(43, 1, 76, 'U') );
+  
+  eventArray.push(new Event(44, 1, 74, 'D') );
+  eventArray.push(new Event(45, 1, 73, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(46, 1, 71, 'D') );
+  eventArray.push(new Event(47, 1, 69, 'U') );
+  period = 48;
+  return eventArray;
+}
+
+function makeEventArrayTest2 () {  
+  var eventArray = [];
+  timeSignatureX=4;
+  timeSignatureY=4;
+  var n=7;
+  eventArray.push(new Event(0, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(1, 1, 71-n, 'U') );
+  eventArray.push(new Event(2, 1, 73-n, 'D') );
+  eventArray.push(new Event(3, 1, 74-n, 'U') );
+                                    
+  eventArray.push(new Event(4, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(5, 1, 78-n, 'U') );
+  eventArray.push(new Event(6, 1, 80-n, 'D') );
+  eventArray.push(new Event(7, 1, 81-n, 'U') );
+                                    
+  eventArray.push(new Event(8, 1, 81-n, 'D') );
+  eventArray.push(new Event(9, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(10, 1, 78-n, 'D') );
+  eventArray.push(new Event(11, 1, 76-n, 'U') );
+                                     
+  eventArray.push(new Event(12, 1, 74-n, 'D') );
+  eventArray.push(new Event(13, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(14, 1, 71-n, 'D') );
+  eventArray.push(new Event(15, 1, 69-n, 'U') );
+                                     
+  eventArray.push(new Event(16, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(17, 1, 71-n, 'U') );
+  eventArray.push(new Event(18, 1, 73-n, 'D') );
+  eventArray.push(new Event(19, 1, 74-n, 'U') );
+                                     
+  eventArray.push(new Event(20, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(21, 1, 78-n, 'U') );
+  eventArray.push(new Event(22, 1, 80-n, 'D') );
+  eventArray.push(new Event(23, 1, 81-n, 'U') );
+                                     
+  eventArray.push(new Event(24, 1, 81-n, 'D') );
+  eventArray.push(new Event(25, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(26, 1, 78-n, 'D') );
+  eventArray.push(new Event(27, 1, 76-n, 'U') );
+
+  eventArray.push(new Event(28, 1, 74-n, 'D') );
+  eventArray.push(new Event(29, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(30, 1, 71-n, 'D') );
+  eventArray.push(new Event(31, 1, 69-n, 'U') );
+                                     
+  eventArray.push(new Event(32, 1, 69-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(33, 1, 71-n, 'U') );
+  eventArray.push(new Event(34, 1, 73-n, 'D') );
+  eventArray.push(new Event(35, 1, 74-n, 'U') );
+                                     
+  eventArray.push(new Event(36, 1, 76-n, 'D', 0.8, 0.5) );
+  eventArray.push(new Event(37, 1, 78-n, 'U') );
+  eventArray.push(new Event(38, 1, 80-n, 'D') );
+  eventArray.push(new Event(39, 1, 81-n, 'U') );
+                                     
+  eventArray.push(new Event(40, 1, 81-n, 'D') );
+  eventArray.push(new Event(41, 1, 80-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(42, 1, 78-n, 'D') );
+  eventArray.push(new Event(43, 1, 76-n, 'U') );
+                                    
+  eventArray.push(new Event(44, 1, 74-n, 'D') );
+  eventArray.push(new Event(45, 1, 73-n, 'U', 0.8, 0.5) );
+  eventArray.push(new Event(46, 1, 71-n, 'D') );
+  eventArray.push(new Event(47, 1, 69-n, 'U') );
+  period = 48;
+  return eventArray;
+}
+
+
+
