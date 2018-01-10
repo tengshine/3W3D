@@ -76,7 +76,6 @@
   <option value='ev9'> 9 </option>
   <option value='ev10'> rondo </option>
   <option value='ev11'> green sleeves </option>
-  <option value='ev14'> 測試 </option>
 </select>
 
 	</div>
@@ -125,11 +124,9 @@
 				}));
 				body.position.set(0, 3, 0);
 				human.add(body);
-
 				///////////////////////
 				var link1 = makeLink(UPPERARM_LEN);
 				link1.position.set(-1.15, 6, 0);
-
 				scene.add(link1);
 				var link2 = makeLink(FOREARM_LEN);
 				link1.add(link2);
@@ -334,7 +331,6 @@
 					violinvv.add(theObject);
 					violinvv.rotation.y = Math.PI / 6;
 					//violin1.add(violinvv);
-
 					//////// MATERIAL ADJUSTMENT for porsche ///////////////
 					// transparent window: double-side fix
 					violinvv.traverse(
@@ -342,7 +338,6 @@
 							if (mesh instanceof THREE.Mesh) {
 								mesh.material.side = THREE.DoubleSide;
 								mesh.castShadow = true;
-
 							}
 						});
 						var violinvv2 = violinvv.clone();
@@ -388,8 +383,6 @@
 		});
 		$('#stop1').click(function() {
 			startClick = false;
-
-
 		});
 		$('#tempo').change(function() {
 			$('#bpm').text($(this).val());
@@ -410,7 +403,6 @@
 			if (tempP2B > bowP2B) anglejB = -0.01;
 			if (tempP2B < bowP2B) anglejB = 0.01;
 		}
-
 		var scene, renderer, camera;
 		var controls;
 		var lowerArm, upperArm;
@@ -1003,7 +995,7 @@
 			Peter.axes.push(new Peter.CCD_axis(new THREE.Vector3(0+3, 1+2, 0), 1, -0.1, 3.14));
 			John.setFK(fk2);
 			John.axes.push(new John.CCD_axis(new THREE.Vector3(0-2.21, 1+3, 0), 0));
-			John.axes.push(new John.CCD_axis(new THREE.Vector3(0, 1, 0), 1, -0.1, 3.14));
+			John.axes.push(new John.CCD_axis(new THREE.Vector3(0-1.21, 1+3, 0), 1, -0.1, 3.14));
 			//////節拍器燈//////////////////////////////
 			//var name1='light4';
 			makeLight(-40,-15,0,'light1');
@@ -1428,7 +1420,6 @@
 				lampi=0;
 				lampj=0;
 				Peter.startClick1=false;
-
 				for(var i=1;i<=4;i++){
 					sceneFront.remove(sceneFront.getObjectByName('light'+i));
 				}
