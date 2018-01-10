@@ -1268,8 +1268,7 @@
 			var localDir = new THREE.Vector3(0, 1, 0);
 			Peter.v = Peter.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
 			Peter.v1 = Peter.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
-			John.v = John.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
-			John.v1 = John.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
+			
 			if (anglei < 0) {
 				if (bowP1 < tempP1) tempP1 += anglei;
 			}
@@ -1283,7 +1282,11 @@
 				if (bowP2 < tempP2) tempP2 += anglej;
 			}
 			
+			var quaternionB = new THREE.Quaternion();
+			var localDirB = new THREE.Vector3(0, 1, 0);
 			
+			John.v = John.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
+			John.v1 = John.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
 			
 			if (angleiB < 0) {
 				if (bowP1B < tempP1B) tempP1B += angleiB;
@@ -1308,11 +1311,12 @@
 			axis.crossVectors(localDir, Peter.vv).normalize();
 			quaternion.setFromAxisAngle(axis, angle);
 			Peter.bow2.quaternion.copy(quaternion);
-			var angle = localDir.angleTo(John.vv);
-			var axis = new THREE.Vector3();
-			axis.crossVectors(localDir, John.vv).normalize();
-			quaternion.setFromAxisAngle(axis, angle);
-			John.bow2.quaternion.copy(quaternion);
+			
+			var angleB = localDir.angleTo(John.vv);
+			var axisB = new THREE.Vector3();
+			axisB.crossVectors(localDirB, John.vv).normalize();
+			quaternionB.setFromAxisAngle(axisB, angleB);
+			John.bow2.quaternion.copy(quaternionB);
 			//////////旋轉bow3(球跑的路線)////////////////
 			var localDir3 = new THREE.Vector3(1, 0, 0);
 			var vv1 = Peter.v1.clone().sub(Peter.v);
