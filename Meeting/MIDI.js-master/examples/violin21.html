@@ -1306,6 +1306,7 @@
 			John.v1.y = tempP2B;
 			Peter.vv = Peter.v.clone().sub(Peter.v1);
 			John.vv = John.v.clone().sub(John.v1);
+			
 			var angle = localDir.angleTo(Peter.vv);
 			var axis = new THREE.Vector3();
 			axis.crossVectors(localDir, Peter.vv).normalize();
@@ -1324,11 +1325,20 @@
 			var axis = new THREE.Vector3();
 			axis.crossVectors(localDir3, vv1).normalize();
 			quaternion.setFromAxisAngle(axis, angle);
+			
 			Peter.bow3.quaternion.copy(quaternion);
-			John.bow3.quaternion.copy(quaternion);
 			Peter.bow3.rotation.x = Math.PI / 2 - angle / 3;
-			John.bow3.rotation.x = Math.PI / 2 - angle / 3;
 			Peter.bow3.rotation.y = Math.PI / 2;
+			/////John
+			var localDir3B = new THREE.Vector3(1, 0, 0);
+			var vv1B = John.v1.clone().sub(John.v);
+			var angleB = localDir3B.angleTo(vv1B);
+			var axisB = new THREE.Vector3();
+			axisB.crossVectors(localDir3B, vv1B).normalize();
+			quaternionB.setFromAxisAngle(axisB, angleB);
+			
+			John.bow3.quaternion.copy(quaternionB);
+			John.bow3.rotation.x = Math.PI / 2 - angleB / 3;
 			John.bow3.rotation.y = Math.PI / 2;
 			//////手臂角度////////////////////
 			var localDir3 = new THREE.Vector3(1, 0, 0);
