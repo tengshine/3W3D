@@ -662,41 +662,6 @@ function makeEventArrayEx1 () {  // rondo Mozart
 	timeSignatureX=12;
 	timeSignatureY=8;
 	
-	eventArray.push(new Event(0   ,   1,  1, 0,0,0) );
-	eventArray.push(new Event(1   ,   1,  1) );
-	eventArray.push(new Event(2	  ,   1,  1) );
-	eventArray.push(new Event(3	  ,   1,  1, 'L',0.6,0.25) );
-
-	eventArray.push(new Event(4   ,   1,72 , 'D') );
-	eventArray.push(new Event(5   , 2/3,72 , 'S') );
-	eventArray.push(new Event(5+2/3,1/3,74 , 'S') );
-	eventArray.push(new Event(6   ,   1,75 , 'U') );
-	eventArray.push(new Event(7   ,   1,75 , 'S') );
-	
-	eventArray.push(new Event(8   ,   1,72 , 'D') );
-	eventArray.push(new Event(9   , 2/3,72 , 'S') );
-	eventArray.push(new Event(9+2/3,1/3,74 , 'S') );
-	eventArray.push(new Event(10  ,   1,75 , 'U') );
-	eventArray.push(new Event(11  , 2/3,75 , 'S') );
-	eventArray.push(new Event(11+2/3,1/3,73, 'S') );
-	
-	eventArray.push(new Event(12  ,   1,72, 'D') );
-	eventArray.push(new Event(13  ,  2/3,72, 'S') );
-	eventArray.push(new Event(13+2/3,1/3,74, 'S') );
-	eventArray.push(new Event(14  ,  2/3,75, 'U') );
-	eventArray.push(new Event(14+2/3,1/3,77, 'S') );
-	eventArray.push(new Event(15  ,   1,79, 'D',0.6,0.5) );
-	
-	eventArray.push(new Event(16  ,  2/3,80, 'U') );
-	eventArray.push(new Event(16+2/3,1/3,82, 'S') );
-	eventArray.push(new Event(17  ,  2/3,84, 'D') );
-	eventArray.push(new Event(17+2/3,1/3,82, 'S') );
-	eventArray.push(new Event(18  ,  2/3,81, 'U') );
-	eventArray.push(new Event(18+2/3,1/3,79, 'S') );
-	eventArray.push(new Event(19  ,    1,77, 'D') );
-	
-	eventArray.push(new Event(20  ,  1/3,77, 'S') );
-	/*
 	eventArray.push(new Event(0   ,  2/3,  1,0,0,0) );
 	eventArray.push(new Event(2/3 ,  1/3,  1) );
 	eventArray.push(new Event(1	  ,  2/3,  1) );
@@ -747,7 +712,7 @@ function makeEventArrayEx1 () {  // rondo Mozart
 	eventArray.push(new Event(18  ,    1,65, 'D') );
 	eventArray.push(new Event(19  ,    1,65, 'S') );
 	eventArray.push(new Event(20  ,  1/3,65, 'S') );
-	*/
+	
   period = 21;
   return eventArray;
 }
@@ -778,7 +743,7 @@ function makeEventArrayEx2 () {  // rondo Mozart
 	eventArray.push(new Event(13+2/3,1/3,74, 'S') );
 	eventArray.push(new Event(14  ,  2/3,75, 'U') );
 	eventArray.push(new Event(14+2/3,1/3,77, 'S') );
-	eventArray.push(new Event(15  ,   1,79, 'D',) );
+	eventArray.push(new Event(15  ,   1,79, 'D',0.6,0.5) );
 	
 	eventArray.push(new Event(16  ,  2/3,80, 'U') );
 	eventArray.push(new Event(16+2/3,1/3,82, 'S') );
