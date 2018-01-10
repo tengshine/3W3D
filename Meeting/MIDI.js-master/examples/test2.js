@@ -685,7 +685,7 @@ function makeEventArrayEx1 () {  // rondo Mozart
 	eventArray.push(new Event(13+2/3,1/3,74, 'S') );
 	eventArray.push(new Event(14  ,  2/3,75, 'U') );
 	eventArray.push(new Event(14+2/3,1/3,77, 'S') );
-	eventArray.push(new Event(15  ,   1,79, 'D',0.6,0.25) );
+	eventArray.push(new Event(15  ,   1,79, 'D',0.6,0.5) );
 	
 	eventArray.push(new Event(16  ,  2/3,80, 'U') );
 	eventArray.push(new Event(16+2/3,1/3,82, 'S') );
