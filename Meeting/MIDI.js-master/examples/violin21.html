@@ -1269,6 +1269,7 @@
 			var localDir = new THREE.Vector3(0, 1, 0);
 			Peter.v = Peter.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
 			Peter.v1 = Peter.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
+			console.log(target.position);
 			
 			if (anglei < 0) {
 				if (bowP1 < tempP1) tempP1 += anglei;
@@ -1570,6 +1571,7 @@
 				notej = 0;
 				//console.log("5");
 			}
+			
 		}
 		function playMusic2() {
 			var note1 = eventArrayB[notei].note;
