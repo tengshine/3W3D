@@ -1269,7 +1269,7 @@
 			var localDir = new THREE.Vector3(0, 1, 0);
 			Peter.v = Peter.bow3.localToWorld(new THREE.Vector3(0, 1, 0));
 			Peter.v1 = Peter.bow3.localToWorld(new THREE.Vector3(0, 0.5, 0));
-			console.log(target.position);
+			
 			
 			if (anglei < 0) {
 				if (bowP1 < tempP1) tempP1 += anglei;
@@ -1410,6 +1410,9 @@
 			Peter.bow2.position.copy(T);
 			Peter.target.copy(T);
 			Peter.update();
+			
+			console.log(target);
+			
 			var T1 = John.bow3.localToWorld(new THREE.Vector3(0, target1, 0));
 			John.tsphere.position.copy(T1);
 			John.bow2.position.copy(T1);
