@@ -929,7 +929,7 @@ function makeEventArrayCanon1 () {
   var eventArray = [];
   timeSignatureX=4;
   timeSignatureY=4;
-  	eventArray.push(new Event(0   ,  0.5 ,  81, 'D', 0.8, 0.25) );
+  	eventArray.push(new Event(0   ,  0.5 ,  81, 'D', 0.8, 0.1) );
 	eventArray.push(new Event(0.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(0.75,  0.25,  79, 'S') );
 	
