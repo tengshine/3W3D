@@ -1081,7 +1081,7 @@ function makeEventArrayCanon1 () {
 	
 	
   
-  period = 32;
+  period = 40;
   return eventArray;
 }
 
