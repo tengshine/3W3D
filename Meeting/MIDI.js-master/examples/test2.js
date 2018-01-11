@@ -937,7 +937,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(1.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(1.75,  0.25,  79, 'S') );
 	
-	eventArray.push(new Event(2	  ,   0.5,  81, 'U', 0.8, 0.75) );
+	eventArray.push(new Event(2	  ,   0.5,  81, 'U') );
 	eventArray.push(new Event(2.25,  0.25,  69, 'S') );
 	eventArray.push(new Event(2.5 ,  0.25,  71, 'S') );
 	eventArray.push(new Event(2.75,  0.25,  73, 'S') );
@@ -947,7 +947,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(3.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(3.75,  0.25,  79, 'S') );
 	/////////////
-	eventArray.push(new Event(4   ,   0.5,  78,' D', 0.8, 0.25) );
+	eventArray.push(new Event(4   ,   0.5,  78,' D') );
 	eventArray.push(new Event(4.5 ,  0.25,  74, 'S') );
 	eventArray.push(new Event(4.75,  0.25,  76, 'S') );
 	
@@ -955,7 +955,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(5.5 ,  0.25,  66, 'S') );
 	eventArray.push(new Event(5.75,  0.25,  67, 'S') );
 	
-	eventArray.push(new Event(6	  ,   0.5,  69, 'U', 0.8, 0.75) );
+	eventArray.push(new Event(6	  ,   0.5,  69, 'U') );
 	eventArray.push(new Event(6.25,  0.25,  71, 'S') );
 	eventArray.push(new Event(6.5 ,  0.25,  69, 'S') );
 	eventArray.push(new Event(6.75,  0.25,  67, 'S') );
