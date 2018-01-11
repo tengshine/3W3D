@@ -965,7 +965,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(7.5 ,  0.25,  67, 'S') );
 	eventArray.push(new Event(7.75,  0.25,  69, 'S') );
 	/////////////
-	eventArray.push(new Event(8   ,   0.5,  67,' D') );
+	eventArray.push(new Event(8   ,   0.5,  67, 'D') );
 	eventArray.push(new Event(8.5 ,  0.25,  71, 'S') );
 	eventArray.push(new Event(8.75,  0.25,  69, 'S') );
 	
