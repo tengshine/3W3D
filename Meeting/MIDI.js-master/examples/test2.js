@@ -927,8 +927,8 @@ function makeEventArrayTest2 () {
 }
 function makeEventArrayCanon1 () {  
   var eventArray = [];
-  timeSignatureX=4;
-  timeSignatureY=4;
+    timeSignatureX=4;
+    timeSignatureY=4;
   	eventArray.push(new Event(0   ,  0.5 ,  81, 'D', 0.8, 0.1) );
 	eventArray.push(new Event(0.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(0.75,  0.25,  79, 'S') );
@@ -983,7 +983,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(11.5 ,  0.25,  69, 'S') );
 	eventArray.push(new Event(11.75,  0.25,  71, 'S') );
 	/////////////
-	/*eventArray.push(new Event(12   ,   0.5,  67, 'D') );
+	eventArray.push(new Event(12   ,   0.5,  67, 'D') );
 	eventArray.push(new Event(12.5 ,  0.25,  71, 'S') );
 	eventArray.push(new Event(12.75,  0.25,  69, 'S') );
 	
@@ -1072,7 +1072,7 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(31.25,  0.25,  74, 'S') );
 	eventArray.push(new Event(31.5 ,  0.25,  71, 'S') );
 	eventArray.push(new Event(31.75,  0.25,  73, 'S') );
-  */
+  
   period = 32;
   return eventArray;
 }
