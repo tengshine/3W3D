@@ -949,6 +949,16 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(6.5 , 0.5, 67, 'U') );
   eventArray.push(new Event(7   , 0.5, 64, 'D') );
   eventArray.push(new Event(7.5 , 0.5, 67, 'U') );
+  
+  eventArray.push(new Event(8   , 0.5, 72, 'D') );
+  eventArray.push(new Event(8.5 , 0.5, 67, 'U') );
+  eventArray.push(new Event(9   , 0.5, 72, 'D') );
+  eventArray.push(new Event(9.5 , 0.5, 76, 'U') );
+  
+  eventArray.push(new Event(10   ,  2, 79, 'DL') );
+  eventArray.push(new Event(12   ,  1, 79, 'D') );
+  eventArray.push(new Event(13   ,0.5, 77, 'US') );
+  eventArray.push(new Event(13.5 ,0.5, 76, 'DS') );
   /*eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
   eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
   eventArray.push(new Event(1   , 0.5, 64, 'D') );
