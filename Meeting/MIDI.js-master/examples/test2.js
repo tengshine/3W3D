@@ -960,26 +960,26 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(13   ,0.5, 77, 'US') );
   eventArray.push(new Event(13.5 ,0.5, 76, 'DS') );
   
-  eventArray.push(new Event(12   ,  1, 74, 'U') );
-  eventArray.push(new Event(13   ,0.5, 76, 'DS') );
-  eventArray.push(new Event(13.5 ,0.5, 74, 'US') );
+  eventArray.push(new Event(14   ,  1, 74, 'U') );
+  eventArray.push(new Event(15   ,0.5, 76, 'DS') );
+  eventArray.push(new Event(15.5 ,0.5, 74, 'US') );
 
-  eventArray.push(new Event(14   ,  1, 72, 'D') );
-  eventArray.push(new Event(15   ,0.5, 74, 'US') );
-  eventArray.push(new Event(15.5 ,0.5, 76, 'DS') );
+  eventArray.push(new Event(16   ,  1, 72, 'D') );
+  eventArray.push(new Event(17   ,0.5, 74, 'US') );
+  eventArray.push(new Event(17.5 ,0.5, 76, 'DS') );
   
-  eventArray.push(new Event(16   ,0.75, 67, 'U') );
-  eventArray.push(new Event(16.75,0.25, 69, 'S') );
-  eventArray.push(new Event(17   ,0.5, 67, 'S') );
-  eventArray.push(new Event(17.5 ,0.5,  1, 'L') );
+  eventArray.push(new Event(18   ,0.75, 67, 'U') );
+  eventArray.push(new Event(18.75,0.25, 69, 'S') );
+  eventArray.push(new Event(19   ,0.5, 67, 'S') );
+  eventArray.push(new Event(19.5 ,0.5,  1, 'L') );
   
-  eventArray.push(new Event(18   ,  1, 79, 'D') );
-  eventArray.push(new Event(19   ,0.5, 77, 'US') );
-  eventArray.push(new Event(19.5 ,0.5, 76, 'DS') );
+  eventArray.push(new Event(20   ,  1, 79, 'D') );
+  eventArray.push(new Event(21   ,0.5, 77, 'US') );
+  eventArray.push(new Event(21.5 ,0.5, 76, 'DS') );
   
-  eventArray.push(new Event(20   ,  1, 81, 'U') );
-  eventArray.push(new Event(21   ,0.5, 79, 'DS') );
-  eventArray.push(new Event(21.5 ,0.5, 76, 'US') );
-  period = 16;
+  eventArray.push(new Event(22   ,  1, 81, 'U') );
+  eventArray.push(new Event(23   ,0.5, 79, 'DS') );
+  eventArray.push(new Event(23.5 ,0.5, 76, 'US') );
+  period = 25;
   return eventArray;
 }                             
