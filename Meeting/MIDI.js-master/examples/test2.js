@@ -1073,11 +1073,19 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(31.5 ,  0.25,  71, 'S',0.7) );
 	eventArray.push(new Event(31.75,  0.25,  73, 'S',0.6) );
 	
-	eventArray.push(new Event(32   ,     2,  74, 'D',0.5,0.5) );
+	eventArray.push(new Event(32   ,     2,  74, 'D',0.5) );
 	eventArray.push(new Event(34   ,     2,  73, 'U') );
 	
 	eventArray.push(new Event(36   ,     2,  71, 'D') );
 	eventArray.push(new Event(38   ,     2,  74, 'U') );
+	
+	eventArray.push(new Event(40   ,     2,  62, 'D',0.5) );
+	eventArray.push(new Event(42   ,     2,  62, 'U',0.4) );
+	
+	eventArray.push(new Event(44   ,     2,  62, 'D') );
+	eventArray.push(new Event(46   ,     2,  64, 'U') );
+	
+	eventArray.push(new Event(48   ,     2,  62, 'D') );
 /*  	eventArray.push(new Event(0   ,  0.5 ,  81, 'D', 0.8, 0.1) );
 	eventArray.push(new Event(0.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(0.75,  0.25,  79, 'S') );
