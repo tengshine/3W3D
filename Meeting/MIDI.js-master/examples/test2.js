@@ -934,8 +934,21 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(0.75, 0.25, 67, 'D') );
   eventArray.push(new Event(1   , 0.5, 66, 'U') );
   eventArray.push(new Event(1.5 , 0.5, 67, 'D') );
-
   
+  eventArray.push(new Event(2   , 0.5, 72, 'D', 0.5, 0.5) );
+  eventArray.push(new Event(2.5 , 0.25, 67, 'U') );
+  eventArray.push(new Event(2.75, 0.25, 67, 'D') );
+  eventArray.push(new Event(3   , 0.5, 66, 'U') );
+  eventArray.push(new Event(3.5 , 0.5, 67, 'D') );
+  
+  eventArray.push(new Event(4   , 0.5, 72, 'D') );  
+  eventArray.push(new Event(4.5 , 0.5, 67, 'U') );
+  eventArray.push(new Event(5   , 0.5, 72, 'D') );
+  eventArray.push(new Event(5.5 , 0.5, 67, 'U') );
+  eventArray.push(new Event(6   , 0.5, 72, 'D') );
+  eventArray.push(new Event(6.5 , 0.5, 67, 'U') );
+  eventArray.push(new Event(7   ,   1, 64, 'D') );
+  eventArray.push(new Event(7.5 , 0.5, 67, 'U') );
   /*eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
   eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
   eventArray.push(new Event(1   , 0.5, 64, 'D') );
