@@ -945,13 +945,13 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(6.5 , 0.5, 59, 'D') );
   eventArray.push(new Event(7   ,   1, 55, 'U') );
                                     
-  eventArray.push(new Event(0   +8, 0.5, 60, 'D') );
-  eventArray.push(new Event(0.5 +8, 0.5, 60, 'U') );
-  eventArray.push(new Event(1   +8, 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5 +8, 0.5, 64, 'U') );
-  eventArray.push(new Event(2   +8, 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5 +8, 0.5, 67, 'U') );
-  eventArray.push(new Event(3   +8,   1, 64, 'D') );
+  eventArray.push(new Event(0+8, 0.5, 60, 'D') );
+  eventArray.push(new Event(0.5+8, 0.5, 60, 'U') );
+  eventArray.push(new Event(1+8, 0.5, 64, 'D') );
+  eventArray.push(new Event(1.5+8, 0.5, 64, 'U') );
+  eventArray.push(new Event(2+8, 0.5, 67, 'D') );
+  eventArray.push(new Event(2.5+8, 0.5, 67, 'U') );
+  eventArray.push(new Event(3+8,   1, 64, 'D') );
   
   eventArray.push(new Event(12   , 0.5, 72, 'U') );  
   eventArray.push(new Event(12.5 , 0.5, 72, 'D') );
@@ -960,7 +960,7 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(14   ,   1, 67, 'U') );
   eventArray.push(new Event(15   ,   1,  1, 'L') );
   /////////////////////////
-  eventArray.push(new Event(0   +16, 0.5, 60, 'D') );
+  /*eventArray.push(new Event(0   +16, 0.5, 60, 'D') );
   eventArray.push(new Event(0.5 +16, 0.5, 60, 'U') );
   eventArray.push(new Event(1   +16, 0.5, 64, 'D') );
   eventArray.push(new Event(1.5 +16, 0.5, 64, 'U') );
@@ -989,8 +989,8 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(13  +16 , 0.5, 66, 'U') );
   eventArray.push(new Event(13.5+16 , 0.5, 66, 'D') );
   eventArray.push(new Event(14  +16 ,   1, 67, 'U') );
-  eventArray.push(new Event(15  +16 ,   1,  1, 'L') );
+  eventArray.push(new Event(15  +16 ,   1,  1, 'L') );*/
   
-  period = 32;
+  period = 16;
   return eventArray;
 }                             
