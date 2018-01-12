@@ -959,68 +959,27 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(12   ,  1, 79, 'D') );
   eventArray.push(new Event(13   ,0.5, 77, 'US') );
   eventArray.push(new Event(13.5 ,0.5, 76, 'DS') );
-  /*eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
-  eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
-  eventArray.push(new Event(1   , 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5 , 0.5, 64, 'U') );
-  eventArray.push(new Event(2   , 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5 , 0.5, 67, 'U') );
-  eventArray.push(new Event(3   ,   1, 64, 'D') );
   
-  eventArray.push(new Event(4   , 0.5, 65, 'U') );  
-  eventArray.push(new Event(4.5 , 0.5, 65, 'D') );
-  eventArray.push(new Event(5   , 0.5, 62, 'U') );
-  eventArray.push(new Event(5.5 , 0.5, 62, 'D') );
-  eventArray.push(new Event(6   , 0.5, 59, 'U') );
-  eventArray.push(new Event(6.5 , 0.5, 59, 'D') );
-  eventArray.push(new Event(7   ,   1, 55, 'U') );
+  eventArray.push(new Event(12   ,  1, 74, 'U') );
+  eventArray.push(new Event(13   ,0.5, 76, 'DS') );
+  eventArray.push(new Event(13.5 ,0.5, 74, 'US') );
+
+  eventArray.push(new Event(14   ,  1, 72, 'D') );
+  eventArray.push(new Event(15   ,0.5, 74, 'US') );
+  eventArray.push(new Event(15.5 ,0.5, 76, 'DS') );
   
-  eventArray.push(new Event(0+8, 0.5, 60, 'D') );
-  eventArray.push(new Event(0.5+8, 0.5, 60, 'U') );
-  eventArray.push(new Event(1+8, 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5+8, 0.5, 64, 'U') );
-  eventArray.push(new Event(2+8, 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5+8, 0.5, 67, 'U') );
-  eventArray.push(new Event(3+8,   1, 64, 'D') );
+  eventArray.push(new Event(16   ,0.75, 67, 'U') );
+  eventArray.push(new Event(16.75,0.25, 69, 'S') );
+  eventArray.push(new Event(17   ,0.5, 67, 'S') );
+  eventArray.push(new Event(17.5 ,0.5,  1, 'L') );
   
-  eventArray.push(new Event(12   , 0.5, 72, 'U') );  
-  eventArray.push(new Event(12.5 , 0.5, 72, 'D') );
-  eventArray.push(new Event(13   , 0.5, 66, 'U') );
-  eventArray.push(new Event(13.5 , 0.5, 66, 'D') );
-  eventArray.push(new Event(14   ,   1, 67, 'U') );
-  eventArray.push(new Event(15   ,   1,  1, 'L') );
-  /////////////////////////
-  /*eventArray.push(new Event(0   +16, 0.5, 60, 'D') );
-  eventArray.push(new Event(0.5 +16, 0.5, 60, 'U') );
-  eventArray.push(new Event(1   +16, 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5 +16, 0.5, 64, 'U') );
-  eventArray.push(new Event(2   +16, 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5 +16, 0.5, 67, 'U') );
-  eventArray.push(new Event(3   +16,   1, 64, 'D') );
-                                
-  eventArray.push(new Event(4   +16, 0.5, 65, 'U') );  
-  eventArray.push(new Event(4.5 +16, 0.5, 65, 'D') );
-  eventArray.push(new Event(5   +16, 0.5, 62, 'U') );
-  eventArray.push(new Event(5.5 +16, 0.5, 62, 'D') );
-  eventArray.push(new Event(6   +16, 0.5, 59, 'U') );
-  eventArray.push(new Event(6.5 +16, 0.5, 59, 'D') );
-  eventArray.push(new Event(7   +16,   1, 55, 'U') );
-                                    
-  eventArray.push(new Event(0   +16+8, 0.5, 60, 'D') );
-  eventArray.push(new Event(0.5 +16+8, 0.5, 60, 'U') );
-  eventArray.push(new Event(1   +16+8, 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5 +16+8, 0.5, 64, 'U') );
-  eventArray.push(new Event(2   +16+8, 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5 +16+8, 0.5, 67, 'U') );
-  eventArray.push(new Event(3   +16+8,   1, 64, 'D') );
-                                
-  eventArray.push(new Event(12  +16 , 0.5, 72, 'U') );  
-  eventArray.push(new Event(12.5+16 , 0.5, 72, 'D') );
-  eventArray.push(new Event(13  +16 , 0.5, 66, 'U') );
-  eventArray.push(new Event(13.5+16 , 0.5, 66, 'D') );
-  eventArray.push(new Event(14  +16 ,   1, 67, 'U') );
-  eventArray.push(new Event(15  +16 ,   1,  1, 'L') );*/
+  eventArray.push(new Event(18   ,  1, 79, 'D') );
+  eventArray.push(new Event(19   ,0.5, 77, 'US') );
+  eventArray.push(new Event(19.5 ,0.5, 76, 'DS') );
   
+  eventArray.push(new Event(20   ,  1, 81, 'U') );
+  eventArray.push(new Event(21   ,0.5, 79, 'DS') );
+  eventArray.push(new Event(21.5 ,0.5, 76, 'US') );
   period = 16;
   return eventArray;
 }                             
