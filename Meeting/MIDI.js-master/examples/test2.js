@@ -980,7 +980,53 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(22   ,  1, 81, 'U') );
   eventArray.push(new Event(23   ,0.5, 79, 'DS') );
   eventArray.push(new Event(23.5 ,0.5, 76, 'US') );
-  period = 25;
+  
+  eventArray.push(new Event(24   ,  0.5, 77, 'D') );
+  eventArray.push(new Event(24.5 , 0.25, 79, 'S') );
+  eventArray.push(new Event(24.75, 0.25, 77, 'S') );
+  eventArray.push(new Event(25   ,  0.5, 76, 'U') );
+  eventArray.push(new Event(25.5 , 0.25, 77, 'S') );
+  eventArray.push(new Event(25.75, 0.25, 76, 'S') );
+  
+  eventArray.push(new Event(26   ,  1, 74, 'D') );
+  eventArray.push(new Event(27   ,  1, 1, 'L') );
+  
+  eventArray.push(new Event(28   ,  0.5, 74, 'US') );
+  eventArray.push(new Event(28.5 , 0.25, 74, 'DS') );
+  eventArray.push(new Event(28.75, 0.25, 74, 'US') );
+  eventArray.push(new Event(29   ,  0.5, 72, 'DS') );
+  eventArray.push(new Event(29.5 ,  0.5, 74, 'US') );
+  
+  eventArray.push(new Event(30   ,  0.5, 76, 'DS') );
+  eventArray.push(new Event(30.5 ,  0.5, 77, 'US') );
+  eventArray.push(new Event(31   ,    1, 79, 'D') );
+  
+  eventArray.push(new Event(32   ,  0.5, 74, 'US') );
+  eventArray.push(new Event(32.5 ,  0.5, 76, 'DS') );
+  eventArray.push(new Event(33   ,    1, 77, 'U') );
+  
+  eventArray.push(new Event(34   ,  0.5, 76, 'DS') );
+  eventArray.push(new Event(34.5 ,  0.5, 74, 'US') );
+  eventArray.push(new Event(35   ,    1, 72, 'D') );
+  
+  eventArray.push(new Event(36   ,  0.5, 74, 'US') );
+  eventArray.push(new Event(36.5 , 0.25, 74, 'DS') );
+  eventArray.push(new Event(36.75, 0.25, 74, 'US') );
+  eventArray.push(new Event(37   ,  0.5, 72, 'DS') );
+  eventArray.push(new Event(37.5 ,  0.5, 74, 'US') );
+  
+  eventArray.push(new Event(38   ,  0.5, 76, 'DS') );
+  eventArray.push(new Event(38.5 ,  0.5, 77, 'US') );
+  eventArray.push(new Event(39   ,    1, 79, 'D') );
+  
+   eventArray.push(new Event(40   ,  0.5,78, 'US') );
+  eventArray.push(new Event(40.5 ,  0.5, 79, 'DS') );
+  eventArray.push(new Event(41   ,  0.75,81, 'U') );
+  eventArray.push(new Event(41.75 ,  0.25, 83, 'S') );
+  
+  eventArray.push(new Event(42   ,    1, 79, 'D') );
+  
+  period = 44;
   return eventArray;
 }
 
