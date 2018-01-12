@@ -929,7 +929,14 @@ function makeEventArrayHH1 () {
   var eventArray = [];
   timeSignatureX=4;
   timeSignatureY=4;
-  eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
+  eventArray.push(new Event(0   , 0.5, 72, 'D', 0.5, 0.5) );
+  eventArray.push(new Event(0.5 , 0.25, 67, 'U') );
+  eventArray.push(new Event(0.75, 0.25, 67, 'D') );
+  eventArray.push(new Event(1   , 0.5, 66, 'U') );
+  eventArray.push(new Event(1.5 , 0.5, 67, 'D') );
+
+  
+  /*eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
   eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
   eventArray.push(new Event(1   , 0.5, 64, 'D') );
   eventArray.push(new Event(1.5 , 0.5, 64, 'U') );
