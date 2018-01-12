@@ -1256,9 +1256,9 @@ function makeEventArrayCanon2 () {
 	eventArray.push(new Event(5   ,      1,  71, 'U') );
 	eventArray.push(new Event(6   ,      2,  74, 'D') );
 	
-	eventArray.push(new Event(8   ,      2,  74, 'D') );
-	eventArray.push(new Event(10   ,     1,  74, 'U') );
-	eventArray.push(new Event(11   ,     1,  74, 'S') );
+	eventArray.push(new Event(8   ,      2,  74, 'U') );
+	eventArray.push(new Event(10   ,     1,  74, 'D') );
+	eventArray.push(new Event(11   ,     1,  74, 'U') );
 	
 	eventArray.push(new Event(12   ,     1,  74, 'D',0.5) );
 	eventArray.push(new Event(13   ,     1,  79, 'U') );
@@ -1327,17 +1327,17 @@ function makeEventArrayCanon2 () {
 	eventArray.push(new Event(13.5 +n,  0.25,  73, 'S') );
 	eventArray.push(new Event(13.75+n,  0.25,  74, 'S') );
 	                               
-	eventArray.push(new Event(14   +n,  0.25,  69, 'D') );
+	eventArray.push(new Event(14   +n,  0.25,  69, 'D',0.6) );
 	eventArray.push(new Event(14.25+n,  0.25,  71, 'S') );
 	eventArray.push(new Event(14.5 +n,  0.25,  73, 'S') );
 	eventArray.push(new Event(14.75+n,  0.25,  74, 'S') );
 	                               
-	eventArray.push(new Event(15   +n,  0.25,  76, 'U',0.6) );
-	eventArray.push(new Event(15.25+n,  0.25,  78, 'S',0.7) );
-	eventArray.push(new Event(15.5 +n,  0.25,  79, 'S',0.7) );
-	eventArray.push(new Event(15.75+n,  0.25,  81, 'S',0.8) );
+	eventArray.push(new Event(15   +n,  0.25,  76, 'U',0.7) );
+	eventArray.push(new Event(15.25+n,  0.25,  78, 'S') );
+	eventArray.push(new Event(15.5 +n,  0.25,  79, 'S') );
+	eventArray.push(new Event(15.75+n,  0.25,  81, 'S') );
 	/////////////                  
-	eventArray.push(new Event(16   +n,   0.5,  78, 'D') );
+	eventArray.push(new Event(16   +n,   0.5,  78, 'D',0.8) );
 	eventArray.push(new Event(16.5 +n,  0.25,  74, 'S') );
 	eventArray.push(new Event(16.75+n,  0.25,  76, 'S') );
 	                               
