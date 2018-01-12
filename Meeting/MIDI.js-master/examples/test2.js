@@ -928,24 +928,8 @@ function makeEventArrayTest2 () {
 function makeEventArrayHH1 () {  
   var eventArray = [];
   timeSignatureX=4;
-  timeSignatureY=4;eventArray.push(new Event(0, 1, 60, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(1, 1, 60, 'U') );
-  eventArray.push(new Event(2, 1, 67, 'D') );
-  eventArray.push(new Event(3, 1, 67, 'U') );
-  
-  eventArray.push(new Event(4, 1, 69, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(5, 1, 69, 'U') );
-  eventArray.push(new Event(6, 2, 67, 'D') );
-  
-  eventArray.push(new Event(8, 1, 65, 'U') );
-  eventArray.push(new Event(9, 1, 65, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(10, 1, 64, 'U') );
-  eventArray.push(new Event(11, 1, 64, 'D') );
-  
-  eventArray.push(new Event(12, 1, 62, 'U') );
-  eventArray.push(new Event(13, 1, 62, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(14, 2, 60, 'U') );
-  /*eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
+  timeSignatureY=4;
+  eventArray.push(new Event(0   , 0.5, 60, 'D', 0.5, 0.5) );
   eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
   eventArray.push(new Event(1   , 0.5, 64, 'D') );
   eventArray.push(new Event(1.5 , 0.5, 64, 'U') );
@@ -960,7 +944,7 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(6   , 0.5, 59, 'U') );
   eventArray.push(new Event(6.5 , 0.5, 59, 'D') );
   eventArray.push(new Event(7   ,   1, 55, 'U') );
-                                    
+  
   eventArray.push(new Event(0+8, 0.5, 60, 'D') );
   eventArray.push(new Event(0.5+8, 0.5, 60, 'U') );
   eventArray.push(new Event(1+8, 0.5, 64, 'D') );
