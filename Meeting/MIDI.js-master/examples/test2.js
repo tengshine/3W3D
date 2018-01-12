@@ -1082,10 +1082,10 @@ function makeEventArrayCanon1 () {
 	eventArray.push(new Event(40   ,     2,  62, 'D',0.5) );
 	eventArray.push(new Event(42   ,     2,  62, 'U',0.4) );
 	
-	eventArray.push(new Event(44   ,     2,  62, 'D') );
-	eventArray.push(new Event(46   ,     2,  64, 'U') );
+	eventArray.push(new Event(44   ,     2,  62, 'D',0.3) );
+	eventArray.push(new Event(46   ,     2,  64, 'U',0.3) );
 	
-	eventArray.push(new Event(48   ,     2,  62, 'D') );
+	eventArray.push(new Event(48   ,     2,  62, 'D',0.3) );
 /*  	eventArray.push(new Event(0   ,  0.5 ,  81, 'D', 0.8, 0.1) );
 	eventArray.push(new Event(0.5 ,  0.25,  78, 'S') );
 	eventArray.push(new Event(0.75,  0.25,  79, 'S') );
@@ -1238,7 +1238,7 @@ function makeEventArrayCanon1 () {
 	*/	
 	
   
-  period = 40;
+  period = 52;
   return eventArray;
 }
 
