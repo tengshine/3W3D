@@ -929,22 +929,21 @@ function makeEventArrayHH1 () {
   var eventArray = [];
   timeSignatureX=4;
   timeSignatureY=4;
-  var n=7;
-  eventArray.push(new Event(0   , 0.5, 60, 'D', 0.8, 0.5) );
-  eventArray.push(new Event(0.5 , 0.5, 60, 'U') );
-  eventArray.push(new Event(1   , 0.5, 64, 'D') );
-  eventArray.push(new Event(1.5 , 0.5, 64, 'U') );
-  eventArray.push(new Event(2   , 0.5, 67, 'D') );
-  eventArray.push(new Event(2.5 , 0.5, 67, 'U') );
-  eventArray.push(new Event(3   ,   1, 64, 'D') );
+  eventArray.push(new Event(0   , 0.5, 60, 'DS', 0.8, 0.5) );
+  eventArray.push(new Event(0.5 , 0.5, 60, 'US') );
+  eventArray.push(new Event(1   , 0.5, 64, 'DS') );
+  eventArray.push(new Event(1.5 , 0.5, 64, 'US') );
+  eventArray.push(new Event(2   , 0.5, 67, 'DS') );
+  eventArray.push(new Event(2.5 , 0.5, 67, 'US') );
+  eventArray.push(new Event(3   ,   1, 64, 'DS') );
   
-  eventArray.push(new Event(4   , 0.5, 65, 'U') );  
-  eventArray.push(new Event(4.5 , 0.5, 65, 'D') );
-  eventArray.push(new Event(5   , 0.5, 62, 'U') );
-  eventArray.push(new Event(5.5 , 0.5, 62, 'D') );
-  eventArray.push(new Event(6   , 0.5, 59, 'U') );
-  eventArray.push(new Event(6.5 , 0.5, 59, 'D') );
-  eventArray.push(new Event(7   ,   1, 55, 'U') );
+  eventArray.push(new Event(4   , 0.5, 65, 'US') );  
+  eventArray.push(new Event(4.5 , 0.5, 65, 'DS') );
+  eventArray.push(new Event(5   , 0.5, 62, 'US') );
+  eventArray.push(new Event(5.5 , 0.5, 62, 'DS') );
+  eventArray.push(new Event(6   , 0.5, 59, 'US') );
+  eventArray.push(new Event(6.5 , 0.5, 59, 'DS') );
+  eventArray.push(new Event(7   ,   1, 55, 'US') );
                                     
   eventArray.push(new Event(0   +8, 0.5, 60, 'D') );
   eventArray.push(new Event(0.5 +8, 0.5, 60, 'U') );
