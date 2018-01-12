@@ -1027,7 +1027,7 @@ function makeEventArrayHH1 () {
   eventArray.push(new Event(42   ,    1, 79, 'D') );
   eventArray.push(new Event(43   ,    1, 1, 'L') );
   
-  period = 46;
+  period = 44;
   return eventArray;
 }
 
@@ -1145,7 +1145,7 @@ function makeEventArrayHH2 () {
   eventArray.push(new Event(43.5   ,  0.5, 55, 'DS') );
  
   
-  period = 46;
+  period = 44;
   return eventArray;
 }
                              
